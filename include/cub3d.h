@@ -7,9 +7,9 @@
 # include <string.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# include "../MLX/include/MLX42/MLX42.h"
+# include "../libs/MLX/include/MLX42/MLX42.h"
 # include <fcntl.h>
-# include "../libft/libft.h"
+# include "../libs//libft/libft.h"
 
 
 #endif

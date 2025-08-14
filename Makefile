@@ -35,7 +35,6 @@ LIBS := $(MLX_A) $(LIBFT_A) $(LIBS_OS)
 all: $(NAME)
 
 $(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
-	@echo "Linking $@"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $@
 
 # Object build
