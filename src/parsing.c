@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:33 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/18 15:50:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:00:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ void	print_2d_array(char **arr)
 
 int	parse_map(t_game *game, char *file)
 {
-	char	*line;
 	int		fd;
 	int		num_lines;
 	int		i;
 
-	line = "";
 	num_lines = count_num_lines(file);
 	game->initial_file = (char **)malloc(sizeof(char *) * (num_lines + 1));
 	i = 0;
@@ -56,14 +54,16 @@ int	parse_map(t_game *game, char *file)
 	while (i < num_lines)
 	{
 		game->initial_file[i] = get_next_line(fd);
-		if (!game->initial_file[i]) // plus free
+		if (!game->initial_file[i])
 		{
-			printf("we broke!\n");
+			free_2darray_partial(game->initial_file, i);
+			close(fd);
 			break;
 		}
 		i++;
 	}
 	game->initial_file[i] = NULL;
+	close(fd);
 	print_2d_array(game->initial_file);
 	return (1);
 }

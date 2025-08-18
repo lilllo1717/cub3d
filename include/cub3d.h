@@ -39,4 +39,8 @@ bool					is_valid_input(int argc, char **argv);
 bool					is_valid_input_file(char *file_name);
 int						parse_map(t_game *game, char *file);
 
+/*utils*/
+void					free_2darray_partial(char **arr, int num);
+void					free_2darray(char **arr);
+
 #endif
