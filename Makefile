@@ -7,7 +7,7 @@ SRC_DIR   := src
 INC_DIR   := include
 BUILD_DIR := build
 
-SRCS      := $(SRC_DIR)/main.c
+SRCS      := $(wildcard $(SRC_DIR)/*.c)
 
 OBJS      := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 HEADERS   := -I $(INC_DIR) -I $(MLX42_DIR)/include
