@@ -16,8 +16,8 @@ typedef struct s_render
 	mlx_t				*mlx;
 	float				player_x;
 	float				player_y;
-	
-} 						t_render;
+
+}						t_render;
 
 typedef struct s_texture
 {
@@ -47,6 +47,8 @@ typedef struct s_game
 bool					is_valid_input(int argc, char **argv);
 bool					is_valid_input_file(char *file_name);
 int						parse_map(t_game *game, char *file);
+bool					is_map_last(char **map);
+int						find_textures(char **map);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
@@ -54,6 +56,6 @@ void					free_2darray(char **arr);
 
 /*mlx*/
 void					mlx_start(t_render *render);
-t_render				*init_render();
+t_render				*init_render(void);
 
 #endif
