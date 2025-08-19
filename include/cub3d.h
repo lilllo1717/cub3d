@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # include "../libs/MLX/include/MLX42/MLX42.h"
-# include "../libs/gnl/get_next_line.h"
+//# include "../libs/gnl/get_next_line.h"
 # include "../libs/libft/libft.h"
 # include <fcntl.h>
 # include <stdarg.h>
@@ -10,6 +10,14 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+typedef struct s_render
+{
+	mlx_t				*mlx;
+	float				player_x;
+	float				player_y;
+	
+} 						t_render;
 
 typedef struct s_texture
 {
@@ -31,6 +39,7 @@ typedef struct s_game
 	char				**map;
 	struct s_texture	*textures;
 	struct s_color		*colors;
+	struct s_render		*render;
 }						t_game;
 
 /*parsing*/
@@ -42,5 +51,9 @@ int						parse_map(t_game *game, char *file);
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
+
+/*mlx*/
+void					mlx_start(t_render *render);
+t_render				*init_render();
 
 #endif
