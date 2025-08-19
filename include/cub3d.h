@@ -10,12 +10,18 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# define MOVEMENT 3.0f
+# define WIDTH 1240
+# define HEIGHT 1240
+# define PLAYER_COLOR 	0xFFFFFFFF
 
 typedef struct s_render
 {
 	mlx_t				*mlx;
+	mlx_image_t			*player_image;
 	float				player_x;
 	float				player_y;
+	float				player_dir;
 	
 } 						t_render;
 
@@ -53,7 +59,10 @@ void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
 
 /*mlx*/
-void					mlx_start(t_render *render);
 t_render				*init_render();
+void					mlx_start(t_render *render);
+void					draw_player(void *param);
+void 					key_handler(mlx_key_data_t keydata, void *param);
+
 
 #endif
