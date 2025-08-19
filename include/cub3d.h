@@ -53,6 +53,8 @@ typedef struct s_game
 bool					is_valid_input(int argc, char **argv);
 bool					is_valid_input_file(char *file_name);
 int						parse_map(t_game *game, char *file);
+bool					is_map_last(char **map);
+int						find_textures(char **map);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
