@@ -72,6 +72,7 @@ bool					is_map_last(char **map);
 int						find_textures(char **map);
 bool					no_invalid_input(char *line, int in_map);
 int						count_num_lines(char *file);
+int						parse_file(char **file);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
