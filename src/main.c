@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:39 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 11:02:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:33:18 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	main(int argc, char **argv)
 		return (1);
 	parse_map(&game, argv[1]);
 	if (is_map_last(game.initial_file) == false)
-		return (1);
+		return (free_2darray(game.initial_file), 1);
 	if (find_textures(game.initial_file) == false)
-		return (1);
+		return (free_2darray(game.initial_file), 1);
 }
 
 // int main (int argc, char **argv)
