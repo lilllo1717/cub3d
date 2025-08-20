@@ -13,7 +13,22 @@
 # define MOVEMENT 3.0f
 # define WIDTH 1240
 # define HEIGHT 1240
-# define PLAYER_COLOR 	0xFFFFFFFF
+# define PLAYER_COLOR 0xFFFFFFFF
+
+enum					keys_texture
+{
+	KEY_NO,
+	KEY_SO,
+	KEY_WE,
+	KEY_EA,
+	NUM_KEYS1
+};
+enum					keys_colors
+{
+	KEY_F,
+	KEY_C,
+	NUM_KEYS2
+};
 
 typedef struct s_render
 {
@@ -22,8 +37,8 @@ typedef struct s_render
 	float				player_x;
 	float				player_y;
 	float				player_dir;
-	
-} 						t_render;
+
+}						t_render;
 
 typedef struct s_texture
 {
@@ -55,16 +70,18 @@ bool					is_valid_input_file(char *file_name);
 int						parse_map(t_game *game, char *file);
 bool					is_map_last(char **map);
 int						find_textures(char **map);
+bool					no_invalid_input(char *line, int in_map);
+int						count_num_lines(char *file);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
+void					print_2d_array(char **arr);
 
 /*mlx*/
-t_render				*init_render();
+t_render				*init_render(void);
 void					mlx_start(t_render *render);
 void					draw_player(void *param);
-void 					key_handler(mlx_key_data_t keydata, void *param);
-
+void					key_handler(mlx_key_data_t keydata, void *param);
 
 #endif
