@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/08/19 17:18:10 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:16:11 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,35 +78,75 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	draw_player(render);
 }
 
-void create_world()
+void create_world(void *param)
 {
-	mlx_image_t* wall;
+	mlx_image_t	* wall;
+	t_render	*render;
+
+	render = (t_render *)param;
+	uint32_t color;
 	uint32_t	i;
 	int	x;
-	int y;
-	int	xo;
-	int yo;
+	int map_s = 64;
+	int y = 0;
+	int	xo = 0;
+	int yo = 0;
 	int map_x = 8;
-	int map_y = 5;
+	int map_y = 8;
 	int map[] = {
 		1, 1, 1, 1, 1, 1, 1, 1,
 		1, 1, 1, 0, 0, 0, 0, 1,
 		1, 0, 1, 1, 0, 0, 1, 1,
 		1, 0, 0, 0, 0, 1, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 1, 1, 1,
+		1, 0, 1, 0, 1, 0, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1,
 	};
-	while (i < wall->width; ++i)
+	
+	wall = mlx_new_image(render->mlx, WIDTH, HEIGHT);
+    if (!wall)
+		return;
+	while(y < map_y)
 	{
-		uint32_t i = 0;
-		for (uint32_t y = 0; y < image->height; ++y)
+		while (x < map_x)
 		{
-			uint32_t color = ft_pixel(
-				rand() % 0xFF, // R
-				rand() % 0xFF, // G
-				rand() % 0xFF, // B
-				rand() % 0xFF  // A
-			);
-			mlx_put_pixel(image, i, y, color);
+			if (map[y * map_x + x] == 1)
+			{
+				color = 0xFFFFFFFF;
+			}
+			else
+				color = 0x00000000;
+			xo = x * map_s;
+			yo = y * map_s;
 		}
+		y++;
 	}
+
 }
+
+
+/*
+	need to translate this into mlx42
+*/
+
+// void drawMap2D()
+// {
+//  int x,y,xo,yo;
+//  for(y=0;y<mapY;y++)
+//  {
+//   for(x=0;x<mapX;x++)
+//   {
+//    if(map[y*mapX+x]==1){ glColor3f(1,1,1);} else{ glColor3f(0,0,0);}
+//    xo=x*mapS; yo=y*mapS;
+//    glBegin(GL_QUADS); 
+//    glVertex2i( 0   +xo+1, 0   +yo+1); 
+//    glVertex2i( 0   +xo+1, mapS+yo-1); 
+//    glVertex2i( mapS+xo-1, mapS+yo-1);  
+//    glVertex2i( mapS+xo-1, 0   +yo+1); 
+//    glEnd();
+//   } 
+//  } 
+
+
+ 

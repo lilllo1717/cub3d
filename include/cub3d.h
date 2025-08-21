@@ -85,5 +85,6 @@ t_render				*init_render(void);
 void					mlx_start(t_render *render);
 void					draw_player(void *param);
 void					key_handler(mlx_key_data_t keydata, void *param);
+void					create_world(void *param);
 
 #endif
