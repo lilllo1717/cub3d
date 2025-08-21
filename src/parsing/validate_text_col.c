@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:36:51 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 14:39:25 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/20 15:12:57 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,6 @@
 	- check path
 	- if everyhting is fine parse into the struct
 */
-
-static int	ft_count_substrings(const char *s, char c)
-{
-	int	i;
-	int	count;
-	int	in_substring;
-
-	i = 0;
-	count = 0;
-	in_substring = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] != c && !in_substring)
-		{
-			in_substring = 1;
-			count++;
-		}
-		else if (s[i] == c)
-			in_substring = 0;
-		i++;
-	}
-	return (count);
-}
 
 bool	is_texture(char *line)
 {
@@ -58,7 +35,7 @@ bool	is_color(char *line)
 	return (false);
 }
 
-bool	is_valid_text(char *line)
+bool	is_valid_text_line(char *line)
 {
 	char	*checking_char;
 	int		i;
@@ -83,7 +60,7 @@ bool	is_valid_text(char *line)
 	return (true);
 }
 
-bool	is_valid_color(char *line)
+bool	is_valid_color_line(char *line)
 {
 	char	*checking_char;
 	int		i;
@@ -110,16 +87,56 @@ bool	is_valid_color(char *line)
 	return (true);
 }
 
+bool	is_valid_text_path(char *line)
+{
+	char	*checking_char;
+	int		fd;
+	char	*file_name;
+	int		i;
+
+	checking_char = NULL;
+	i = 0;
+	checking_char = ft_strchr(line, '.');
+	file_name = (char *)malloc(ft_strlen(checking_char) * sizeof(char));
+	while (checking_char[i] != '\n')
+	{
+		file_name[i] = checking_char[i];
+		i++;
+	}
+	file_name[i] = '\0';
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+		return (free(file_name), printf("Invalid texture path.\n"), close(fd),
+			false);
+	close(fd);
+	free(file_name);
+	return (true);
+}
+
+bool	is_valid_color(char *file)
+{
+	char	*checking_char;
+
+	checking_char = NULL;
+	while (*file && !ft_isdigit(*file))
+		file++;
+	checking_char = file;
+	// printf("checking_char color:%s\n", checking_char);
+	return (true);
+}
+
 int	parse_file(char **file)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (file[i])
 	{
-		if (is_texture(file[i]) && !is_valid_text(file[i]))
+		if (is_texture(file[i]) && (!is_valid_text_line(file[i])
+				|| !(is_valid_text_path(file[i]))))
 			return (false);
-		if (is_color(file[i]) && !is_valid_color(file[i]))
+		if (is_color(file[i]) && (!is_valid_color_line(file[i])
+				|| !(is_valid_color(file[i]))))
 			return (false);
 		i++;
 	}
