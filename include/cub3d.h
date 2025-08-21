@@ -10,7 +10,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# define MOVEMENT 3.0f
+# define MOVEMENT 10.0f
 # define WIDTH 1240
 # define HEIGHT 1240
 # define PLAYER_COLOR 	0xFFFFFFFF

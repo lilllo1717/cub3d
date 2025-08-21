@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/08/19 15:54:23 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:18:10 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,37 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(render->mlx, MLX_KEY_A))
 		render->player_x -= MOVEMENT;
 	draw_player(render);
+}
+
+void create_world()
+{
+	mlx_image_t* wall;
+	uint32_t	i;
+	int	x;
+	int y;
+	int	xo;
+	int yo;
+	int map_x = 8;
+	int map_y = 5;
+	int map[] = {
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 1, 0, 0, 1, 1,
+		1, 0, 0, 0, 0, 1, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+	};
+	while (i < wall->width; ++i)
+	{
+		uint32_t i = 0;
+		for (uint32_t y = 0; y < image->height; ++y)
+		{
+			uint32_t color = ft_pixel(
+				rand() % 0xFF, // R
+				rand() % 0xFF, // G
+				rand() % 0xFF, // B
+				rand() % 0xFF  // A
+			);
+			mlx_put_pixel(image, i, y, color);
+		}
+	}
 }
