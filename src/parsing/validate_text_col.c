@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:36:51 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 15:12:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:18:45 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,6 @@ bool	is_valid_text_line(char *line)
 	return (true);
 }
 
-bool	is_valid_color_line(char *line)
-{
-	char	*checking_char;
-	int		i;
-	int		count_members;
-
-	i = 0;
-	checking_char = NULL;
-	count_members = ft_count_substrings(line, ' ');
-	if (count_members != 2)
-		return (printf("1.Wrong input format for color.\n"), false);
-	if (is_color(line))
-		checking_char = line + 2;
-	while (checking_char[i] != '\0')
-	{
-		while (checking_char[i] == ' ')
-			i++;
-		if (ft_isdigit(checking_char[i]) || checking_char[i] == ',')
-			i++;
-		else if (checking_char[i] == '\n' && checking_char[i + 1] == '\0')
-			return (true);
-		else
-			return (printf("2.Wrong input format for color.\n"), false);
-	}
-	return (true);
-}
-
 bool	is_valid_text_path(char *line)
 {
 	char	*checking_char;
@@ -98,7 +71,7 @@ bool	is_valid_text_path(char *line)
 	i = 0;
 	checking_char = ft_strchr(line, '.');
 	file_name = (char *)malloc(ft_strlen(checking_char) * sizeof(char));
-	while (checking_char[i] != '\n')
+	while (checking_char[i] && checking_char[i] != '\n')
 	{
 		file_name[i] = checking_char[i];
 		i++;
@@ -110,18 +83,6 @@ bool	is_valid_text_path(char *line)
 			false);
 	close(fd);
 	free(file_name);
-	return (true);
-}
-
-bool	is_valid_color(char *file)
-{
-	char	*checking_char;
-
-	checking_char = NULL;
-	while (*file && !ft_isdigit(*file))
-		file++;
-	checking_char = file;
-	// printf("checking_char color:%s\n", checking_char);
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:53:21 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 14:41:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/21 15:02:27 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,21 @@ int	count_num_lines(char *file)
 {
 	int	num_lines;
 	int	fd;
+	char	*line;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (false);
 	num_lines = 0;
-	while (get_next_line(fd))
+	line = get_next_line(fd);
+	while (line)
+	{
 		num_lines++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (line)
+		free(line);
 	close(fd);
 	return (num_lines);
 }
@@ -88,3 +96,28 @@ int	ft_count_substrings(const char *s, char c)
 	return (count);
 }
 
+void	free_2dint_partial(int **arr, int num)
+{
+	int	i;
+
+	i = 0;
+	while (i < num)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+void	free_2dint(int **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}

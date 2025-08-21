@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # include "../libs/MLX/include/MLX42/MLX42.h"
-//# include "../libs/gnl/get_next_line.h"
+# include "../libs/gnl/get_next_line.h"
 # include "../libs/libft/libft.h"
 # include <fcntl.h>
 # include <stdarg.h>
@@ -73,12 +73,17 @@ int						find_textures(char **map);
 bool					no_invalid_input(char *line, int in_map);
 int						count_num_lines(char *file);
 int						parse_file(char **file);
+bool					is_valid_color(char *file);
+bool					is_valid_color_line(char *line);
+bool					is_color(char *line);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
 void					print_2d_array(char **arr);
 int						ft_count_substrings(const char *s, char c);
+void					free_2dint_partial(int **arr, int num);
+void					free_2dint(int **arr);
 
 /*mlx*/
 t_render				*init_render(void);
