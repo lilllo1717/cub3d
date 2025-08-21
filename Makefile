@@ -16,7 +16,8 @@ SRC_PARSING = \
 	$(SRC_DIR)/parsing/parsing.c \
 	$(SRC_DIR)/parsing/input_check.c \
 	$(SRC_DIR)/parsing/text_color_check.c \
-	$(SRC_DIR)/parsing/validate_text_col.c
+	$(SRC_DIR)/parsing/validate_text_col.c \
+	$(SRC_DIR)/parsing/validate_color.c \
 
 GNL_DIR  := libs/gnl
 GNL_SRCS = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
