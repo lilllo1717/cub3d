@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 10:23:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/18 10:40:14 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:26:54 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ bool	is_valid_input(int argc, char **argv)
 		return (false);
 	if (is_valid_input_file(argv[1]) == false)
 		return (false);
-    return (true);
+	return (true);
 }

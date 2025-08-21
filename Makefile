@@ -7,7 +7,18 @@ SRC_DIR   := src
 INC_DIR   := include
 BUILD_DIR := build
 
-SRCS      := $(wildcard $(SRC_DIR)/*.c)
+SRC_ROOT = \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/mlx_init.c \
+	$(SRC_DIR)/utils.c
+
+SRC_PARSING = \
+	$(SRC_DIR)/parsing/parsing.c \
+	$(SRC_DIR)/parsing/input_check.c \
+	$(SRC_DIR)/parsing/text_color_check.c \
+	$(SRC_DIR)/parsing/validate_text_col.c
+
+SRCS = $(SRC_ROOT) $(SRC_PARSING)
 
 OBJS      := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 HEADERS   := -I $(INC_DIR) -I $(MLX42_DIR)/include
