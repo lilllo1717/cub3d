@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:36:51 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 15:12:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/21 15:05:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ bool	is_valid_text_path(char *line)
 	i = 0;
 	checking_char = ft_strchr(line, '.');
 	file_name = (char *)malloc(ft_strlen(checking_char) * sizeof(char));
-	while (checking_char[i] != '\n')
+	while (checking_char[i] && checking_char[i] != '\n')
 	{
 		file_name[i] = checking_char[i];
 		i++;
@@ -113,15 +113,66 @@ bool	is_valid_text_path(char *line)
 	return (true);
 }
 
+bool	color_valid(char **arr)
+{
+	int		*int_colors;
+	int		i;
+
+	i = 0;
+	int_colors = malloc(4 * sizeof(int));
+	while (arr[i])
+	{
+		int_colors[i] = ft_atoi(arr[i]);
+		if (int_colors[i] < 0 || int_colors[i] > 255)
+		{
+			free(int_colors);
+			return (false);
+		}
+		i++;
+	}
+	free(int_colors);
+	return (true);
+}
+
 bool	is_valid_color(char *file)
 {
 	char	*checking_char;
+	char	*color;
+	int		i;
+	int		num_colors;
+	char	**split_colors;
 
 	checking_char = NULL;
+	split_colors = NULL;
+	num_colors = 0;
+	i = 0;
 	while (*file && !ft_isdigit(*file))
 		file++;
 	checking_char = file;
-	// printf("checking_char color:%s\n", checking_char);
+	color = (char *)malloc(ft_strlen(checking_char) * sizeof(char));
+	if (!color)
+		return (NULL);
+	while (checking_char[i] && checking_char[i] != '\n')
+	{
+		color[i] = checking_char[i];
+		i++;
+	}
+	color[i] = '\0';
+	num_colors = ft_count_substrings(color, ',');
+	if (num_colors != 3)
+		return(free(color), false);
+	split_colors = ft_split(color, ',');
+	if (!split_colors)
+		return (free(color), NULL);
+	if (color_valid(split_colors) == false)
+	{
+		printf("Invalid color values.\n");
+		free(color);
+		free(split_colors);
+		return (false);
+	}
+	free(color);
+	free_2darray(split_colors);
 	return (true);
 }
 

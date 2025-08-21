@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:33 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 11:24:58 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/21 15:12:07 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	parse_map(t_game *game, char *file)
 
 	num_lines = count_num_lines(file);
 	game->initial_file = (char **)malloc(sizeof(char *) * (num_lines + 1));
+	if (!game->initial_file)
+		return (0);
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)

@@ -18,7 +18,11 @@ SRC_PARSING = \
 	$(SRC_DIR)/parsing/text_color_check.c \
 	$(SRC_DIR)/parsing/validate_text_col.c
 
-SRCS = $(SRC_ROOT) $(SRC_PARSING)
+GNL_DIR  := libs/gnl
+GNL_SRCS = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
+
+SRCS = $(SRC_ROOT) $(SRC_PARSING) $(GNL_SRCS)
+
 
 OBJS      := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 HEADERS   := -I $(INC_DIR) -I $(MLX42_DIR)/include

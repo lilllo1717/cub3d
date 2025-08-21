@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:39 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 13:02:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/21 14:55:31 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 		return (free_2darray(game.initial_file), 1);
 	if (parse_file(game.initial_file) == false)
 		return (free_2darray(game.initial_file), 1);
+	free_2darray(game.initial_file);
 }
 
 // int main (int argc, char **argv)
