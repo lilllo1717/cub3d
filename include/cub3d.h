@@ -78,6 +78,7 @@ int						parse_file(char **file);
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
 void					print_2d_array(char **arr);
+int						ft_count_substrings(const char *s, char c);
 
 /*mlx*/
 t_render				*init_render(void);
