@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:39 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/21 17:02:59 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:40:21 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 // int main (int argc, char **argv)
 // {
 //     t_game  	game;
-// 	// t_render	*render;
+// 	t_render	*render;
 
 //     if (is_valid_input(argc, argv) == false)
 // 	{
@@ -41,11 +41,11 @@ int	main(int argc, char **argv)
 //     parse_map(&game, argv[1]);
 // 	is_map_last(game.initial_file);
 // 	find_textures(game.initial_file);
-// 	// render = init_render();
-// 	// mlx_start(render);
+// 	render = init_render();
+// 	mlx_start(render);
 // 	mlx_key_hook(render->mlx, &key_handler, render);
 // 	mlx_loop_hook(render->mlx, &draw_player, render);
-// 	// mlx_loop(render->mlx);
+// 	mlx_loop(render->mlx);
 // 	mlx_terminate(render->mlx);
-// 	// free(render); //needs to be freed somewhere else
+// 	free(render); //needs to be freed somewhere else
 // }

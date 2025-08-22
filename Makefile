@@ -9,7 +9,6 @@ BUILD_DIR := build
 
 SRC_ROOT = \
 	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/mlx_init.c \
 	$(SRC_DIR)/utils.c
 
 SRC_PARSING = \
@@ -19,10 +18,14 @@ SRC_PARSING = \
 	$(SRC_DIR)/parsing/validate_text_col.c \
 	$(SRC_DIR)/parsing/validate_color.c \
 
+SRC_RENDERING = \
+	$(SRC_DIR)/rendering/mlx_init.c \
+	$(SRC_DIR)/rendering/map_init.c \
+
 GNL_DIR  := libs/gnl
 GNL_SRCS = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 
-SRCS = $(SRC_ROOT) $(SRC_PARSING) $(GNL_SRCS)
+SRCS = $(SRC_ROOT) $(SRC_PARSING) $(SRC_RENDERING) $(GNL_SRCS)
 
 
 OBJS      := $(SRCS:%.c=$(BUILD_DIR)/%.o)

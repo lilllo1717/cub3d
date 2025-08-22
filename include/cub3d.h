@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # include "../libs/MLX/include/MLX42/MLX42.h"
-# include "../libs/gnl/get_next_line.h"
+//# include "../libs/gnl/get_next_line.h"
 # include "../libs/libft/libft.h"
 # include <fcntl.h>
 # include <stdarg.h>
@@ -11,8 +11,8 @@
 # include <string.h>
 # include <unistd.h>
 # define MOVEMENT 10.0f
-# define WIDTH 1240
-# define HEIGHT 1240
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PLAYER_COLOR 0xFFFFFFFF
 
 enum					keys_texture
@@ -91,5 +91,6 @@ void					mlx_start(t_render *render);
 void					draw_player(void *param);
 void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
+void					put_tile(mlx_image_t *image, int start_x, int start_y, int size, uint32_t color);
 
 #endif
