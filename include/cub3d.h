@@ -13,7 +13,9 @@
 # define MOVEMENT 10.0f
 # define WIDTH 1920
 # define HEIGHT 1080
-# define PLAYER_COLOR 0xFFFFFFFF
+# define PLAYER_COLOR 0xFF0000FF
+# define WALL 0xFFFFFFFF
+# define FLOOR 0x00FFFFFF
 
 enum					keys_texture
 {

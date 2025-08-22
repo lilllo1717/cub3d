@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:33 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/21 15:12:07 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:36:57 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	is_map_last(char **map)
 	return (true);
 }
 
-int	parse_map(t_game *game, char *file)
+int	parse_map(t_game *game, char *file) // if there is an empty line after the map, consider map closed 
 {
 	int	fd;
 	int	num_lines;

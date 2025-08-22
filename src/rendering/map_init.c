@@ -9,7 +9,7 @@ void create_world(void *param)
 	uint32_t color;
 	//uint32_t	i;
 	int	x = 0;
-	int map_s = 64;
+	int map_s = 77;
 	int y = 0;
 	int	xo = 0;
 	int yo = 0;
@@ -43,18 +43,16 @@ void create_world(void *param)
 		while (x < map_x)
 		{
 			if (map[y * map_x + x] == 1)
-				color = 0xFFFFFFFF;
+				color = WALL;
 
 			else
-				color = 0x00000000;
+				color = FLOOR;
 			xo = x * map_s;
 			yo = y * map_s;
 			put_tile(wall, xo, yo, map_s, color);
 			x++;
-			ft_printf("x incremented\n");
 		}
 		y++;
-		ft_printf("y incremented\n");
 	}
 		mlx_image_to_window(render->mlx, wall, 0, 0);
 }
@@ -84,6 +82,7 @@ void	draw_player(void *param)
 	t_render	*render;
 	float		pixel_x;
 	float		pixel_y;
+	
 
 	render = (t_render *)param;
 	if (!render->player_image)
@@ -96,7 +95,9 @@ void	draw_player(void *param)
 		WIDTH * HEIGHT * sizeof(int32_t));
 	pixel_x = render->player_x;
 	pixel_y = render->player_y;
-	if (pixel_x >= 0 && pixel_x < WIDTH && pixel_y >= 0 && pixel_y < HEIGHT)
-		mlx_put_pixel(render->player_image, (int)pixel_x,
-			(int)pixel_y, PLAYER_COLOR);
+
+		if (pixel_x >= 0 && pixel_x < WIDTH && pixel_y >= 0 && pixel_y < HEIGHT)
+			mlx_put_pixel(render->player_image, (int)pixel_x,
+				(int)pixel_y, PLAYER_COLOR);
+	
 }
