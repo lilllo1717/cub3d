@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/08/22 14:33:05 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:20:50 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,55 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 		mlx_close_window(render->mlx);
 	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_W))
-		render->player_y -= MOVEMENT;
+	{
+		render->player_x += render->player_delta_x;
+		render->player_y += render->player_delta_y;
+	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_S))
-		render->player_y += MOVEMENT;
+	{
+		render->player_x -= render->player_delta_x;
+		render->player_y -= render->player_delta_y;
+	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_D))
-		render->player_x += MOVEMENT;
+	{	
+		render->player_angle += 0.1;
+		if (render->player_angle > render->player_angle > 2 * PI)
+			render->player_angle -= 2 * PI;
+		render->player_delta_x = cos(render->player_angle) * 5;
+		render->player_delta_y = sin(render->player_angle) * 5;
+	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_A))
-		render->player_x -= MOVEMENT;
+	{	
+		render->player_angle -= 0.1;
+		if (render->player_angle < 0)
+			render->player_angle += 2 * PI;
+		render->player_delta_x = cos(render->player_angle) * 5;
+		render->player_delta_y = sin(render->player_angle) * 5;
+	}
 	draw_player(render);
 }
+
+/*
+	The deltas tell us wich direction the line goes, how steep the line is, how many steps are needed to draw the complete line
+and which axis to use as the primary stepping direction (larger absoulte delta).
+	float delta_x : horizontal distance form start to end
+					if negative line goes right, if postive line goes left, if 0 just a vertical line
+	float delta_y : vertical distance form start to end
+					if positive line goes down, if negative line goes up, if 0 just a horizontal line
+*/
+// void	draw_line(mlx_image_t *img, float start_y, float start_x, float end_y,
+// 	float end_x)
+// {
+// 	float	delta_x;
+// 	float	delta_y;
+	
+// 	delta_x = end_x - start_x;
+// 	delta_y = end_y - start_y;
+	
+// 	while ()
+// 	{
+		
+// 	}
+// }
 
 

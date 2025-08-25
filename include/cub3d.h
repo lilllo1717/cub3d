@@ -10,12 +10,14 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <math.h>
 # define MOVEMENT 10.0f
 # define WIDTH 1920
 # define HEIGHT 1080
 # define PLAYER_COLOR 0xFF0000FF
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
+# define PI 3.1415926535 
 
 enum					keys_texture
 {
@@ -36,9 +38,11 @@ typedef struct s_render
 {
 	mlx_t				*mlx;
 	mlx_image_t			*player_image;
-	float				player_x;
+	float				player_x; 
 	float				player_y;
-	float				player_dir;
+	float				player_delta_x;
+	float				player_delta_y;
+	float				player_angle;
 
 }						t_render;
 
