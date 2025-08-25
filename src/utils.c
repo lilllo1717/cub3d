@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:53:21 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/21 15:02:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/25 13:15:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	print_2d_array(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		printf("%s", arr[i]);
+		printf("[%s]\n", arr[i]);
 		i++;
 	}
 }
