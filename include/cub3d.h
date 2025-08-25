@@ -60,6 +60,12 @@ typedef struct s_color
 	char				*c_color;
 }						t_color;
 
+typedef struct s_map
+{
+	size_t				max_len;
+	size_t				num_rows;
+}						t_map;
+
 typedef struct s_game
 {
 	char				**initial_file;
@@ -82,6 +88,11 @@ int						parse_file(char **file);
 bool					is_valid_color(char *file);
 bool					is_valid_color_line(char *line);
 bool					is_color(char *line);
+bool					is_texture(char *line);
+bool					is_color(char *line);
+// char					*find_map(char **file);
+t_map					find_map_size(char **file);
+int						validate_map(char **initial_file);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
@@ -97,6 +108,7 @@ void					mlx_start(t_render *render);
 void					draw_player(void *param);
 void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
-void					put_tile(mlx_image_t *image, int start_x, int start_y, int size, uint32_t color);
+void					put_tile(mlx_image_t *image, int start_x, int start_y,
+							int size, uint32_t color);
 
 #endif
