@@ -92,6 +92,7 @@ typedef struct s_map
 {
 	size_t				max_len;
 	size_t				num_rows;
+	char				player_letter;
 }						t_map;
 
 typedef struct s_game
@@ -119,12 +120,13 @@ bool					is_color(char *line);
 bool					is_texture(char *line);
 bool					is_color(char *line);
 t_map					find_map_size(char **file);
-int						validate_map(char **initial_file);
+int						validate_map(char **initial_file, t_render *render);
 char					**map_for_valid(char **file, t_map *map_dim);
 int						ft_dfs_inside(char **map, size_t row, size_t col,
 							t_map *map_dim);
-bool					map_chars_valid(char **map);
-
+bool					map_chars_valid(char **map, t_map *map_for_pos);
+void					find_player_position(char **map, t_render *render,
+							t_map *map_for_pos);
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);

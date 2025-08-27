@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/27 10:13:39 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:40:35 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_map	find_map_size(char **file)
 {
 	char	*map_start;
-	t_map	map = {0, 0};
+	t_map	map = {0, 0, '\0'};
 	size_t	curr_len;
 	int		i;
 
