@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/27 15:01:29 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:38:56 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,13 @@ int	validate_map(char **initial_file, t_render *render)
 	else
 		printf("Map is valid.\n");
 	find_player_position(map_to_valid, render, &map);
-	if (ft_dfs_inside(map_to_valid, (size_t)render->player_y, (size_t)render->player_x,
-		&map) == true)
+	if (ft_dfs_inside(map_to_valid, (size_t)render->player_y,
+			(size_t)render->player_x, &map) == true)
 	{
 		free_2darray(map_to_valid);
 		printf("Map is invalid. Empty spaces.\n");
 		return (0);
 	}
-	else
-		printf("Map is valid.\n");
+	printf("Map is valid.\n");
 	return (1);
 }
