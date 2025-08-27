@@ -1,5 +1,9 @@
 #include "cub3d.h"
 
+//player_delta_x and y represent the movement vector of the player, the direction and speed the player moves when pressing movement keyes.
+//x is horizontal forward direction
+//y is vertical forward direction
+//cos(player_angle) * 5: speed is 5. player moves 5 pixels per keypress
 void create_world(void *param)
 {
 	mlx_image_t	* tile;
@@ -67,8 +71,8 @@ void create_world(void *param)
 		return ;
 	ft_memset(render->ray_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
-	mlx_image_to_window(render->mlx, render->ray_image, 0, 0);
 	mlx_image_to_window(render->mlx, tile, 0, 0);
+	mlx_image_to_window(render->mlx, render->ray_image, 0, 0);
 	render->player_delta_x = cos(render->player_angle) * 5;
 	render->player_delta_y = sin(render->player_angle) * 5;
 }

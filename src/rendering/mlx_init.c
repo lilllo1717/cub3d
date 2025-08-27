@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/08/27 12:09:04 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:31:34 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_render	*init_render(void)
 		free(render);
 		return (NULL);
 	}
+	render->h_distance = 1000000;
+	render->v_distance = 1000000;
 	return (render);
 }
 
@@ -39,7 +41,6 @@ void	mlx_start(t_render *render)
 	}
 	mlx_key_hook(render->mlx, &key_handler, render);
 	create_world(render);
-
 	draw_player(render);
 }
 
@@ -64,7 +65,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 		render->player_y -= render->player_delta_y;
 	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_D))
-	{	
+	{
 		render->player_angle += 0.1;
 		if (render->player_angle > render->player_angle > 2 * PI)
 			render->player_angle -= 2 * PI;
@@ -72,7 +73,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 		render->player_delta_y = sin(render->player_angle) * 5;
 	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_A))
-	{	
+	{
 		render->player_angle -= 0.1;
 		if (render->player_angle < 0)
 			render->player_angle += 2 * PI;

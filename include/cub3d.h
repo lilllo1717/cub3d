@@ -18,6 +18,8 @@
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
 # define PI 3.1415926535
+# define P2 PI/2
+# define P3 3 * PI / 2
 
 enum					keys_texture
 {
@@ -56,6 +58,12 @@ typedef struct s_render
 	float				ray_angle;
 	float				ray_y;
 	float				ray_x;
+	float				h_distance;
+	float				v_distance;
+	float				horizontal_ray_x_pos; //horizontal ray's x positions
+	float				horizontal_ray_y_pos;//horizontal ray's y positions
+	float				vertical_ray_x_pos; //vertical ray's x positions
+	float				vertical_ray_y_pos;//vertical ray's y positions
 	int					ray;
 	float				y_offset;
 	float				x_offset;
@@ -136,6 +144,6 @@ void					put_tile(mlx_image_t *image, int start_x, int start_y,
 void					draw_rays(t_render *render);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
 /* ----render utils---- */
-
+float					distance(float ax, float ay, float bx, float by, float ang);
 
 #endif
