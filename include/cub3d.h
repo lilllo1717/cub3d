@@ -90,9 +90,9 @@ bool					is_valid_color_line(char *line);
 bool					is_color(char *line);
 bool					is_texture(char *line);
 bool					is_color(char *line);
-// char					*find_map(char **file);
 t_map					find_map_size(char **file);
 int						validate_map(char **initial_file);
+char					**map_for_valid(char **file, t_map *map_dim);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);

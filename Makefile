@@ -17,6 +17,7 @@ SRC_PARSING = \
 	$(SRC_DIR)/parsing/text_color_check.c \
 	$(SRC_DIR)/parsing/validate_text_col.c \
 	$(SRC_DIR)/parsing/validate_color.c \
+	$(SRC_DIR)/parsing/validate_outer_walls.c \
 	$(SRC_DIR)/parsing/validate_map.c \
 
 SRC_RENDERING = \
