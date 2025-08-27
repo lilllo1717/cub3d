@@ -2,22 +2,22 @@
 # define CUB3D_H
 
 # include "../libs/MLX/include/MLX42/MLX42.h"
-//# include "../libs/gnl/get_next_line.h"
+# include "../libs/gnl/get_next_line.h"
 # include "../libs/libft/libft.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdarg.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <math.h>
 # define MOVEMENT 10.0f
 # define WIDTH 1920
 # define HEIGHT 1080
 # define PLAYER_COLOR 0xFF0000FF
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
-# define PI 3.1415926535 
+# define PI 3.1415926535
 
 enum					keys_texture
 {
@@ -27,6 +27,15 @@ enum					keys_texture
 	KEY_EA,
 	NUM_KEYS1
 };
+
+enum					player_chars
+{
+	KEY_N,
+	KEY_S,
+	KEY_W,
+	KEY_E,
+};
+
 enum					keys_colors
 {
 	KEY_F,
@@ -101,9 +110,12 @@ bool					is_valid_color_line(char *line);
 bool					is_color(char *line);
 bool					is_texture(char *line);
 bool					is_color(char *line);
-// char					*find_map(char **file);
 t_map					find_map_size(char **file);
 int						validate_map(char **initial_file);
+char					**map_for_valid(char **file, t_map *map_dim);
+int						ft_dfs_inside(char **map, size_t row, size_t col,
+							t_map *map_dim);
+bool					map_chars_valid(char **map);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
