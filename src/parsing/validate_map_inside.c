@@ -6,34 +6,57 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/27 12:30:22 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:54:58 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// int	ft_dfs_inside(char **map, size_t row, size_t col, t_map *map_dim)
-// {
-// 	if (row < 0 || row >= map_dim->num_rows + 2 || col < 0
-// 		|| col >= map_dim->max_len + 2)
-// 		return (0);
-// 	if (map[row][col] == '1')
-// 		return (0);
-// 	if (map[row][col] != ' ')
-// 		return (1);
-// 	map[row][col] = '1';
-// 	if (ft_dfs(map, row - 1, col, map_dim))
-// 		return (1);
-// 	if (ft_dfs(map, row + 1, col, map_dim))
-// 		return (1);
-// 	if (ft_dfs(map, row, col + 1, map_dim))
-// 		return (1);
-// 	if (ft_dfs(map, row, col - 1, map_dim))
-// 		return (1);
-// 	return (0);
-// }
+void    find_player_position(char **map, t_render *render, t_map *map_for_pos)
+{
+    int i;
+	int j;
 
-bool	player_count_valid(int *player_val, int player_flag)
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+            if (map[i][j] == map_for_pos->player_letter)
+            {
+                render->player_x = j;
+                render->player_y = i;
+            }
+            j++;
+        }
+        i++;
+    }
+    // printf("Player position: [%f][%f].\n", render->player_y, render->player_x);
+}
+
+int	ft_dfs_inside(char **map, size_t row, size_t col, t_map *map_dim)
+{
+	if (row < 0 || row >= map_dim->num_rows + 2 || col < 0
+		|| col >= map_dim->max_len + 2)
+		return (0);
+	if (map[row][col] == '1')
+		return (0);
+	if (map[row][col] == ' ')
+		return (1);
+	map[row][col] = '1';
+	if (ft_dfs_inside(map, row - 1, col, map_dim))
+		return (1);
+	if (ft_dfs_inside(map, row + 1, col, map_dim))
+		return (1);
+	if (ft_dfs_inside(map, row, col + 1, map_dim))
+		return (1);
+	if (ft_dfs_inside(map, row, col - 1, map_dim))
+		return (1);
+	return (0);
+}
+
+bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 {
 	int	i;
 
@@ -53,10 +76,18 @@ bool	player_count_valid(int *player_val, int player_flag)
 		}
 		i++;
 	}
-	return (true);
+    if (player_flag == 0)
+        map_for_pos->player_letter = 'N';
+    if (player_flag == 1)
+        map_for_pos->player_letter = 'S';
+    if (player_flag == 2)
+        map_for_pos->player_letter = 'W';
+    if (player_flag == 3)
+        map_for_pos->player_letter = 'E';
+    return (true);
 }
 
-bool	map_chars_valid(char **map)
+bool	map_chars_valid(char **map, t_map *map_for_pos)
 {
 	int player_val[4] = {0};
 	int i;
@@ -98,7 +129,7 @@ bool	map_chars_valid(char **map)
 		}
         i++;
 	}
-    if (player_count_valid(player_val, player_flag) == false)
+    if (player_count_valid(player_val, player_flag, map_for_pos) == false)
         return (false);
     return (true);
 }

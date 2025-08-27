@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/27 12:20:36 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:01:29 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_dfs(char **map, size_t row, size_t col, t_map *map_dim)
 	return (0);
 }
 
-int	validate_map(char **initial_file)
+int	validate_map(char **initial_file, t_render *render)
 {
 	t_map	map;
 	char	**map_to_valid;
@@ -41,11 +41,22 @@ int	validate_map(char **initial_file)
 	map = find_map_size(initial_file);
 	map_to_valid = map_for_valid(initial_file, &map);
 	print_2d_array(map_to_valid);
-	if (ft_dfs(map_to_valid, 0, 0, &map)
-		|| map_chars_valid(map_to_valid) == false)
+	if (ft_dfs(map_to_valid, 0, 0, &map) || map_chars_valid(map_to_valid,
+			&map) == false)
 	{
 		free_2darray(map_to_valid);
 		printf("Map is invalid.\n");
+		return (0);
+	}
+	else
+		printf("Map is valid.\n");
+	find_player_position(map_to_valid, render, &map);
+	if (ft_dfs_inside(map_to_valid, (size_t)render->player_y, (size_t)render->player_x,
+		&map) == true)
+	{
+		free_2darray(map_to_valid);
+		printf("Map is invalid. Empty spaces.\n");
+		return (0);
 	}
 	else
 		printf("Map is valid.\n");
