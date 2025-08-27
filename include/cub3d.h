@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # include "../libs/MLX/include/MLX42/MLX42.h"
-//# include "../libs/gnl/get_next_line.h"
+# include "../libs/gnl/get_next_line.h"
 # include "../libs/libft/libft.h"
 # include <fcntl.h>
 # include <stdarg.h>
