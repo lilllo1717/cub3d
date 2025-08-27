@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/08/25 17:20:50 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:09:04 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ t_render	*init_render(void)
 	if (!render)
 		return (NULL);
 	ft_memset(render, 0, sizeof(t_render));
+	render->map = malloc(sizeof(int) * 25 * 14);
+	if (!render->map)
+	{
+		free(render);
+		return (NULL);
+	}
 	return (render);
 }
 
@@ -33,6 +39,7 @@ void	mlx_start(t_render *render)
 	}
 	mlx_key_hook(render->mlx, &key_handler, render);
 	create_world(render);
+
 	draw_player(render);
 }
 
@@ -72,6 +79,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 		render->player_delta_x = cos(render->player_angle) * 5;
 		render->player_delta_y = sin(render->player_angle) * 5;
 	}
+	draw_rays(render);
 	draw_player(render);
 }
 

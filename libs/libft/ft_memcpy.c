@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:43:01 by wxi               #+#    #+#             */
-/*   Updated: 2024/06/07 23:17:25 by wxi              ###   ########.fr       */
+/*   Updated: 2025/08/27 11:56:36 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	unsigned char		*d;
 	const unsigned char	*s;
 
+	if (!dest || !src)
+		return (dest);
 	d = (unsigned char *)dest;
 	s = (const unsigned char *)src;
 	i = 0;

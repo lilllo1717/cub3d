@@ -1,7 +1,7 @@
 
 NAME      := cub3D
 CC        := cc
-CFLAGS    := -Wall -Wextra -Werror -Wunreachable-code -Ofast
+CFLAGS    := -Wall -Wextra -Werror -Wunreachable-code -Ofast -g
 
 SRC_DIR   := src
 INC_DIR   := include
@@ -22,6 +22,8 @@ SRC_PARSING = \
 SRC_RENDERING = \
 	$(SRC_DIR)/rendering/mlx_init.c \
 	$(SRC_DIR)/rendering/map_init.c \
+	$(SRC_DIR)/rendering/raycasting.c \
+	$(SRC_DIR)/rendering/render_utils.c \
 
 GNL_DIR  := libs/gnl
 GNL_SRCS = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c

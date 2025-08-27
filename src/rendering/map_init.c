@@ -2,7 +2,7 @@
 
 void create_world(void *param)
 {
-	mlx_image_t	* wall;
+	mlx_image_t	* tile;
 	t_render	*render;
 
 	render = (t_render *)param;
@@ -19,7 +19,7 @@ void create_world(void *param)
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 		1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1,
 		1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1,
@@ -31,30 +31,46 @@ void create_world(void *param)
 		1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 	};
+	ft_memcpy(render->map, map, sizeof(map));
 	
-	wall = mlx_new_image(render->mlx, WIDTH, HEIGHT);
-    if (!wall)
+	tile = mlx_new_image(render->mlx, WIDTH, HEIGHT);
+    if (!tile)
 		return;
-	ft_memset(wall->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
+	ft_memset(tile->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
 	while (y < map_y)
 	{
-		// printf("x: %d y: %d\n", x, y);
 		x = 0; 
 		while (x < map_x)
 		{
-			if (map[y * map_x + x] == 1)
+			printf("y: [%d]\nmap_x: [%d]\nx: [%d]\n", y, map_x, x);
+			if (render->map[y * map_x + x] == 2)
+			{
+				printf("x: [%d]\n", x);
+				printf("y: [%d]\n", y);
+				render->player_x = (float)(x * map_s) + (map_s / 2);
+				render->player_y = (float)(y * map_s) + (map_s / 2);
+			}
+			printf("passed\n");
+			if (render->map[y * map_x + x] == 1)
 				color = WALL;
-
 			else
 				color = FLOOR;
 			xo = x * map_s;
 			yo = y * map_s;
-			put_tile(wall, xo, yo, map_s, color);
+			put_tile(tile, xo, yo, map_s, color);
 			x++;
 		}
 		y++;
 	}
-		mlx_image_to_window(render->mlx, wall, 0, 0);
+	render->ray_image = mlx_new_image(render->mlx, WIDTH, HEIGHT);
+	if (!render->ray_image)
+		return ;
+	ft_memset(render->ray_image->pixels, 0,
+		WIDTH * HEIGHT * sizeof(int32_t));
+	mlx_image_to_window(render->mlx, render->ray_image, 0, 0);
+	mlx_image_to_window(render->mlx, tile, 0, 0);
+	render->player_delta_x = cos(render->player_angle) * 5;
+	render->player_delta_y = sin(render->player_angle) * 5;
 }
 
 void	put_tile(mlx_image_t *image, int start_x, int start_y, int size, uint32_t color)
@@ -91,13 +107,16 @@ void	draw_player(void *param)
 	if (!render->player_image)
 	{
 		render->player_image = mlx_new_image(render->mlx, WIDTH, HEIGHT);
-		if (mlx_image_to_window(render->mlx, render->player_image, 64*2-32,  64*2-32) < 0)
+		if (mlx_image_to_window(render->mlx, render->player_image, 0,  0) < 0)
 			return ;
 	}
+	
 	ft_memset(render->player_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
 	pixel_x = render->player_x;
 	pixel_y = render->player_y;
+	printf("player x: [%f]\n", render->player_x);
+	printf("player y: [%f]\n", render->player_y);
 	put_tile(render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10 , PLAYER_COLOR);
 	
 }

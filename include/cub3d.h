@@ -38,12 +38,23 @@ typedef struct s_render
 {
 	mlx_t				*mlx;
 	mlx_image_t			*player_image;
+	mlx_image_t			*ray_image;
 	float				player_x; 
 	float				player_y;
 	float				player_delta_x;
 	float				player_delta_y;
 	float				player_angle;
-
+	float				ray_angle;
+	float				ray_y;
+	float				ray_x;
+	int					ray;
+	float				y_offset;
+	float				x_offset;
+	int 				dof;
+	int					m_x;
+	int					m_y;
+	int					mp;
+	int					*map;
 }						t_render;
 
 typedef struct s_texture
@@ -102,7 +113,7 @@ int						ft_count_substrings(const char *s, char c);
 void					free_2dint_partial(int **arr, int num);
 void					free_2dint(int **arr);
 
-/*mlx*/
+/* ----mlx---- */
 t_render				*init_render(void);
 void					mlx_start(t_render *render);
 void					draw_player(void *param);
@@ -110,5 +121,9 @@ void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
 void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							int size, uint32_t color);
+void					draw_rays(t_render *render);
+int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
+/* ----render utils---- */
+
 
 #endif
