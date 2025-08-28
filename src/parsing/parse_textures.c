@@ -6,37 +6,59 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:32:38 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/28 16:01:41 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/28 16:07:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	first_letters(t_game *game, char *start_pars, char c, int len)
+{
+	if (c == 'N')
+	{
+		game->textures->n_text = (char *)malloc(len * sizeof(char));
+		if (!game->textures->n_text)
+			return (0);
+		ft_strncpy(game->textures->n_text, start_pars, len - 1);
+	}
+	else if (c == 'S')
+	{
+		game->textures->s_text = (char *)malloc(len * sizeof(char));
+		if (!game->textures->s_text)
+			return (0);
+		ft_strncpy(game->textures->s_text, start_pars, len - 1);
+	}
+	return (1);
+}
+
+int	second_letters(t_game *game, char *start_pars, char c, int len)
+{
+	if (c == 'E')
+	{
+		game->textures->e_text = (char *)malloc(len * sizeof(char));
+		if (!game->textures->e_text)
+			return (0);
+		ft_strncpy(game->textures->e_text, start_pars, len - 1);
+	}
+	else if (c == 'W')
+	{
+		game->textures->w_text = (char *)malloc(len * sizeof(char));
+		if (!game->textures->w_text)
+			return (0);
+		ft_strncpy(game->textures->w_text, start_pars, len - 1);
+	}
+	return (1);
+}
 
 int	malloc_copy_texture(t_game *game, char *start_pars, char c)
 {
 	size_t	len;
 
 	len = ft_strlen(start_pars);
-	if (c == 'N')
-	{
-		game->textures->n_text = (char *)malloc(len * sizeof(char));
-		ft_strncpy(game->textures->n_text, start_pars, len - 1);
-	}
-	else if (c == 'S')
-	{
-		game->textures->s_text = (char *)malloc(len * sizeof(char));
-		ft_strncpy(game->textures->s_text, start_pars, len - 1);
-	}
-	else if (c == 'E')
-	{
-		game->textures->e_text = (char *)malloc(len * sizeof(char));
-		ft_strncpy(game->textures->e_text, start_pars, len - 1);
-	}
-	else if (c == 'W')
-	{
-		game->textures->w_text = (char *)malloc(len * sizeof(char));
-		ft_strncpy(game->textures->w_text, start_pars, len - 1);
-	}
+	if (!first_letters(game, start_pars, c, len))
+		return (0);
+	if (!second_letters(game, start_pars, c, len))
+		return (0);
 	return (1);
 }
 
