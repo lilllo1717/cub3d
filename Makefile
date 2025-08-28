@@ -20,6 +20,7 @@ SRC_PARSING = \
 	$(SRC_DIR)/parsing/validate_outer_walls.c \
 	$(SRC_DIR)/parsing/validate_map.c \
 	$(SRC_DIR)/parsing/validate_map_inside.c \
+	$(SRC_DIR)/parsing/parse_color.c \
 
 SRC_RENDERING = \
 	$(SRC_DIR)/rendering/mlx_init.c \

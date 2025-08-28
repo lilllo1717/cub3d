@@ -18,7 +18,7 @@
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
 # define PI 3.1415926535
-# define P2 PI/2
+# define P2 PI / 2
 # define P3 3 * PI / 2
 
 enum					keys_texture
@@ -50,7 +50,7 @@ typedef struct s_render
 	mlx_t				*mlx;
 	mlx_image_t			*player_image;
 	mlx_image_t			*ray_image;
-	float				player_x; 
+	float				player_x;
 	float				player_y;
 	float				player_delta_x;
 	float				player_delta_y;
@@ -60,14 +60,14 @@ typedef struct s_render
 	float				ray_x;
 	float				h_distance;
 	float				v_distance;
-	float				horizontal_ray_x_pos; //horizontal ray's x positions
-	float				horizontal_ray_y_pos;//horizontal ray's y positions
-	float				vertical_ray_x_pos; //vertical ray's x positions
-	float				vertical_ray_y_pos;//vertical ray's y positions
+	float horizontal_ray_x_pos; // horizontal ray's x positions
+	float horizontal_ray_y_pos; // horizontal ray's y positions
+	float vertical_ray_x_pos;   // vertical ray's x positions
+	float vertical_ray_y_pos;   // vertical ray's y positions
 	int					ray;
 	float				y_offset;
 	float				x_offset;
-	int 				dof;
+	int					dof;
 	int					m_x;
 	int					m_y;
 	int					mp;
@@ -86,6 +86,8 @@ typedef struct s_color
 {
 	char				*f_color;
 	char				*c_color;
+	unsigned long		f_rgb;
+	unsigned long		c_rgb;
 }						t_color;
 
 typedef struct s_map
@@ -134,6 +136,8 @@ void					print_2d_array(char **arr);
 int						ft_count_substrings(const char *s, char c);
 void					free_2dint_partial(int **arr, int num);
 void					free_2dint(int **arr);
+int						parse_colors(t_game *game);
+void					copy_string(char *checking_char, char *color);
 
 /* ----mlx---- */
 t_render				*init_render(void);
@@ -144,8 +148,10 @@ void					create_world(void *param);
 void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							int size, uint32_t color);
 void					draw_rays(t_render *render);
-int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
+int						draw_line(t_render *render, int begin_x, int begin_y,
+							int end_x, int end_y);
 /* ----render utils---- */
-float					distance(float ax, float ay, float bx, float by, float ang);
+float					distance(float ax, float ay, float bx, float by,
+							float ang);
 
 #endif
