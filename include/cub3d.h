@@ -11,7 +11,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# define MOVEMENT 10.0f
+# define DR 0.0174533 //one degree in radians, used to seperate each ray by 1 degree
 # define WIDTH 1920
 # define HEIGHT 1080
 # define PLAYER_COLOR 0xFF0000FF
@@ -61,13 +61,16 @@ typedef struct s_render
 	float				h_distance;
 	float				v_distance;
 	float				horizontal_ray_x_pos; //horizontal ray's x positions
-	float				horizontal_ray_y_pos;//horizontal ray's y positions
+	float				horizontal_ray_y_pos; //horizontal ray's y positions
 	float				vertical_ray_x_pos; //vertical ray's x positions
-	float				vertical_ray_y_pos;//vertical ray's y positions
+	float				vertical_ray_y_pos; //vertical ray's y positions
+	float				line_height;
+	float				line_offset;
 	int					ray;
 	float				y_offset;
 	float				x_offset;
 	int 				dof;
+	int					final_dist;
 	int					m_x;
 	int					m_y;
 	int					mp;
@@ -145,6 +148,7 @@ void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							int size, uint32_t color);
 void					draw_rays(t_render *render);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
+void					draw_col(t_render *render);
 /* ----render utils---- */
 float					distance(float ax, float ay, float bx, float by, float ang);
 

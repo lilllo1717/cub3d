@@ -11,14 +11,14 @@ static void check_horizontal_lines(t_render *render, float a_tan)
 		render->y_offset = -64; 
 		render->x_offset = render->y_offset * a_tan; 
 	}
-	if (render->ray_angle < PI) // looking down
+	else if (render->ray_angle < PI) // looking down
 	{
 		render->ray_y = (((int)render->player_y / 64) * 64) + 64;
 		render->ray_x = (render->player_y - render->ray_y) * a_tan + render->player_x;
 		render->y_offset = 64; 
 		render->x_offset = render->y_offset * a_tan; 
 	}
-	if (render->ray_angle == 0 || render->ray_angle == PI) // looking straight left or right
+	else if (render->ray_angle == 0 || render->ray_angle == PI) // looking straight left or right
 	{
 		render->ray_x = render->player_x;
 		render->ray_y = render->player_y;
@@ -28,20 +28,25 @@ static void check_horizontal_lines(t_render *render, float a_tan)
 	{
 		render->m_x = (int)(render->ray_x) / 64;
 		render->m_y = (int)(render->ray_y) / 64;
-		render->mp = render->m_y * 25 + render->m_x;
-		if (render->mp > 0 && render->mp < 25 * 14 && render->map[render->mp] == 1)
+		if (render->m_x >= 0 && render->m_x < 25 && render->m_y >= 0 && render->m_y < 14)
 		{
-			render->horizontal_ray_x_pos = render->ray_x;
-			render->horizontal_ray_y_pos = render->ray_y;
-			render->h_distance = distance(render->player_x, render->player_y, render->horizontal_ray_x_pos, render->horizontal_ray_y_pos, render->ray_angle);
-			render->dof = 8;
+			render->mp = render->m_y * 25 + render->m_x;
+			if (render->map[render->mp] == 1)
+			{
+				render->horizontal_ray_x_pos = render->ray_x;
+				render->horizontal_ray_y_pos = render->ray_y;
+				render->h_distance = distance(render->player_x, render->player_y, render->horizontal_ray_x_pos, render->horizontal_ray_y_pos, render->ray_angle);
+				render->dof = 8;
+			}
+			else
+			{
+				render->ray_x += render->x_offset;
+				render->ray_y += render->y_offset;
+				render->dof += 1;
+			}
 		}
 		else
-		{
-			render->ray_x += render->x_offset;
-			render->ray_y += render->y_offset;
-				render->dof += 1;
-		}
+			render->dof = 8;
 	}
 	//draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
 		
@@ -49,8 +54,8 @@ static void check_horizontal_lines(t_render *render, float a_tan)
 
 static void	check_vertical_lines(t_render *render, float n_tan)
 {
-	render->horizontal_ray_x_pos = render->player_x;
-	render->horizontal_ray_y_pos = render->player_y;
+	render->vertical_ray_x_pos = render->player_x;
+	render->vertical_ray_y_pos = render->player_y;
 	if (render->ray_angle > P2 && render->ray_angle < P3) // looking left
 	{
 		render->ray_x = (((int)render->player_x / 64) * 64) - 0.0001;
@@ -58,14 +63,14 @@ static void	check_vertical_lines(t_render *render, float n_tan)
 		render->x_offset = -64;
 		render->y_offset = render->x_offset * n_tan; 
 	}
-	if (render->ray_angle < P2 || render->ray_angle > P3) // looking right
+	else if (render->ray_angle < P2 || render->ray_angle > P3) // looking right
 	{
 		render->ray_x = (((int)render->player_x / 64) * 64) + 64;
-		render->ray_y = (render->player_y - render->ray_x) * n_tan + render->player_y;
+		render->ray_y = (render->player_x - render->ray_x) * n_tan + render->player_y;
 		render->x_offset = 64; 
 		render->y_offset = render->x_offset * n_tan; 
 	}
-	if (render->ray_angle == 0 || render->ray_angle == PI) // looking straight up or down
+	else if (render->ray_angle == P2 || render->ray_angle == P3) // looking straight up or down
 	{
 		render->ray_x = render->player_x;
 		render->ray_y = render->player_y;
@@ -75,22 +80,26 @@ static void	check_vertical_lines(t_render *render, float n_tan)
 	{
 		render->m_x = (int)(render->ray_x) / 64;
 		render->m_y = (int)(render->ray_y) / 64;
-		render->mp = render->m_y * 25 + render->m_x;
-		if (render->mp > 0 && render->mp < 25 * 14 && render->map[render->mp] == 1) //hit wall
+		if (render->m_x >= 0 && render->m_x < 25 && render->m_y >= 0 && render->m_y < 14)
 		{
-			render->vertical_ray_x_pos = render->ray_x;
-			render->vertical_ray_y_pos = render->ray_y;
-			render->v_distance = distance(render->player_x, render->player_y, render->vertical_ray_x_pos, render->vertical_ray_y_pos, render->ray_angle);
-			render->dof = 8;
-		}
-		else //next line
-		{
-			render->ray_x += render->x_offset;
-			render->ray_y += render->y_offset;
+			render->mp = render->m_y * 25 + render->m_x;
+			if (render->map[render->mp] == 1) //hit wall
+			{
+				render->vertical_ray_x_pos = render->ray_x;
+				render->vertical_ray_y_pos = render->ray_y;
+				render->v_distance = distance(render->player_x, render->player_y, render->vertical_ray_x_pos, render->vertical_ray_y_pos, render->ray_angle);
+				render->dof = 8;
+			}
+			else //next line
+			{
+				render->ray_x += render->x_offset;
+				render->ray_y += render->y_offset;
 				render->dof += 1;
+			}
 		}
+		else
+			render->dof = 8;
 	}
-	draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
 }
 
 // function that will return the distance between the player and the rays end point
@@ -106,25 +115,50 @@ void	draw_rays(t_render *render)
 	float	n_tan;
 
 	ft_memset(render->ray_image->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
-	render->ray_angle = render->player_angle;
+	render->ray_angle = render->player_angle - DR * 30;
+	if (render->ray_angle < 0)
+		render->ray_angle += 2 * PI;
+	else if (render->ray_angle > 2 * PI)
+		render->ray_angle -= 2 * PI;
 	render->ray = 0;
-	while (render->ray < 1)
+	while (render->ray < 60) //number of rays being cast
 	{
+		render->h_distance = 1000000;
+		render->v_distance = 1000000;
+		render->dof = 0;
+		render->ray_angle += DR;
+		if (render->ray_angle < 0)
+			render->ray_angle += 2 * PI;
+		if (render->ray_angle > 2 * PI)
+			render->ray_angle -= 2 * PI;
 		n_tan = -tan(render->ray_angle);
 		a_tan = -1 / tan(render->ray_angle);
 		check_horizontal_lines(render, a_tan);
+		render->dof = 0;
 		check_vertical_lines(render, n_tan);
 		if (render->v_distance < render->h_distance)
 		{
 			render->ray_x = render->vertical_ray_x_pos;
 			render->ray_y = render->vertical_ray_y_pos;
+			render->final_dist = render->v_distance;
 		}
 		if (render->h_distance < render->v_distance)
 		{
 			render->ray_x = render->horizontal_ray_x_pos;
 			render->ray_y = render->horizontal_ray_y_pos;
+			render->final_dist = render->h_distance;
 		}
+		draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
+		draw_col(render);
+		//draw 3d walls
+		render->line_height = (360 * WIDTH) / render->final_dist;
+		//line height
+		if (render->line_height > WIDTH)
+			render->line_height = 320;
+		//line offset
+		render->line_offset = 160 - render->line_height / 2;
 		render->ray++;
+		
 	}
 }
 
@@ -165,4 +199,27 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 		i++;
 	}
 	return (0);
+}
+
+void	draw_col(t_render *render)
+{
+	int	col_x;
+	int	wall_start;
+	int wall_end;
+	int y;
+
+	y = 0;
+	col_x = render->ray * (WIDTH / 60);
+	wall_start = (HEIGHT / 2) - (render->line_height / 2);
+	wall_end = (HEIGHT / 2) + (render->line_height / 2);
+	while (y < HEIGHT)
+	{
+		if (y < wall_start)
+			 mlx_put_pixel(render->ray_image, col_x, y, 0x87CEEBFF);
+		else if (y > wall_end)
+			mlx_put_pixel(render->ray_image, col_x, y, 0x8B4513FF);
+		else
+			mlx_put_pixel(render->ray_image, col_x, y, WALL);
+		y++;
+	}
 }

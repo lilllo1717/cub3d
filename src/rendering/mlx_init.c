@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/08/27 15:31:34 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/28 12:28:52 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ t_render	*init_render(void)
 		return (NULL);
 	ft_memset(render, 0, sizeof(t_render));
 	render->map = malloc(sizeof(int) * 25 * 14);
+	printf("Allocated render->map at: %p\n", render->map);
 	if (!render->map)
 	{
+		printf("ERROR: malloc failed for render->map\n");
+		mlx_terminate(render->mlx);
 		free(render);
 		return (NULL);
 	}
-	render->h_distance = 1000000;
-	render->v_distance = 1000000;
+	
 	return (render);
 }
 
@@ -66,15 +68,15 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_D))
 	{
-		render->player_angle += 0.1;
-		if (render->player_angle > render->player_angle > 2 * PI)
+		render->player_angle += 0.05;
+		if (render->player_angle > 2 * PI)
 			render->player_angle -= 2 * PI;
 		render->player_delta_x = cos(render->player_angle) * 5;
 		render->player_delta_y = sin(render->player_angle) * 5;
 	}
 	if (mlx_is_key_down(render->mlx, MLX_KEY_A))
 	{
-		render->player_angle -= 0.1;
+		render->player_angle -= 0.05;
 		if (render->player_angle < 0)
 			render->player_angle += 2 * PI;
 		render->player_delta_x = cos(render->player_angle) * 5;

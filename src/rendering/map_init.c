@@ -10,10 +10,14 @@ void create_world(void *param)
 	t_render	*render;
 
 	render = (t_render *)param;
+	if (!render || !render->map) {
+		printf("ERROR: Invalid render or render->map is NULL\n");
+		return;
+	}
 	uint32_t color;
-	//uint32_t	i;
+
 	int	x = 0;
-	int map_s = 77;
+	int map_s = 64;
 	int y = 0;
 	int	xo = 0;
 	int yo = 0;
@@ -35,6 +39,12 @@ void create_world(void *param)
 		1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 	};
+	printf("render->map address: %p\n", render->map);
+	if (!render->map) 
+	{
+   		 printf("ERROR: render->map is NULL!\n");
+    	return;
+	}
 	ft_memcpy(render->map, map, sizeof(map));
 	
 	tile = mlx_new_image(render->mlx, WIDTH, HEIGHT);
@@ -53,6 +63,7 @@ void create_world(void *param)
 				printf("y: [%d]\n", y);
 				render->player_x = (float)(x * map_s) + (map_s / 2);
 				render->player_y = (float)(y * map_s) + (map_s / 2);
+				render->player_angle = 0.0f;
 			}
 			printf("passed\n");
 			if (render->map[y * map_x + x] == 1)
