@@ -122,7 +122,8 @@ bool					is_color(char *line);
 bool					is_texture(char *line);
 bool					is_color(char *line);
 t_map					find_map_size(char **file);
-int						validate_map(char **initial_file, t_render *render);
+int						validate_map(t_game *game, char **initial_file,
+							t_render *render);
 char					**map_for_valid(char **file, t_map *map_dim);
 int						ft_dfs_inside(char **map, size_t row, size_t col,
 							t_map *map_dim);
@@ -139,6 +140,7 @@ void					free_2dint(int **arr);
 int						parse_colors(t_game *game);
 void					copy_string(char *checking_char, char *color);
 int						parse_textures(t_game *game);
+int						malloc_map(char **map, t_map *map_dim);
 
 /* ----mlx---- */
 t_render				*init_render(void);
