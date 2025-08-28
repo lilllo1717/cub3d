@@ -18,7 +18,7 @@
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
 # define PI 3.1415926535
-# define P2 PI/2
+# define P2 PI / 2
 # define P3 3 * PI / 2
 
 enum					keys_texture
@@ -50,7 +50,7 @@ typedef struct s_render
 	mlx_t				*mlx;
 	mlx_image_t			*player_image;
 	mlx_image_t			*ray_image;
-	float				player_x; 
+	float				player_x;
 	float				player_y;
 	float				player_delta_x;
 	float				player_delta_y;
@@ -89,6 +89,8 @@ typedef struct s_color
 {
 	char				*f_color;
 	char				*c_color;
+	unsigned long		f_rgb;
+	unsigned long		c_rgb;
 }						t_color;
 
 typedef struct s_map
@@ -123,7 +125,8 @@ bool					is_color(char *line);
 bool					is_texture(char *line);
 bool					is_color(char *line);
 t_map					find_map_size(char **file);
-int						validate_map(char **initial_file, t_render *render);
+int						validate_map(t_game *game, char **initial_file,
+							t_render *render);
 char					**map_for_valid(char **file, t_map *map_dim);
 int						ft_dfs_inside(char **map, size_t row, size_t col,
 							t_map *map_dim);
@@ -137,6 +140,10 @@ void					print_2d_array(char **arr);
 int						ft_count_substrings(const char *s, char c);
 void					free_2dint_partial(int **arr, int num);
 void					free_2dint(int **arr);
+int						parse_colors(t_game *game);
+void					copy_string(char *checking_char, char *color);
+int						parse_textures(t_game *game);
+int						malloc_map(char **map, t_map *map_dim);
 
 /* ----mlx---- */
 t_render				*init_render(void);
@@ -150,6 +157,7 @@ void					draw_rays(t_render *render);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
 void					draw_col(t_render *render);
 /* ----render utils---- */
-float					distance(float ax, float ay, float bx, float by, float ang);
+float					distance(float ax, float ay, float bx, float by,
+							float ang);
 
 #endif

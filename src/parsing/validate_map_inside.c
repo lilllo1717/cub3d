@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/27 15:37:44 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/28 11:55:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 	i = 0;
 	while (i < 4)
 	{
-		printf("%i\n", player_val[i]);
+		// printf("%i\n", player_val[i]);
 		if (player_val[i] != 1 && player_flag == i)
 			return (printf("Invalid input: Wrong number of player.\n"), false);
 		else if (player_val[i] != 0 && player_flag != i)
