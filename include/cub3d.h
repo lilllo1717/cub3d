@@ -138,6 +138,7 @@ void					free_2dint_partial(int **arr, int num);
 void					free_2dint(int **arr);
 int						parse_colors(t_game *game);
 void					copy_string(char *checking_char, char *color);
+int						parse_textures(t_game *game);
 
 /* ----mlx---- */
 t_render				*init_render(void);
