@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/28 16:55:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:31:14 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,30 @@ int	ft_dfs(char **map, size_t row, size_t col, t_map *map_dim)
 char	**dup_array(char **income_map)
 {
 	char	**map;
-	size_t		i;
-	size_t	num_rows = 0;
+	size_t	i;
+	size_t	num_rows;
 	size_t	len;
 
+	num_rows = 0;
 	i = 0;
-	len = ft_strlen(income_map[0]);
 	while (income_map[num_rows])
 		num_rows++;
 	map = (char **)malloc((num_rows + 1) * sizeof(char *));
+	if (!map)
+		return (NULL);
 	while (i < num_rows)
 	{
+		len = ft_strlen(income_map[i]);
 		map[i] = (char *)malloc(len + 1);
+		if (!map[i])
+			return (free_2darray_partial(map, i), NULL);
 		ft_strncpy(map[i], income_map[i], len);
+		map[i][len] = '\0';
 		i++;
 	}
 	map[i] = NULL;
-	return(map);
+	return (map);
 }
-
 
 int	validate_map(t_game *game, char **initial_file, t_render *render)
 {
@@ -65,22 +70,19 @@ int	validate_map(t_game *game, char **initial_file, t_render *render)
 	game->map = NULL;
 	map = find_map_size(initial_file);
 	map_to_valid = map_for_valid(initial_file, &map);
+	if (!map_to_valid)
+		return (0);
 	tmp = dup_array(map_to_valid);
-	if (ft_dfs(tmp, 0, 0, &map) || map_chars_valid(tmp,
-			&map) == false)
-	{
-		free_2darray(tmp);
-		printf("Map is invalid.\n");
-		return (0);
-	}
+	if (!tmp)
+		return (free_2darray(map_to_valid), 0);
+	if (ft_dfs(tmp, 0, 0, &map) || map_chars_valid(tmp, &map) == false)
+		return (printf("Map is invalid.\n"), free_2darray(tmp),
+			free_2darray(map_to_valid), 0);
 	find_player_position(tmp, render, &map);
-	if (ft_dfs_inside(tmp, (size_t)render->player_y,
-			(size_t)render->player_x, &map) == true)
-	{
-		free_2darray(tmp);
-		printf("Map is invalid. Empty spaces.\n");
-		return (0);
-	}
+	if (ft_dfs_inside(tmp, (size_t)render->player_y, (size_t)render->player_x,
+			&map) == true)
+		return (printf("Map is invalid. Empty spaces.\n"), free_2darray(tmp),
+			free_2darray(map_to_valid), 0);
 	game->map = map_to_valid;
 	print_2d_array(game->map);
 	free_2darray(tmp);
