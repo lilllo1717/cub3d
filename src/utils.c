@@ -6,37 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:53:21 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/25 13:15:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:18:17 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_2darray_partial(char **arr, int num)
-{
-	int	i;
-
-	i = 0;
-	while (i < num)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-void	free_2darray(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 int	count_num_lines(char *file)
 {
@@ -94,30 +69,4 @@ int	ft_count_substrings(const char *s, char c)
 		i++;
 	}
 	return (count);
-}
-
-void	free_2dint_partial(int **arr, int num)
-{
-	int	i;
-
-	i = 0;
-	while (i < num)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-void	free_2dint(int **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
 }

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:46:22 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/28 15:30:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:53:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	parse_color_c(t_game *game)
 	split_colors = NULL;
 	file = game->initial_file;
 	split_colors = find_copy_color_c(file);
+	if (!split_colors)
+		return (free_2darray(split_colors), 0);
 	rgb[0] = ft_atoi(split_colors[0]);
 	rgb[1] = ft_atoi(split_colors[1]);
 	rgb[2] = ft_atoi(split_colors[2]);
@@ -95,6 +97,8 @@ int	parse_color_f(t_game *game)
 	split_colors = NULL;
 	file = game->initial_file;
 	split_colors = find_copy_color_f(file);
+	if (!split_colors)
+		return (free_2darray(split_colors), 0);
 	rgb[0] = ft_atoi(split_colors[0]);
 	rgb[1] = ft_atoi(split_colors[1]);
 	rgb[2] = ft_atoi(split_colors[2]);
@@ -105,11 +109,11 @@ int	parse_color_f(t_game *game)
 
 int	parse_colors(t_game *game)
 {
-	game->colors->c_rgb = (unsigned long)0;
-	game->colors->f_rgb = (unsigned long)0;
-	parse_color_f(game);
-	parse_color_c(game);
-    printf("%lX\n", game->colors->c_rgb);
-    printf("%lX\n", game->colors->f_rgb);
+	if (!parse_color_f(game))
+		return (0);
+	if (!parse_color_c(game))
+		return (0);
+	// printf("%lX\n", game->colors->c_rgb);
+	// printf("%lX\n", game->colors->f_rgb);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/28 11:55:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:49:18 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 		map_for_pos->player_letter = 'W';
 	if (player_flag == 3)
 		map_for_pos->player_letter = 'E';
+	else
+		return (false);
 	return (true);
 }
 
@@ -105,6 +107,8 @@ bool	count_playes(char c, int *player_val, int *player_flag)
 		*player_flag = 3;
 		player_val[KEY_E]++;
 	}
+	else
+		return (false);
 	return (true);
 }
 
@@ -116,6 +120,7 @@ bool	map_chars_valid(char **map, t_map *map_for_pos)
 	int	player_flag;
 
 	i = 0;
+	player_flag = -1;
 	while (map[i])
 	{
 		j = 0;

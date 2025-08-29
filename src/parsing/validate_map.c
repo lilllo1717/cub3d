@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/27 14:40:35 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:43:16 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int	malloc_map(char **map, t_map *map_dim)
 	size_t	i;
 
 	i = 0;
-	while (i < (map_dim->num_rows + 2 + 1))
+	while (i < (map_dim->num_rows + 2))
 	{
 		map[i] = (char *)malloc(map_dim->max_len + 2 + 1);
 		if (!map[i])
-			return (free(map), 0);
+			return (free_2darray_partial(map, i), 0);
 		i++;
 	}
+	map[i] = NULL;
 	return (1);
 }
 
@@ -103,7 +104,8 @@ char	**map_for_valid(char **file, t_map *map_dim)
 	extrac_map = (char **)malloc((map_dim->num_rows + 2 + 1) * sizeof(char *));
 	if (!extrac_map)
 		return (NULL);
-	malloc_map(extrac_map, map_dim);
+	if (!malloc_map(extrac_map, map_dim))
+		return (free(extrac_map), NULL);
 	fill_with_space(extrac_map[0], map_dim->max_len + 2);
 	while (file[i] && (is_color(file[i]) || is_texture(file[i])
 			|| !(ft_strchr(file[i], '1'))))

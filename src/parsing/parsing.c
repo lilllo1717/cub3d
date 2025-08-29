@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:33 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/22 15:36:57 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:13:53 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	is_map_last(char **map)
 	return (true);
 }
 
-int	parse_map(t_game *game, char *file) // if there is an empty line after the map, consider map closed 
+int	parse_map(t_game *game, char *file)
 {
 	int	fd;
 	int	num_lines;
@@ -63,20 +63,33 @@ int	parse_map(t_game *game, char *file) // if there is an empty line after the m
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (false);
+		return (0);
 	while (i < num_lines)
 	{
 		game->initial_file[i] = get_next_line(fd);
 		if (!game->initial_file[i])
-		{
-			free_2darray_partial(game->initial_file, i);
-			close(fd);
-			return (0);
-		}
+			return (free_2darray_partial(game->initial_file, i), close(fd), 0);
 		i++;
 	}
 	game->initial_file[i] = NULL;
 	close(fd);
-	// print_2d_array(game->initial_file);
+	return (1);
+}
+
+int	init_game_parsing(t_game *game)
+{
+	game->colors = NULL;
+	game->colors = (t_color *)malloc(sizeof(t_color));
+	if (!game->colors)
+		return (0);
+	game->colors->c_rgb = (unsigned long)0;
+	game->colors->f_rgb = (unsigned long)0;
+	game->textures = (t_texture *)malloc(sizeof(t_texture));
+	if (!game->textures)
+		return (free(game->colors), 0);
+	game->textures->e_text = NULL;
+	game->textures->w_text = NULL;
+	game->textures->n_text = NULL;
+	game->textures->s_text = NULL;
 	return (1);
 }

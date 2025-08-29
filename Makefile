@@ -2,6 +2,9 @@
 NAME      := cub3D
 CC        := cc
 CFLAGS    := -Wall -Wextra -Werror -Wunreachable-code -Ofast -g
+ARGS ?=
+valgrind: $(NAME)
+	valgrind --leak-check=full --track-origins=yes ./$(NAME) $(ARGS)
 
 SRC_DIR   := src
 INC_DIR   := include
@@ -9,7 +12,8 @@ BUILD_DIR := build
 
 SRC_ROOT = \
 	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/utils.c
+	$(SRC_DIR)/utils.c \
+	$(SRC_DIR)/utils2.c \
 
 SRC_PARSING = \
 	$(SRC_DIR)/parsing/parsing.c \
