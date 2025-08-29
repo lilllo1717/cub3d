@@ -2,9 +2,9 @@
 NAME      := cub3D
 CC        := cc
 CFLAGS    := -Wall -Wextra -Werror -Wunreachable-code -Ofast -g
-ARGS ?=
-valgrind: $(NAME)
-	valgrind --leak-check=full --track-origins=yes ./$(NAME) $(ARGS)
+# ARGS ?=
+# valgrind: $(NAME)
+# 	valgrind --leak-check=full --track-origins=yes ./$(NAME) $(ARGS)
 
 SRC_DIR   := src
 INC_DIR   := include

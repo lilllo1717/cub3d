@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 13:49:18 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:49:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,23 @@ int	ft_dfs_inside(char **map, size_t row, size_t col, t_map *map_dim)
 
 bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 {
-	int	i;
+	int total = player_val[0] + player_val[1] + player_val[2] + player_val[3];
 
-	i = 0;
-	while (i < 4)
-	{
-		// printf("%i\n", player_val[i]);
-		if (player_val[i] != 1 && player_flag == i)
-			return (printf("Invalid input: Wrong number of player.\n"), false);
-		else if (player_val[i] != 0 && player_flag != i)
-			return (printf("Invalid input: Wrong number of player.\n"), false);
-		i++;
-	}
+    if (total != 1)
+    {
+        printf("Invalid input: Wrong number of player.\n");
+        return false;
+    }
 	if (player_flag == 0)
 		map_for_pos->player_letter = 'N';
-	if (player_flag == 1)
+	else if (player_flag == 1)
 		map_for_pos->player_letter = 'S';
-	if (player_flag == 2)
+	else if (player_flag == 2)
 		map_for_pos->player_letter = 'W';
-	if (player_flag == 3)
+	else if (player_flag == 3)
 		map_for_pos->player_letter = 'E';
-	else
-		return (false);
+	// else
+	// 	return (false);
 	return (true);
 }
 
@@ -107,8 +102,8 @@ bool	count_playes(char c, int *player_val, int *player_flag)
 		*player_flag = 3;
 		player_val[KEY_E]++;
 	}
-	else
-		return (false);
+	// else
+	// 	return (false);
 	return (true);
 }
 

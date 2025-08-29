@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 12:43:01 by wxi               #+#    #+#             */
-/*   Updated: 2024/06/07 23:17:25 by wxi              ###   ########.fr       */
+/*   Created: 2024/10/07 16:08:14 by tignatov          #+#    #+#             */
+/*   Updated: 2024/10/14 11:41:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "libft.h"
 
-int	prtstr(char *s)
+t_list	*ft_lstlast(t_list *lst)
 {
-	if (s == NULL)
-		return (write(STDOUT_FILENO, "(null)", 6));
-	return (write(STDOUT_FILENO, s, ft_strlen(s)));
+	if (!lst)
+		return (NULL);
+	while (lst)
+	{
+		if (lst->next == NULL)
+			return (lst);
+		lst = lst->next;
+	}
+	return (lst);
 }

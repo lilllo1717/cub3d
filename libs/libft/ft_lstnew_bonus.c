@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 16:18:05 by tignatov          #+#    #+#             */
-/*   Updated: 2024/10/15 15:54:38 by tignatov         ###   ########.fr       */
+/*   Created: 2024/10/07 16:09:01 by tignatov          #+#    #+#             */
+/*   Updated: 2024/10/15 13:06:52 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+t_list	*ft_lstnew(void const *content)
 {
-	size_t	i;
+	t_list	*new_list;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	new_list = (t_list *)malloc(sizeof(t_list));
+	if (!new_list)
+		return (NULL);
+	new_list->content = (void *)content;
+	new_list->next = NULL;
+	return (new_list);
 }
 
-// int main(void) {
-//     char* str = "Hello";
-//     int length = strlen(NULL);
-//     printf("%i", length);
+// int main(void)
+// {
+// 	t_list *new;
+// 	new = ft_lstnew("5");
+// 	printf("%s", (char *)new->content);
+// 	free(new);
 // }

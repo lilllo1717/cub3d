@@ -1,32 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 16:18:05 by tignatov          #+#    #+#             */
-/*   Updated: 2024/10/15 15:54:38 by tignatov         ###   ########.fr       */
+/*   Created: 2024/10/07 16:09:08 by tignatov          #+#    #+#             */
+/*   Updated: 2024/10/14 17:16:44 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
 #include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-size_t	ft_strlen(const char *str)
+int	ft_lstsize(t_list *lst)
 {
-	size_t	i;
+	int		i;
+	t_list	*temp;
 
 	i = 0;
-	while (str[i] != '\0')
+	temp = lst;
+	while (temp)
+	{
+		temp = temp->next;
 		i++;
+	}
 	return (i);
 }
 
-// int main(void) {
-//     char* str = "Hello";
-//     int length = strlen(NULL);
-//     printf("%i", length);
+// int main(void)
+// {
+// 	t_list *list;
+// 	int result;
+
+// 	list = lstnew(strdup("1"));
+// 	list->next = lstnew(strdup("2"));
+// 	list->next->next = lstnew(strdup("3"));
+// 	result = ft_lstsize(list);
+// 	printf("%i", result);
+// 	free(list);
 // }
