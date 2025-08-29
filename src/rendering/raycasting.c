@@ -4,6 +4,12 @@ static void check_horizontal_lines(t_render *render, float a_tan)
 {
 	render->horizontal_ray_x_pos = render->player_x;
 	render->horizontal_ray_y_pos = render->player_y;
+	printf("Player: (%.1f, %.1f) Angle: %.2f degrees\n", 
+       render->player_x, render->player_y, 
+       render->player_angle * 180.0 / PI);
+	printf("Ray %d: Angle %.2f degrees -> Wall at (%.1f, %.1f)\n",
+       render->ray, render->ray_angle * 180.0 / PI,
+       render->ray_x, render->ray_y);
 	if (render->ray_angle > PI) // looking up
 	{
 		render->ray_y = (((int)render->player_y / 64) * 64) - 0.0001;
@@ -121,7 +127,7 @@ void	draw_rays(t_render *render)
 	else if (render->ray_angle > 2 * PI)
 		render->ray_angle -= 2 * PI;
 	render->ray = 0;
-	while (render->ray < 60) //number of rays being cast
+	while (render->ray < 64) //number of rays being cast
 	{
 		render->h_distance = 1000000;
 		render->v_distance = 1000000;
@@ -133,6 +139,7 @@ void	draw_rays(t_render *render)
 			render->ray_angle -= 2 * PI;
 		n_tan = -tan(render->ray_angle);
 		a_tan = -1 / tan(render->ray_angle);
+		render->dof = 0;
 		check_horizontal_lines(render, a_tan);
 		render->dof = 0;
 		check_vertical_lines(render, n_tan);
@@ -148,6 +155,7 @@ void	draw_rays(t_render *render)
 			render->ray_y = render->horizontal_ray_y_pos;
 			render->final_dist = render->h_distance;
 		}
+		
 		draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
 		draw_col(render);
 		//draw 3d walls
@@ -209,7 +217,7 @@ void	draw_col(t_render *render)
 	int y;
 
 	y = 0;
-	col_x = render->ray * (WIDTH / 60);
+	col_x = ((WIDTH / 2) + (render->ray * (WIDTH / 2) / 60));
 	wall_start = (HEIGHT / 2) - (render->line_height / 2);
 	wall_end = (HEIGHT / 2) + (render->line_height / 2);
 	while (y < HEIGHT)
