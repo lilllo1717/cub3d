@@ -39,6 +39,16 @@ void create_world(void *param)
 		1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 	};
+	//  int map[] = {
+	// 	1,1,1,1,1,1,1,1,
+	// 	1,0,0,0,0,0,0,1,
+	// 	1,0,0,0,0,0,0,1,
+	// 	1,0,0,0,0,0,0,1,
+	// 	1,0,0,0,0,0,0,1,
+	// 	1,0,0,0,0,0,0,1,
+	// 	1,0,0,0,0,0,0,1,
+	// 	1,1,1,1,1,1,1,1
+	//  }
 	printf("render->map address: %p\n", render->map);
 	if (!render->map) 
 	{
@@ -72,7 +82,8 @@ void create_world(void *param)
 				color = FLOOR;
 			xo = x * map_s;
 			yo = y * map_s;
-			put_tile(tile, xo, yo, map_s, color);
+			if (xo < (WIDTH / 2) && yo < HEIGHT)
+				put_tile(tile, xo, yo, map_s, color);
 			x++;
 		}
 		y++;
