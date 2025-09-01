@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 13:43:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:31:22 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	malloc_map(char **map, t_map *map_dim)
 	while (i < (map_dim->num_rows + 2))
 	{
 		map[i] = (char *)malloc(map_dim->max_len + 2 + 1);
+		// printf("%zu\n",map_dim->max_len);
 		if (!map[i])
 			return (free_2darray_partial(map, i), 0);
 		i++;
@@ -72,25 +73,33 @@ void	copy_line(char *file_line, char *result_line, t_map *map_dim)
 
 	i = 0;
 	k = 0;
-	while (file_line[i] != '\0')
-	{
-		if (k == 0 || k == map_dim->max_len + 2)
-		{
-			result_line[k] = ' ';
-			k++;
-		}
-		if (file_line[i] == '\n')
-			result_line[k] = ' ';
-		else
-			result_line[k] = file_line[i];
+	while (file_line[i] == ' ' || file_line[i] == '\t')
 		i++;
-		k++;
-	}
-	while (k < map_dim->max_len + 2)
-	{
-		result_line[k] = ' ';
-		k++;
-	}
+	result_line[k++] = ' ';
+	while (file_line[i] != '\0' && file_line[i] != '\n' && k < map_dim->max_len + 1)
+		result_line[k++] = file_line[i++];
+	while (k < map_dim->max_len + 1)
+		result_line[k++] = ' ';
+	result_line[k++] = ' ';
+	// while (file_line[i] != '\0')
+	// {
+	// 	if (k == 0 || k == map_dim->max_len + 2)
+	// 	{
+	// 		result_line[k] = ' ';
+	// 		k++;
+	// 	}
+	// 	if (file_line[i] == '\n')
+	// 		result_line[k] = ' ';
+	// 	else
+	// 		result_line[k] = file_line[i];
+	// 	i++;
+	// 	k++;
+	// }
+	// while (k < map_dim->max_len + 2)
+	// {
+	// 	result_line[k] = ' ';
+	// 	k++;
+	// }
 	result_line[k] = '\0';
 }
 
@@ -102,6 +111,7 @@ char	**map_for_valid(char **file, t_map *map_dim)
 
 	i = 0;
 	extrac_map = (char **)malloc((map_dim->num_rows + 2 + 1) * sizeof(char *));
+	// printf("%zu\n",map_dim->num_rows);
 	if (!extrac_map)
 		return (NULL);
 	if (!malloc_map(extrac_map, map_dim))

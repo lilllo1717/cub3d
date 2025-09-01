@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 16:49:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:04:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ bool	map_chars_valid(char **map, t_map *map_for_pos)
 		i++;
 	}
 	if (player_count_valid(player_val, player_flag, map_for_pos) == false)
-		return (false);
+		return (printf("Wrong input for player.\n"),false);
 	return (true);
 }
