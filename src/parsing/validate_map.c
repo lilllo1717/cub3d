@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/01 14:31:22 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:55:29 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_map	find_map_size(char **file)
 {
-	char	*map_start;
 	t_map	map = {0, 0, '\0'};
 	size_t	curr_len;
 	int		i;
@@ -27,7 +26,7 @@ t_map	find_map_size(char **file)
 		i++;
 	while (file[i] && ft_strchr(file[i], '1'))
 	{
-		curr_len = ft_strlen(map_start);
+		curr_len = ft_strlen(file[i]);
 		if (curr_len > map.max_len)
 			map.max_len = curr_len;
 		map.num_rows++;
@@ -74,7 +73,11 @@ void	copy_line(char *file_line, char *result_line, t_map *map_dim)
 	i = 0;
 	k = 0;
 	while (file_line[i] == ' ' || file_line[i] == '\t')
+	{
+		result_line[k] = ' ';
 		i++;
+		k++;
+	}
 	result_line[k++] = ' ';
 	while (file_line[i] != '\0' && file_line[i] != '\n' && k < map_dim->max_len + 1)
 		result_line[k++] = file_line[i++];
