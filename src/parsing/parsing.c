@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing->c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student->42->fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:58:33 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 13:13:53 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/02 14:08:21 by tignatov         ###   ########->fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	no_invalid_input(char *line, int in_map)
 		|| (ft_strncmp(line, " ", 1) == 0 && map_line != NULL)
 		|| (ft_strcmp(line, "\n") == 0) || (map_line != NULL && in_map == 1))
 		return (true);
-	printf("Invalid input present.\n");
+	printf("Invalid input present->\n");
 	return (false);
 }
 
@@ -76,20 +76,33 @@ int	parse_map(t_game *game, char *file)
 	return (1);
 }
 
-int	init_game_parsing(t_game *game)
+int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 {
-	game->colors = NULL;
-	game->colors = (t_color *)malloc(sizeof(t_color));
-	if (!game->colors)
+	if (is_valid_input(argc, argv) == false)
 		return (0);
-	game->colors->c_rgb = (unsigned long)0;
-	game->colors->f_rgb = (unsigned long)0;
-	game->textures = (t_texture *)malloc(sizeof(t_texture));
-	if (!game->textures)
-		return (free(game->colors), 0);
-	game->textures->e_text = NULL;
-	game->textures->w_text = NULL;
-	game->textures->n_text = NULL;
-	game->textures->s_text = NULL;
+	if (!parse_map(game, argv[1]))
+		return (0);
+	if (is_map_last(game->initial_file) == false)
+		return (free_2darray(game->initial_file), 0);
+	if (find_textures(game->initial_file) == false)
+		return (free_2darray(game->initial_file), 0);
+	if (parse_file(game->initial_file) == false)
+		return (free_2darray(game->initial_file), 0);
+	render = init_render();
+	if (!validate_map(game, game->initial_file, render))
+	{
+		free_2darray(game->initial_file);
+		if (game->map)
+			free_2darray(game->map);
+		return (0);
+	}
+	if (!init_game_parsing(game))
+		return (free_2darray(game->map), free(game->initial_file), 0);
+	if (!parse_colors(game))
+		return (free_2darray(game->map), free(game->colors), free(game->textures),
+			free(game->initial_file), 0);
+	if (!parse_textures(game))
+		return (free_2darray(game->map), free(game->colors), free(game->textures),
+			free(game->initial_file), 0);
 	return (1);
 }

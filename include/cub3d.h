@@ -134,6 +134,8 @@ bool					map_chars_valid(char **map, t_map *map_for_pos);
 void					find_player_position(char **map, t_render *render,
 							t_map *map_for_pos);
 int						init_game_parsing(t_game *game);
+int						implement_parsing(t_game *game, t_render *render, 
+							int argc, char **argv);
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
@@ -146,6 +148,7 @@ void					copy_string(char *checking_char, char *color);
 int						parse_textures(t_game *game);
 int						malloc_map(char **map, t_map *map_dim);
 void					free_game(t_game *game);
+int						init_game_parsing(t_game *game);
 
 /* ----mlx---- */
 t_render				*init_render(void);

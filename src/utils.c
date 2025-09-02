@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:53:21 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 10:18:17 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/02 14:17:14 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,22 @@ int	ft_count_substrings(const char *s, char c)
 		i++;
 	}
 	return (count);
+}
+
+int	init_game_parsing(t_game *game)
+{
+	game->colors = NULL;
+	game->colors = (t_color *)malloc(sizeof(t_color));
+	if (!game->colors)
+		return (0);
+	game->colors->c_rgb = (unsigned long)0;
+	game->colors->f_rgb = (unsigned long)0;
+	game->textures = (t_texture *)malloc(sizeof(t_texture));
+	if (!game->textures)
+		return (free(game->colors), 0);
+	game->textures->e_text = NULL;
+	game->textures->w_text = NULL;
+	game->textures->n_text = NULL;
+	game->textures->s_text = NULL;
+	return (1);
 }
