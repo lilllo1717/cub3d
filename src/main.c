@@ -29,9 +29,12 @@ int	main(int argc, char **argv)
 	t_game		game;
 	t_render	*render;
 
-	render = NULL;
+	(void)argc;
+	(void)argv;
+
+	render = init_render();
 	if (implement_parsing(&game, render, argc, argv) == 0)
-		return (1);
+	 	return (1);
 	mlx_start(render);
 	mlx_key_hook(render->mlx, &key_handler, render);
 	mlx_loop_hook(render->mlx, &draw_player, render);
