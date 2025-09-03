@@ -76,6 +76,29 @@ int	parse_map(t_game *game, char *file)
 	return (1);
 }
 
+void find_map_dimensions(t_game *game)
+{
+	size_t	i;
+	size_t	j;
+	game->map_info.max_len = 0;
+	game->map_info.num_rows = 0;
+
+	i = 0;
+	while (game->map[i])
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			j++;
+		}
+		i++;
+	}
+	game->map_info.max_len = j;
+	game->map_info.num_rows = i;
+	// printf("width: %zu\n",game->map_info.max_len);
+	// printf("height: %zu\n",game->map_info.num_rows);
+}
+
 int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 {
 	if (is_valid_input(argc, argv) == false)
@@ -95,6 +118,7 @@ int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 			free_2darray(game->map);
 		return (0);
 	}
+	find_map_dimensions(game);
 	if (!init_game_parsing(game))
 		return (free_2darray(game->map), free(game->initial_file), 0);
 	if (!parse_colors(game))

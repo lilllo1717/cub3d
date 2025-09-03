@@ -109,7 +109,7 @@ typedef struct s_game
 	struct s_texture	*textures;
 	struct s_color		*colors;
 	struct s_render		*render;
-	struct s_map		*map_info;
+	struct s_map		map_info;
 }						t_game;
 
 /*parsing*/
