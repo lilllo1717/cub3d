@@ -77,7 +77,6 @@ typedef struct s_render
 	int					m_x;
 	int					m_y;
 	int					mp;
-	int					*map;
 }						t_render;
 
 typedef struct s_texture

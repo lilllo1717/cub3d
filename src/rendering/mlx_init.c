@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/03 14:45:13 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:45:29 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,7 @@ t_render	*init_render(void)
 	if (!render)
 		return (NULL);
 	ft_memset(render, 0, sizeof(t_render));
-	render->map = malloc(sizeof(int) * 25 * 14);
-	printf("Allocated render->map at: %p\n", render->map);
-	if (!render->map)
-	{
-		printf("ERROR: malloc failed for render->map\n");
-		mlx_terminate(render->mlx);
-		free(render);
-		return (NULL);
-	}
+
 	return (render);
 }
 
@@ -50,43 +42,43 @@ void	mlx_start(t_game *game)
 
 void	key_handler(mlx_key_data_t keydata, void *param)
 {
-	t_render	*render;
+	t_game	*game;
 
-	render = (t_render *)param;
+	game = (t_game *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		ft_putendl_fd("Goodbye", 1);
-		mlx_close_window(render->mlx);
+		mlx_close_window(game->render->mlx);
 	}
-	if (mlx_is_key_down(render->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_W))
 	{
 		//if (render->map[(int)render->pos_x + render->dir_x *])
-		render->player_x += render->player_delta_x;
-		render->player_y += render->player_delta_y;
+		game->render->player_x += game->render->player_delta_x;
+		game->render->player_y += game->render->player_delta_y;
 	}
-	if (mlx_is_key_down(render->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_S))
 	{
-		render->player_x -= render->player_delta_x;
-		render->player_y -= render->player_delta_y;
+		game->render->player_x -= game->render->player_delta_x;
+		game->render->player_y -= game->render->player_delta_y;
 	}
-	if (mlx_is_key_down(render->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_D))
 	{
-		render->player_angle += 0.05;
-		if (render->player_angle > 2 * PI)
-			render->player_angle -= 2 * PI;
-		render->player_delta_x = cos(render->player_angle) * 5;
-		render->player_delta_y = sin(render->player_angle) * 5;
+		game->render->player_angle += 0.05;
+		if (game->render->player_angle > 2 * PI)
+			game->render->player_angle -= 2 * PI;
+		game->render->player_delta_x = cos(game->render->player_angle) * 5;
+		game->render->player_delta_y = sin(game->render->player_angle) * 5;
 	}
-	if (mlx_is_key_down(render->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_A))
 	{
-		render->player_angle -= 0.05;
-		if (render->player_angle < 0)
-			render->player_angle += 2 * PI;
-		render->player_delta_x = cos(render->player_angle) * 5;
-		render->player_delta_y = sin(render->player_angle) * 5;
+		game->render->player_angle -= 0.05;
+		if (game->render->player_angle < 0)
+			game->render->player_angle += 2 * PI;
+		game->render->player_delta_x = cos(game->render->player_angle) * 5;
+		game->render->player_delta_y = sin(game->render->player_angle) * 5;
 	}
-	draw_rays(render);
-	draw_player(render);
+	draw_rays(game);
+	draw_player(game->render);
 }
 
 /*

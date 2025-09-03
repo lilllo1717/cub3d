@@ -102,9 +102,9 @@ void find_map_dimensions(t_game *game)
 void	find_player_angle(t_game *game, t_render *render)
 {
 	if (game->map_info.player_letter == 'N')
-		render->player_angle = PI/2;
-	else if (game->map_info.player_letter == 'S')
 		render->player_angle = 3*PI/2;
+	else if (game->map_info.player_letter == 'S')
+		render->player_angle = PI/2;
 	else if (game->map_info.player_letter == 'W')
 		render->player_angle = PI;
 	else if (game->map_info.player_letter == 'E')
@@ -124,8 +124,8 @@ void	parse_player(t_game *game, t_render *render)
 		{
 			if (game->map[i][j] == game->map_info.player_letter)
 			{
-				render->player_y = (float)i;
-				render->player_x = (float)j;
+				render->player_y = (float)(i * 64) + 32;
+				render->player_x = (float)(j * 64) + 32;
 				find_player_angle(game, render);
 				return ;
 			}

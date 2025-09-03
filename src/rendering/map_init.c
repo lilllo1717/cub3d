@@ -75,11 +75,21 @@ void create_world(void *param)
 			// 	game->render->player_angle = 0.0f;
 			// }
 			if (game->map[y][x] == '1')
+			{
+				//printf("x[%d] y[%d]\n", x, y);
 				color = WALL;
-			else if (game->map[y][x] == '0')
+			}
+			else if (game->map[y][x] == '0' || game->map[y][x] == 'N' || game->map[y][x] == 'S' 
+				|| game->map[y][x] == 'W' || game->map[y][x] == 'E')
+			{
+				//printf("x[%d] y[%d]\n", x, y);
 				color = FLOOR;
-			else 
+			}
+			else
+			{
+				//printf("x[%d] y[%d]\n", x, y); 
 				color = EMPTY;
+			}
 			xo = x * map_s;
 			yo = y * map_s;
 			if (xo < (WIDTH / 2) && yo < HEIGHT)
@@ -141,8 +151,6 @@ void	draw_player(void *param)
 		WIDTH * HEIGHT * sizeof(int32_t));
 	pixel_x = render->player_x;
 	pixel_y = render->player_y;
-	// printf("player x: [%f]\n", render->player_x);
-	// printf("player y: [%f]\n", render->player_y);
 	put_tile(render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10 , PLAYER_COLOR);
 	
 }
