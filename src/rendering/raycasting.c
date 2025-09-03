@@ -115,11 +115,13 @@ void	draw_rays(t_render *render)
 	float	n_tan;
 	float	ray_angle_increment;
 
+ 	if (!render || !render->ray_image || !render->ray_image->pixels)
+        return;
 	ft_memset(render->ray_image->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
 	
-	// Calculate the field of view in radians (60 degrees = PI/3)
+	//calculate the field of view in radians (60 degrees = PI/3)
 	render->fov = PI / 3;
-	ray_angle_increment = render->fov / WIDTH;
+	ray_angle_increment = render->fov / (WIDTH / 2); // half width for right side 3d view
 	
 	render->ray_angle = render->player_angle - (render->fov / 2);
 	if (render->ray_angle < 0)
@@ -127,7 +129,7 @@ void	draw_rays(t_render *render)
 	else if (render->ray_angle > 2 * PI)
 		render->ray_angle -= 2 * PI;
 	render->ray = 0;
-	while (render->ray < WIDTH) //number of rays being cast
+	while (render->ray < (WIDTH / 2)) // rays for right half only
 	{
 		render->h_distance = 1000000;
 		render->v_distance = 1000000;
@@ -164,7 +166,10 @@ void	draw_rays(t_render *render)
 			render->line_height = HEIGHT;
 		if (render->line_height < 1)
 			render->line_height = 1;
-		draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
+		
+		// Only draw every 8th ray to avoid cluttering the 2D view
+		if (render->ray % 8 == 0)
+			draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
 		draw_col(render);
 		//line offset
 		render->line_offset = (HEIGHT / 2) - (render->line_height / 2);
@@ -203,7 +208,8 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 	current_y = begin_y;
 	while (i <= steps)
 	{
-        if ((int)current_x >= 0 && (int)current_x < WIDTH && 
+		//only drawing rays on right half of the window
+        if ((int)current_x >= 0 && (int)current_x < (WIDTH / 2) && 
             (int)current_y >= 0 && (int)current_y < HEIGHT)
             mlx_put_pixel(render->ray_image, (int)current_x, (int)current_y, 0xFF0000FF);
         current_x += step_x;
@@ -221,7 +227,10 @@ void	draw_col(t_render *render)
 	int y;
 
 	y = 0;
-	col_x = render->ray;  // each ray corresponds to one column
+	// Draw 3D view on the right half of the screen
+	col_x = (WIDTH / 2) + render->ray;
+	if (col_x >= WIDTH)
+		return ;
 	wall_start = (HEIGHT / 2) - (render->line_height / 2);
 	wall_end = (HEIGHT / 2) + (render->line_height / 2);
 	while (y < HEIGHT)

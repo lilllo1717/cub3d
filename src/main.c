@@ -33,6 +33,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 
 	render = init_render();
+	game.render = render;
 	if (implement_parsing(&game, render, argc, argv) == 0)
 	 	return (1);
 	mlx_start(render);
