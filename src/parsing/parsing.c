@@ -99,6 +99,42 @@ void find_map_dimensions(t_game *game)
 	// printf("height: %zu\n",game->map_info.num_rows);
 }
 
+void	find_player_angle(t_game *game, t_render *render)
+{
+	if (game->map_info.player_letter == 'N')
+		render->player_angle = PI/2;
+	else if (game->map_info.player_letter == 'S')
+		render->player_angle = 3*PI/2;
+	else if (game->map_info.player_letter == 'W')
+		render->player_angle = PI;
+	else if (game->map_info.player_letter == 'E')
+		render->player_angle = 0;
+}
+
+void	parse_player(t_game *game, t_render *render)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (game->map[i])
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			if (game->map[i][j] == game->map_info.player_letter)
+			{
+				render->player_y = (float)i;
+				render->player_x = (float)j;
+				find_player_angle(game, render);
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 {
 	if (is_valid_input(argc, argv) == false)
@@ -119,6 +155,10 @@ int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 		return (0);
 	}
 	find_map_dimensions(game);
+	parse_player(game, render);
+	// printf("y: %f\n",render->player_y);
+	// printf("x: %f\n",render->player_x);
+	// printf("x: %f\n",render->player_angle);
 	if (!init_game_parsing(game))
 		return (free_2darray(game->map), free(game->initial_file), 0);
 	if (!parse_colors(game))

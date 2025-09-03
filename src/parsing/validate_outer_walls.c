@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/01 14:12:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/03 13:02:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	validate_map(t_game *game, char **initial_file, t_render *render)
 	tmp = dup_array(map_to_valid);
 	if (!tmp)
 		return (free_2darray(map_to_valid), 0);
-	if (ft_dfs(tmp, 0, 0, &map) || map_chars_valid(tmp, &map) == false)
+	if (ft_dfs(tmp, 0, 0, &map) || map_chars_valid(game, tmp, &map) == false)
 		return (printf("1.Map is invalid.\n"), free_2darray(tmp),
 			free_2darray(map_to_valid), 0);
 	find_player_position(tmp, render, &map);
