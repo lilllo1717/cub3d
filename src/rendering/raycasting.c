@@ -111,11 +111,11 @@ float	distance(float ax, float ay, float bx, float by, float ang)
 
 void	draw_rays(void  *param)
 {
-	float	a_tan;
-	float	n_tan;
-	float	ray_angle_increment;
+	float		a_tan;
+	float		n_tan;
+	float		ray_angle_increment;
+	t_render	*render;
 
-	t
 	render = (t_render *)param;
  	if (!render || !render->ray_image || !render->ray_image->pixels)
         return;

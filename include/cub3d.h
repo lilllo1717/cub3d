@@ -162,7 +162,7 @@ void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
 void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							int size, uint32_t color);
-void					draw_rays(t_render *render);
+void					draw_rays(void *param);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
 void					draw_col(t_render *render);
 /* ----render utils---- */
