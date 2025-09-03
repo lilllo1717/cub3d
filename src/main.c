@@ -36,11 +36,11 @@ int	main(int argc, char **argv)
 	game.render = render;
 	if (implement_parsing(&game, render, argc, argv) == 0)
 	 	return (1);
-	mlx_start(render);
-	mlx_key_hook(render->mlx, &key_handler, render);
-	mlx_loop_hook(render->mlx, &draw_player, render);
-	mlx_loop(render->mlx);
-	mlx_terminate(render->mlx);
+	// mlx_start(render);
+	// mlx_key_hook(render->mlx, &key_handler, render);
+	// mlx_loop_hook(render->mlx, &draw_player, render);
+	// mlx_loop(render->mlx);
+	// mlx_terminate(render->mlx);
 	free_game(&game);
 	// free_render(render);
 }

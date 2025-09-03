@@ -100,6 +100,7 @@ typedef struct s_map
 	size_t				max_len;
 	size_t				num_rows;
 	char				player_letter;
+	int					player_flag;
 }						t_map;
 
 typedef struct s_game
@@ -133,7 +134,7 @@ int						validate_map(t_game *game, char **initial_file,
 char					**map_for_valid(char **file, t_map *map_dim);
 int						ft_dfs_inside(char **map, size_t row, size_t col,
 							t_map *map_dim);
-bool					map_chars_valid(char **map, t_map *map_for_pos);
+bool	map_chars_valid(t_game *game, char **map, t_map *map_for_pos);
 void					find_player_position(char **map, t_render *render,
 							t_map *map_for_pos);
 int						init_game_parsing(t_game *game);
