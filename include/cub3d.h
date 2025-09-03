@@ -66,11 +66,13 @@ typedef struct s_render
 	float				vertical_ray_y_pos; //vertical ray's y positions
 	float				line_height;
 	float				line_offset;
+	float				correct_distance;
+	float				fov;
 	int					ray;
 	float				y_offset;
 	float				x_offset;
 	int 				dof;
-	int					final_dist;
+	float				final_dist;
 	int					m_x;
 	int					m_y;
 	int					mp;
@@ -107,6 +109,7 @@ typedef struct s_game
 	struct s_texture	*textures;
 	struct s_color		*colors;
 	struct s_render		*render;
+	struct s_map		*map_info;
 }						t_game;
 
 /*parsing*/
