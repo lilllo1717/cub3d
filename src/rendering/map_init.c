@@ -66,13 +66,13 @@ void create_world(void *param)
 		x = 0; 
 		while (x < (int)game->map_info.num_rows)
 		{
-			if (ft_strcmp(game->map[y * (int)game->map_info.num_rows + x], "N") == 0)
-			{
-				game->render->player_x = (float)(x * map_s) + (map_s / 2);
-				game->render->player_y = (float)(y * map_s) + (map_s / 2);
-				printf("[%f] [%f]", game->render->player_x, game->render->player_y);
-				game->render->player_angle = 0.0f;
-			}
+			// if (ft_strcmp(game->map[y * (int)game->map_info.num_rows + x], "N") == 0)
+			// {
+			// 	game->render->player_x = (float)(x * map_s) + (map_s / 2);
+			// 	game->render->player_y = (float)(y * map_s) + (map_s / 2);
+			// 	printf("[%f] [%f]", game->render->player_x, game->render->player_y);
+			// 	game->render->player_angle = 0.0f;
+			// }
 			if (ft_strcmp(game->map[y * (int)game->map_info.num_rows + x], "1") == 0)
 				color = WALL;
 			else

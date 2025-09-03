@@ -109,12 +109,14 @@ float	distance(float ax, float ay, float bx, float by, float ang)
 	return (sqrt((bx-ax) * (bx-ax) + (by-ay) * (by-ay)));
 }
 
-void	draw_rays(t_render *render)
+void	draw_rays(void  *param)
 {
 	float	a_tan;
 	float	n_tan;
 	float	ray_angle_increment;
 
+	t
+	render = (t_render *)param;
  	if (!render || !render->ray_image || !render->ray_image->pixels)
         return;
 	ft_memset(render->ray_image->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
