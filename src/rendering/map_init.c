@@ -10,7 +10,7 @@ void create_world(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	if (!game->render ) {
+	if (!game->render) {
 		printf("ERROR: Invalid game->render or game->map is NULL\n");
 		return ;
 	}
@@ -61,10 +61,11 @@ void create_world(void *param)
     if (!tile)
 		return;
 	ft_memset(tile->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
-	while (y < (int)game->map_info.max_len)
+	print_2d_array(game->map);
+	while (y < (int)game->map_info.num_rows)
 	{
 		x = 0; 
-		while (x < (int)game->map_info.num_rows)
+		while (x < (int)game->map_info.max_len)
 		{
 			// if (ft_strcmp(game->map[y * (int)game->map_info.num_rows + x], "N") == 0)
 			// {
@@ -73,10 +74,12 @@ void create_world(void *param)
 			// 	printf("[%f] [%f]", game->render->player_x, game->render->player_y);
 			// 	game->render->player_angle = 0.0f;
 			// }
-			if (ft_strcmp(game->map[y * (int)game->map_info.num_rows + x], "1") == 0)
+			if (game->map[y][x] == '1')
 				color = WALL;
-			else
+			else if (game->map[y][x] == '0')
 				color = FLOOR;
+			else 
+				color = EMPTY;
 			xo = x * map_s;
 			yo = y * map_s;
 			if (xo < (WIDTH / 2) && yo < HEIGHT)

@@ -33,10 +33,13 @@ int	main(int argc, char **argv)
 	(void)argv;
 
 	render = init_render();
-	game.render = render;
 	if (implement_parsing(&game, render, argc, argv) == 0)
-	 	return (1);
-	mlx_start(render);
+		return (1);
+	game.render = render;
+	// printf("y: %f\n",game.render->player_y);
+	// printf("x: %f\n",game.render->player_x);
+	// printf("x: %f\n",game.render->player_angle);
+	mlx_start(&game);
 	mlx_key_hook(render->mlx, &key_handler, render);
 	mlx_loop_hook(render->mlx, &draw_rays, render);
 	mlx_loop_hook(render->mlx, &draw_player, render);

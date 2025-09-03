@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/02 14:45:00 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:45:13 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ t_render	*init_render(void)
 	return (render);
 }
 
-void	mlx_start(t_render *render)
+void	mlx_start(t_game *game)
 {
 	printf("starting mlx\n");
-	render->mlx = mlx_init(WIDTH, HEIGHT, "BEST GAME EVER", true);
-	if (!render->mlx)
+	game->render->mlx = mlx_init(WIDTH, HEIGHT, "BEST GAME EVER", true);
+	if (!game->render->mlx)
 	{
 		perror("Failed to initialize MLX42");
 		exit(EXIT_FAILURE);
 	}
 	else
 		printf("mlx started\n");
-	mlx_key_hook(render->mlx, &key_handler, render);
-	create_world(render);
-	draw_player(render);
+	mlx_key_hook(game->render->mlx, &key_handler, game->render);
+	create_world(game);
+	draw_player(game->render);
 }
 
 void	key_handler(mlx_key_data_t keydata, void *param)

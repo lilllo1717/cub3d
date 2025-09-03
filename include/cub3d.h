@@ -17,6 +17,7 @@
 # define PLAYER_COLOR 0xFF0000FF
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
+# define EMPTY 0x00000000
 # define PI 3.1415926535
 # define P2 PI / 2
 # define P3 3 * PI / 2
@@ -156,7 +157,7 @@ int						init_game_parsing(t_game *game);
 
 /* ----mlx---- */
 t_render				*init_render(void);
-void					mlx_start(t_render *render);
+void					mlx_start(t_game *game);
 void					draw_player(void *param);
 void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
