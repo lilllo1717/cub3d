@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/03 15:45:29 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/04 11:09:05 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 		game->render->player_delta_x = cos(game->render->player_angle) * 5;
 		game->render->player_delta_y = sin(game->render->player_angle) * 5;
 	}
+	printf("[%f]\n", game->render->player_angle);
 	draw_rays(game);
 	draw_player(game->render);
 }
