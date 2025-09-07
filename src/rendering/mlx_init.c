@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/04 11:09:05 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/07 14:18:06 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	// printf("[%f]\n", game->render->player_angle);
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		ft_putendl_fd("Goodbye", 1);
@@ -63,11 +64,17 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(game->render->mlx, MLX_KEY_D))
 	{
-		game->render->player_angle += 0.05;
+		printf("player_angle before[%f]\n", game->render->player_angle);
+		game->render->player_angle += 0.05; 
+		printf("player_angle after[%f]\n", game->render->player_angle);
 		if (game->render->player_angle > 2 * PI)
 			game->render->player_angle -= 2 * PI;
+		// printf("b[%f]\n", game->render->player_delta_x);
+		// printf("b[%f]\n", game->render->player_delta_y);
 		game->render->player_delta_x = cos(game->render->player_angle) * 5;
 		game->render->player_delta_y = sin(game->render->player_angle) * 5;
+		printf("delta_x[%f]\n", game->render->player_delta_x);
+		printf("delta_y[%f]\n", game->render->player_delta_y);
 	}
 	if (mlx_is_key_down(game->render->mlx, MLX_KEY_A))
 	{
@@ -77,7 +84,7 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 		game->render->player_delta_x = cos(game->render->player_angle) * 5;
 		game->render->player_delta_y = sin(game->render->player_angle) * 5;
 	}
-	printf("[%f]\n", game->render->player_angle);
+	// printf("[%f]\n", game->render->player_angle);
 	draw_rays(game);
 	draw_player(game->render);
 }

@@ -2,21 +2,26 @@
 
 static void check_horizontal_lines(t_game *game, float a_tan)
 {
+	(void)a_tan;
 	game->render->horizontal_ray_x_pos = game->render->player_x;
 	game->render->horizontal_ray_y_pos = game->render->player_y;
+	// printf("game->render->horizontal_ray_x_pos[%f]\n", game->render->horizontal_ray_x_pos);
+	// printf("game->render->horizontal_ray_y_pos[%f]\n", game->render->horizontal_ray_y_pos);
 	if (game->render->ray_angle > PI) // looking up
 	{
 		game->render->ray_y = (((int)game->render->player_y / 64) * 64) - 0.0001;
-		game->render->ray_x = (game->render->player_y - game->render->ray_y) * a_tan + game->render->player_x;
+		// game->render->ray_x = game->render->player_x + (game->render->player_y - game->render->ray_y)/tan(game->render->ray_angle);
+		game->render->ray_x  = game->render->player_x + (game->render->ray_y - game->render->player_y) / tan(game->render->ray_angle);
 		game->render->y_offset = -64; 
-		game->render->x_offset = game->render->y_offset * a_tan; 
+		game->render->x_offset = game->render->y_offset/tan(game->render->ray_angle); 
 	}
 	else if (game->render->ray_angle < PI) // looking down
 	{
 		game->render->ray_y = (((int)game->render->player_y / 64) * 64) + 64;
-		game->render->ray_x = (game->render->player_y - game->render->ray_y) * a_tan + game->render->player_x;
+		// game->render->ray_x = game->render->player_x + (game->render->player_y - game->render->ray_y)/ tan(game->render->ray_angle);
+		game->render->ray_x  = game->render->player_x + (game->render->ray_y - game->render->player_y) / tan(game->render->ray_angle);
 		game->render->y_offset = 64; 
-		game->render->x_offset = game->render->y_offset * a_tan; 
+		game->render->x_offset = game->render->y_offset/tan(game->render->ray_angle);
 	}
 	else if (game->render->ray_angle == 0 || game->render->ray_angle == PI) // looking straight left or right
 	{
@@ -24,6 +29,19 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 		game->render->ray_y = game->render->player_y;
 		game->render->dof = 8;
 	}
+	// printf("first horiz intersection: ray_x=%f, ray_y=%f (x_off=%f, y_off=%f)\n",
+    //    game->render->ray_x, game->render->ray_y,
+    //    game->render->x_offset, game->render->y_offset);
+
+	// printf("----------horiz----------\n");
+	// printf("H init: ray_x=%f ray_y=%f x_off=%f y_off=%f\n",
+    //    game->render->ray_x, game->render->ray_y,
+    //    game->render->x_offset, game->render->y_offset);
+
+	// printf("V init: ray_x=%f ray_y=%f x_off=%f y_off=%f\n",
+	// 	game->render->ray_x, game->render->ray_y,
+	// 	game->render->x_offset, game->render->y_offset);
+	// printf("----------------------------\n");
 	while (game->render->dof < 8)
 	{
 		game->render->m_x = (int)(game->render->ray_x) / 64;
@@ -54,21 +72,26 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 
 static void	check_vertical_lines(t_game *game, float n_tan)
 {
+	(void)n_tan;
 	game->render->vertical_ray_x_pos = game->render->player_x;
 	game->render->vertical_ray_y_pos = game->render->player_y;
+	// printf("game->render->vertical_ray_x_pos[%f]\n", game->render->vertical_ray_x_pos);
+	// printf("game->render->vertical_ray_y_pos[%f]\n", game->render->vertical_ray_y_pos);
 	if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // looking left
 	{
-		game->render->ray_x = ((game->render->player_x / 64) * 64) - 0.0001;
-		game->render->ray_y = (game->render->player_x - game->render->ray_x) * n_tan + game->render->player_y;
+		game->render->ray_x = (((int)game->render->player_x / 64) * 64) - 0.0001;
+		// game->render->ray_y = (game->render->player_x - game->render->ray_x) * tan(game->render->ray_angle) + game->render->player_y;
+		game->render->ray_y = game->render->player_y + (game->render->ray_x - game->render->player_x) * tan(game->render->ray_angle);
 		game->render->x_offset = -64;
-		game->render->y_offset = game->render->x_offset * n_tan; 
+		game->render->y_offset = game->render->x_offset * tan(game->render->ray_angle); 
 	}
 	else if (game->render->ray_angle < P2 || game->render->ray_angle > P3) // looking right
 	{
-		game->render->ray_x = ((game->render->player_x / 64) * 64) + 64;
-		game->render->ray_y = (game->render->player_x - game->render->ray_x) * n_tan + game->render->player_y;
+		game->render->ray_x = (((int)game->render->player_x / 64) * 64) + 64;
+		// game->render->ray_y = (game->render->player_x - game->render->ray_x) * tan(game->render->ray_angle) + game->render->player_y;
+		game->render->ray_y = game->render->player_y + (game->render->ray_x - game->render->player_x) * tan(game->render->ray_angle);
 		game->render->x_offset = 64; 
-		game->render->y_offset = game->render->x_offset * n_tan; 
+		game->render->y_offset = game->render->x_offset * tan(game->render->ray_angle); 
 	}
 	else if (game->render->ray_angle == P2 || game->render->ray_angle == P3) // looking straight up or down
 	{
@@ -76,6 +99,18 @@ static void	check_vertical_lines(t_game *game, float n_tan)
 		game->render->ray_y = game->render->player_y;
 		game->render->dof = 8;
 	}
+	// printf("first vert intersection: ray_x=%f, ray_y=%f (x_off=%f, y_off=%f)\n",
+    //    game->render->ray_x, game->render->ray_y,
+    //    game->render->x_offset, game->render->y_offset);
+	// printf("----------vertical----------\n");
+	// printf("H init: ray_x=%f ray_y=%f x_off=%f y_off=%f\n",
+    //    game->render->ray_x, game->render->ray_y,
+    //    game->render->x_offset, game->render->y_offset);
+
+	// printf("V init: ray_x=%f ray_y=%f x_off=%f y_off=%f\n",
+	// 	game->render->ray_x, game->render->ray_y,
+	// 	game->render->x_offset, game->render->y_offset);
+	// printf("----------------------------\n");
 	while (game->render->dof < 8)
 	{
 		game->render->m_x = (int)(game->render->ray_x) / 64;
@@ -123,8 +158,8 @@ void	draw_rays(void  *param)
 	//calculate the field of view in radians (60 degrees = PI/3)
 	game->render->fov = PI / 3;
 	ray_angle_increment = game->render->fov / (WIDTH / 2); // half width for right side 3d view
-	
 	game->render->ray_angle = game->render->player_angle + (game->render->fov / 2);
+	printf("ray_angle[%f]\n", game->render->ray_angle);
 	//angle normalization
 	if (game->render->ray_angle < 0)
 		game->render->ray_angle += 2 * PI;
@@ -132,6 +167,7 @@ void	draw_rays(void  *param)
 		game->render->ray_angle -= 2 * PI;
 	game->render->ray = 0;
 	printf("----------------------------------\n");
+	// printf("[%f]\n", game->render->ray_angle);
 	while (game->render->ray < (WIDTH / 2)) // rays for right half only
 	{	//distance from player to an intersection on the horizontal and vertical grids. 
 		//set to a really high value so that the real wall intersection will be closer and replace these default values
@@ -144,6 +180,7 @@ void	draw_rays(void  *param)
 			game->render->ray_angle += 2 * PI;
 		if (game->render->ray_angle > 2 * PI)
 			game->render->ray_angle -= 2 * PI;
+		// printf("[%f]\n", game->render->ray_angle);
 		//------------------------------------
 		n_tan = -tan(game->render->ray_angle); //vertical line intersection calculations
 		a_tan = -1 / tan(game->render->ray_angle); //horizontal line intersection calculations
@@ -175,7 +212,7 @@ void	draw_rays(void  *param)
 		if (game->render->correct_distance < 1.0) //prevent division by zero 
 			game->render->correct_distance = 1.0;
 		
-			game->render->line_height = (64 * HEIGHT) / game->render->correct_distance; //calculate wall height based on the distance
+		game->render->line_height = (64 * HEIGHT) / game->render->correct_distance; //calculate wall height based on the distance
 		
 		// cap the line height. maintainst visual consistency regardless of player distance to the wall. and prevents renderer from drawing wall too high
 		if (game->render->line_height > HEIGHT)
@@ -184,9 +221,8 @@ void	draw_rays(void  *param)
 			game->render->line_height = 1;
 		
 			// only draw every 8th ray to avoid cluttering the 2d view
-		if (game->render->ray % 8 == 0)
+		if (game->render->ray % 32 == 0)
 			draw_line(game->render, (int)game->render->player_x, (int)game->render->player_y, (int)game->render->ray_x, (int)game->render->ray_y);
-		
 		draw_col(game->render);
 		
 		//line offset
@@ -251,7 +287,7 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
         current_y += step_y;
 		i++;
 	}
-	printf("[%f]\n", render->ray_angle);
+	// printf("[%f]\n", render->ray_angle);
 	
 	return (0);
 }
