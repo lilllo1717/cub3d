@@ -92,9 +92,9 @@ void find_map_dimensions(t_game *game)
 			j++;
 		}
 		i++;
+		game->map_info.max_len = j;
+		game->map_info.num_rows = i;
 	}
-	game->map_info.max_len = j;
-	game->map_info.num_rows = i;
 	// printf("width: %zu\n",game->map_info.max_len);
 	// printf("height: %zu\n",game->map_info.num_rows);
 }
@@ -124,8 +124,8 @@ void	parse_player(t_game *game, t_render *render)
 		{
 			if (game->map[i][j] == game->map_info.player_letter)
 			{
-				render->player_y = (float)(i * 64) + 32;
-				render->player_x = (float)(j * 64) + 32;
+				render->player_y = (float)(i * TILE) + (TILE / 2);
+				render->player_x = (float)(j * TILE) + (TILE / 2);
 				find_player_angle(game, render);
 				return ;
 			}

@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	// printf("x: %f\n",game.render->player_angle);
 	mlx_start(&game);
 	mlx_key_hook(render->mlx, &key_handler, &game);
-	//mlx_loop_hook(render->mlx, &draw_rays, &game);
+	mlx_loop_hook(render->mlx, &draw_rays, &game);
 	mlx_loop_hook(render->mlx, &draw_player, render);
 	mlx_loop(render->mlx);
 	mlx_terminate(render->mlx);

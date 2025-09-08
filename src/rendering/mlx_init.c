@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/08 11:59:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:18:29 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,71 +45,101 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	// printf("[%f]\n", game->render->player_angle);
+
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		ft_putendl_fd("Goodbye", 1);
 		mlx_close_window(game->render->mlx);
 	}
-	if (mlx_is_key_down(game->render->mlx, MLX_KEY_W))
+	left_right(game);
+	forward_backward(game);
+	turn(game);
+	//draw_player(game->render);
+}
+
+void	left_right(t_game *game)
+{	
+	
+	int		col;
+	int		row;
+	float 	next_pos_x;
+	float	next_pos_y;
+
+	next_pos_x = game->render->player_x;
+	next_pos_y = game->render->player_y;
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_A))
 	{
-		//if (render->map[(int)render->pos_x + render->dir_x *])
-		game->render->player_x += game->render->player_delta_x;
-		game->render->player_y += game->render->player_delta_y;
-	}
-	if (mlx_is_key_down(game->render->mlx, MLX_KEY_S))
-	{
-		game->render->player_x -= game->render->player_delta_x;
-		game->render->player_y -= game->render->player_delta_y;
+		next_pos_x +=  game->render->player_delta_y;
+		next_pos_y += -game->render->player_delta_x;
+		
 	}
 	if (mlx_is_key_down(game->render->mlx, MLX_KEY_D))
 	{
-		// printf("player_angle before[%f]\n", game->render->player_angle);
-		game->render->player_angle += 0.05; 
-		// printf("player_angle after[%f]\n", game->render->player_angle);
-		if (game->render->player_angle > 2 * PI)
-			game->render->player_angle -= 2 * PI;
-		// printf("b[%f]\n", game->render->player_delta_x);
-		// printf("b[%f]\n", game->render->player_delta_y);
-		game->render->player_delta_x = cos(game->render->player_angle) * 5;
-		game->render->player_delta_y = sin(game->render->player_angle) * 5;
-		// printf("delta_x[%f]\n", game->render->player_delta_x);
-		// printf("delta_y[%f]\n", game->render->player_delta_y);
+		next_pos_x += -game->render->player_delta_y;
+		next_pos_y += game->render->player_delta_x;
 	}
-	if (mlx_is_key_down(game->render->mlx, MLX_KEY_A))
+	col = (int)(next_pos_x / TILE);
+	row = (int)(next_pos_y / TILE);
+	if (row >= 0 && row < (int)game->map_info.num_rows
+		&& col >= 0 && col < (int)game->map_info.max_len
+		&& game->map[row][col] != '1')
 	{
-		game->render->player_angle -= 0.05;
-		if (game->render->player_angle < 0)
-			game->render->player_angle += 2 * PI;
-		game->render->player_delta_x = cos(game->render->player_angle) * 5;
-		game->render->player_delta_y = sin(game->render->player_angle) * 5;
+		game->render->player_x = next_pos_x;
+		game->render->player_y = next_pos_y;
 	}
-	// printf("[%f]\n", game->render->player_angle);
-	draw_rays(game);
-	draw_player(game->render);
 }
 
-/*
-	The deltas tell us wich direction the line goes, how steep the line is, how many steps are needed to draw the complete line
-and which axis to use as the primary stepping direction (larger absoulte delta).
-	float delta_x : horizontal distance form start to end
-					if negative line goes right, if postive line goes left, if 0 just a vertical line
-	float delta_y : vertical distance form start to end
-					if positive line goes down, if negative line goes up, if 0 just a horizontal line
-*/
-// void	draw_line(mlx_image_t *img, float start_y, float start_x, float end_y,
-// 	float end_x)
-// {
-// 	float	delta_x;
-// 	float	delta_y;
+void	forward_backward(t_game *game)
+{
+	int	col;
+	int	row;
+	float 	next_pos_x;
+	float	next_pos_y;
 	
-// 	delta_x = end_x - start_x;
-// 	delta_y = end_y - start_y;
-	
-// 	while ()
-// 	{
+	next_pos_x = game->render->player_x;
+	next_pos_y = game->render->player_y;
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_W))
+	{
+		next_pos_x += game->render->player_delta_x;
+		next_pos_y += game->render->player_delta_y;
+	}
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_S))
+	{
+		next_pos_x -= game->render->player_delta_x;
+		next_pos_y -= game->render->player_delta_y;
+	}
+	col = (int)(next_pos_x / TILE);
+	row = (int)(next_pos_y / TILE);
+	if (row >= 0 && row < (int)game->map_info.num_rows
+		&& col >= 0 && col < (int)game->map_info.max_len
+		&& game->map[row][col] != '1')
+	{
+		game->render->player_x = next_pos_x;
+		game->render->player_y = next_pos_y;
+	}
+}
+
+void	turn(t_game *game)
+{
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_RIGHT))
+	{
+		game->render->player_angle += 0.1;
+		if (game->render->player_angle > 2.0 * PI)
+			game->render->player_angle -= 2.0 * PI;
 		
-// 	}
-// }
-
-
+		
+		
+		// game->render->player_delta_x = cos(game->render->player_angle) * 5.0;
+		// game->render->player_delta_y = sin(game->render->player_angle) * 5.0;
+	}
+	if (mlx_is_key_down(game->render->mlx, MLX_KEY_LEFT))
+	{
+		game->render->player_angle -= 0.1;
+		if (game->render->player_angle < 0.0)
+			game->render->player_angle += 2.0 * PI;
+		// game->render->player_delta_x = cos(game->render->player_angle) * 5.0;
+		// game->render->player_delta_y = sin(game->render->player_angle) * 5.0;
+	}
+	game->render->player_delta_x = cos(game->render->player_angle) * 5.0;
+	game->render->player_delta_y = sin(game->render->player_angle) * 5.0;
+}

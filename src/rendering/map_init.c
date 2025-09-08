@@ -17,63 +17,27 @@ void create_world(void *param)
 	uint32_t color;
 
 	int	x = 0;
-	int map_s = 64;
 	int y = 0;
 	int	xo = 0;
 	int yo = 0;
-	// int map_x = 25;
-	// int map_y = 14;
-	// int map[] = {
-	// 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	// 	1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	// 	1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	// 	1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-	// 	1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
-	// 	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1,
-	// 	1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1,
-	// 	1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1,
-	// 	1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1,
-	// 	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
-	// 	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1,
-	// 	1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
-	// 	1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1,
-	// 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-	// };
-	//  int map[] = {
-	// 	1,1,1,1,1,1,1,1,
-	// 	1,0,0,0,0,0,0,1,
-	// 	1,0,0,0,0,0,0,1,
-	// 	1,0,0,0,0,0,0,1,
-	// 	1,0,0,0,0,0,0,1,
-	// 	1,0,0,0,0,0,0,1,
-	// 	1,0,0,0,0,0,0,1,
-	// 	1,1,1,1,1,1,1,1
-	//  }
-	printf("render->map address: %p\n", game->map);
+
 	if (!game->map) 
 	{
    		 printf("ERROR: render->map is NULL!\n");
     	return;
 	}
-	//ft_memcpy(game->render->map, map, sizeof(map));
+
 	
 	tile = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
     if (!tile)
 		return;
 	ft_memset(tile->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
-	print_2d_array(game->map);
 	while (y < (int)game->map_info.num_rows)
 	{
 		x = 0; 
 		while (x < (int)game->map_info.max_len)
 		{
-			// if (ft_strcmp(game->map[y * (int)game->map_info.num_rows + x], "N") == 0)
-			// {
-			// 	game->render->player_x = (float)(x * map_s) + (map_s / 2);
-			// 	game->render->player_y = (float)(y * map_s) + (map_s / 2);
-			// 	printf("[%f] [%f]", game->render->player_x, game->render->player_y);
-			// 	game->render->player_angle = 0.0f;
-			// }
+
 			if (game->map[y][x] == '1')
 			{
 				//printf("x[%d] y[%d]\n", x, y);
@@ -90,10 +54,10 @@ void create_world(void *param)
 				//printf("x[%d] y[%d]\n", x, y); 
 				color = EMPTY;
 			}
-			xo = x * map_s;
-			yo = y * map_s;
+			xo = x * TILE;
+			yo = y * TILE;
 			if (xo < (WIDTH / 2) && yo < HEIGHT)
-				put_tile(tile, xo, yo, map_s, color);
+				put_tile(tile, xo, yo, TILE, color);
 			x++;
 		}
 		y++;
@@ -134,11 +98,11 @@ void	draw_player(void *param)
 	t_render	*render;
 	float		pixel_x;
 	float		pixel_y;
-	float		y;
-	float		x;
+	// float		y;
+	// float		x;
 
-	y = 0;
-	x = 0;
+	// y = 0;
+	// x = 0;
 	render = (t_render *)param;
 	if (!render->player_image)
 	{

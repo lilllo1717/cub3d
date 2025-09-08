@@ -12,8 +12,8 @@
 # include <string.h>
 # include <unistd.h>
 # define DR 0.0174533 //one degree in radians, used to seperate each ray by 1 degree
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1000
+# define HEIGHT 800
 # define PLAYER_COLOR 0xFF0000FF
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
@@ -21,6 +21,7 @@
 # define PI 3.1415926535
 # define P2 PI / 2
 # define P3 3 * PI / 2
+# define TILE 64
 
 enum					keys_texture
 {
@@ -165,6 +166,16 @@ void					put_tile(mlx_image_t *image, int start_x, int start_y,
 void					draw_rays(void *param);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
 void					draw_col(t_render *render);
+void					draw_3d(t_game *game);
+void					full_render(void *param);
+void					draw_minimap(t_game *game);
+void					check_horizontal_lines(t_game *game, float a_tan);
+void					check_vertical_lines(t_game *game, float n_tan);
+/* ---movement------ */
+void					left_right(t_game *game);
+void					forward_backward(t_game *game);
+void					turn(t_game *game);
+
 /* ----render utils---- */
 float					distance(float ax, float ay, float bx, float by,
 							float ang);
