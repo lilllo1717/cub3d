@@ -300,8 +300,8 @@ void	draw_col(t_render *render)
 	int y;
 
 	y = 0;
-	// Draw 3D view on the right half of the screen
-	col_x = (WIDTH / 2) + render->ray;
+	// draws the 3d view on the right half of the screen if its width / 2
+	col_x = WIDTH - render->ray;
 	if (col_x >= WIDTH)
 		return ;
 	wall_start = (HEIGHT / 2) - (render->line_height / 2);
