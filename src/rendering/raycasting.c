@@ -3,6 +3,11 @@
 static void check_horizontal_lines(t_game *game, float a_tan)
 {
 	(void)a_tan;
+	int	max_dof;
+	if (game->map_info.max_len > game->map_info.num_rows)
+		max_dof = game->map_info.max_len;
+	else
+		max_dof = game->map_info.num_rows;
 	game->render->horizontal_ray_x_pos = game->render->player_x;
 	game->render->horizontal_ray_y_pos = game->render->player_y;
 	// printf("game->render->horizontal_ray_x_pos[%f]\n", game->render->horizontal_ray_x_pos);
@@ -27,7 +32,7 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 	{
 		game->render->ray_x = game->render->player_x;
 		game->render->ray_y = game->render->player_y;
-		game->render->dof = 8;
+		game->render->dof = max_dof;
 	}
 	// printf("first horiz intersection: ray_x=%f, ray_y=%f (x_off=%f, y_off=%f)\n",
     //    game->render->ray_x, game->render->ray_y,
@@ -42,7 +47,7 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 	// 	game->render->ray_x, game->render->ray_y,
 	// 	game->render->x_offset, game->render->y_offset);
 	// printf("----------------------------\n");
-	while (game->render->dof < 8)
+	while (game->render->dof < max_dof)
 	{
 		game->render->m_x = (int)(game->render->ray_x) / 64;
 		game->render->m_y = (int)(game->render->ray_y) / 64;
@@ -54,7 +59,7 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 				game->render->horizontal_ray_x_pos = game->render->ray_x;
 				game->render->horizontal_ray_y_pos = game->render->ray_y;
 				game->render->h_distance = distance(game->render->player_x, game->render->player_y, game->render->horizontal_ray_x_pos, game->render->horizontal_ray_y_pos, game->render->ray_angle);
-				game->render->dof = 8;
+				game->render->dof = max_dof;
 			}
 			else
 			{
@@ -64,7 +69,7 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 			}
 		}
 		else
-			game->render->dof = 8;
+			game->render->dof = max_dof;
 	}
 	//draw_line(render, (int)render->player_x, (int)render->player_y, (int)render->ray_x, (int)render->ray_y);
 		
@@ -73,6 +78,11 @@ static void check_horizontal_lines(t_game *game, float a_tan)
 static void	check_vertical_lines(t_game *game, float n_tan)
 {
 	(void)n_tan;
+	int	max_dof;
+	if (game->map_info.max_len > game->map_info.num_rows)
+		max_dof = game->map_info.max_len;
+	else
+		max_dof = game->map_info.num_rows;
 	game->render->vertical_ray_x_pos = game->render->player_x;
 	game->render->vertical_ray_y_pos = game->render->player_y;
 	// printf("game->render->vertical_ray_x_pos[%f]\n", game->render->vertical_ray_x_pos);
@@ -97,7 +107,7 @@ static void	check_vertical_lines(t_game *game, float n_tan)
 	{
 		game->render->ray_x = game->render->player_x;
 		game->render->ray_y = game->render->player_y;
-		game->render->dof = 8;
+		game->render->dof = max_dof;
 	}
 	// printf("first vert intersection: ray_x=%f, ray_y=%f (x_off=%f, y_off=%f)\n",
     //    game->render->ray_x, game->render->ray_y,
@@ -111,7 +121,8 @@ static void	check_vertical_lines(t_game *game, float n_tan)
 	// 	game->render->ray_x, game->render->ray_y,
 	// 	game->render->x_offset, game->render->y_offset);
 	// printf("----------------------------\n");
-	while (game->render->dof < 8)
+	
+	while (game->render->dof < max_dof)
 	{
 		game->render->m_x = (int)(game->render->ray_x) / 64;
 		game->render->m_y = (int)(game->render->ray_y) / 64;
@@ -123,7 +134,7 @@ static void	check_vertical_lines(t_game *game, float n_tan)
 				game->render->vertical_ray_x_pos = game->render->ray_x;
 				game->render->vertical_ray_y_pos = game->render->ray_y;
 				game->render->v_distance = distance(game->render->player_x, game->render->player_y, game->render->vertical_ray_x_pos, game->render->vertical_ray_y_pos, game->render->ray_angle);
-				game->render->dof = 8;
+				game->render->dof = max_dof;
 			}
 			else //next line
 			{
@@ -133,7 +144,7 @@ static void	check_vertical_lines(t_game *game, float n_tan)
 			}
 		}
 		else
-			game->render->dof = 8;
+			game->render->dof = max_dof;
 	}
 }
 
@@ -159,14 +170,14 @@ void	draw_rays(void  *param)
 	game->render->fov = PI / 3;
 	ray_angle_increment = game->render->fov / (WIDTH / 2); // half width for right side 3d view
 	game->render->ray_angle = game->render->player_angle + (game->render->fov / 2);
-	printf("ray_angle[%f]\n", game->render->ray_angle);
+	// printf("ray_angle[%f]\n", game->render->ray_angle);
 	//angle normalization
 	if (game->render->ray_angle < 0)
 		game->render->ray_angle += 2 * PI;
 	else if (game->render->ray_angle > 2 * PI)
 		game->render->ray_angle -= 2 * PI;
 	game->render->ray = 0;
-	printf("----------------------------------\n");
+	// printf("----------------------------------\n");
 	// printf("[%f]\n", game->render->ray_angle);
 	while (game->render->ray < (WIDTH / 2)) // rays for right half only
 	{	//distance from player to an intersection on the horizontal and vertical grids. 
@@ -231,7 +242,7 @@ void	draw_rays(void  *param)
 		game->render->ray_angle -= ray_angle_increment;
 		
 	}
-	printf("----------------------------------\n");
+	// printf("----------------------------------\n");
 }
 //finds the bigger distance so the line doesn't have gaps when drawing diagonally. picks whatever delta (axis) is bigger.
 static int	determine_steps(float delta_x, float delta_y)
@@ -267,7 +278,7 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 	delta_x = end_x - begin_x;
 
 	steps = determine_steps(delta_x, delta_y);
-	//printf("steps [%d\n", steps);
+	// printf("steps [%d\n", steps);
 
 	// steps calculate the incremental step sizes needed to draw a consistent line between 2 points
 	step_x = delta_x / steps;
