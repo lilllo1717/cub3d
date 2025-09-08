@@ -12,8 +12,8 @@
 # include <string.h>
 # include <unistd.h>
 # define DR 0.0174533 //one degree in radians, used to seperate each ray by 1 degree
-# define WIDTH 1000
-# define HEIGHT 800
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PLAYER_COLOR 0xFF0000FF
 # define WALL 0xFFFFFFFF
 # define FLOOR 0x00FFFFFF
