@@ -33,6 +33,7 @@ SRC_RENDERING = \
 	$(SRC_DIR)/rendering/map_init.c \
 	$(SRC_DIR)/rendering/raycasting.c \
 	$(SRC_DIR)/rendering/render_utils.c \
+	$(SRC_DIR)/rendering/mouse_handler.c \
 
 GNL_DIR  := libs/gnl
 GNL_SRCS = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c

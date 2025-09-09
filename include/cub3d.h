@@ -176,6 +176,7 @@ void					check_vertical_lines(t_game *game, float n_tan);
 void					left_right(t_game *game);
 void					forward_backward(t_game *game);
 void					turn(t_game *game);
+void    mouse_handler(double xpos, double ypos, void* param);
 
 /* ----render utils---- */
 float					distance(float ax, float ay, float bx, float by,
