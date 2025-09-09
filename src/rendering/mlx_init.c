@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/08 15:18:29 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:14:07 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_render	*init_render(void)
 void	mlx_start(t_game *game)
 {
 	printf("starting mlx\n");
-	game->render->mlx = mlx_init(WIDTH, HEIGHT, "BEST GAME EVER", true);
+	game->render->mlx = mlx_init(WIDTH, HEIGHT, "BEST GAME EVER", false);
 	if (!game->render->mlx)
 	{
 		perror("Failed to initialize MLX42");
@@ -91,8 +91,8 @@ void	left_right(t_game *game)
 
 void	forward_backward(t_game *game)
 {
-	int	col;
-	int	row;
+	int		col;
+	int		row;
 	float 	next_pos_x;
 	float	next_pos_y;
 	
@@ -126,19 +126,12 @@ void	turn(t_game *game)
 		game->render->player_angle += 0.1;
 		if (game->render->player_angle > 2.0 * PI)
 			game->render->player_angle -= 2.0 * PI;
-		
-		
-		
-		// game->render->player_delta_x = cos(game->render->player_angle) * 5.0;
-		// game->render->player_delta_y = sin(game->render->player_angle) * 5.0;
 	}
 	if (mlx_is_key_down(game->render->mlx, MLX_KEY_LEFT))
 	{
 		game->render->player_angle -= 0.1;
 		if (game->render->player_angle < 0.0)
 			game->render->player_angle += 2.0 * PI;
-		// game->render->player_delta_x = cos(game->render->player_angle) * 5.0;
-		// game->render->player_delta_y = sin(game->render->player_angle) * 5.0;
 	}
 	game->render->player_delta_x = cos(game->render->player_angle) * 5.0;
 	game->render->player_delta_y = sin(game->render->player_angle) * 5.0;

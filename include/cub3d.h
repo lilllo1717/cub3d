@@ -86,6 +86,10 @@ typedef struct s_texture
 	char				*s_text;
 	char				*w_text;
 	char				*e_text;
+	mlx_texture_t		*north_t;
+	mlx_texture_t		*south_t;
+	mlx_texture_t		*east_t;
+	mlx_texture_t		*west_t;
 }						t_texture;
 
 typedef struct s_color
@@ -165,10 +169,7 @@ void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							int size, uint32_t color);
 void					draw_rays(void *param);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
-void					draw_col(t_render *render);
-void					draw_3d(t_game *game);
-void					full_render(void *param);
-void					draw_minimap(t_game *game);
+void					draw_col(t_game *game);
 void					check_horizontal_lines(t_game *game, float a_tan);
 void					check_vertical_lines(t_game *game, float n_tan);
 /* ---movement------ */
@@ -179,5 +180,10 @@ void					turn(t_game *game);
 /* ----render utils---- */
 float					distance(float ax, float ay, float bx, float by,
 							float ang);
+void					normalize_angle(t_game *game);
+/* -- textures --*/
+// void					put_textures(t_game *game);
+int						load_textures(t_game *game);
+
 
 #endif

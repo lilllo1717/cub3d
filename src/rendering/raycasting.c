@@ -172,10 +172,7 @@ void	draw_rays(void  *param)
 	game->render->ray_angle = game->render->player_angle - (game->render->fov / 2);
 	// printf("ray_angle[%f]\n", game->render->ray_angle);
 	//angle normalization
-	if (game->render->ray_angle < 0)
-		game->render->ray_angle += 2 * PI;
-	else if (game->render->ray_angle > 2 * PI)
-		game->render->ray_angle -= 2 * PI;
+	normalize_angle(game);
 	game->render->ray = 0;
 	// printf("----------------------------------\n");
 	// printf("[%f]\n", game->render->ray_angle);
@@ -186,11 +183,7 @@ void	draw_rays(void  *param)
 		game->render->v_distance = 1000000;
 		//----------------------------------------------------------------------------------------
 		game->render->dof = 0; //dof is distance of field and means the amount of grid cells we search for a wall before giving
-		//angle normalization
-		if (game->render->ray_angle < 0)
-			game->render->ray_angle += 2 * PI;
-		if (game->render->ray_angle > 2 * PI)
-			game->render->ray_angle -= 2 * PI;
+		normalize_angle(game);
 		// printf("[%f]\n", game->render->ray_angle);
 		//------------------------------------
 		n_tan = -tan(game->render->ray_angle); //vertical line intersection calculations
@@ -234,7 +227,7 @@ void	draw_rays(void  *param)
 			// only draw every 8th ray to avoid cluttering the 2d view
 		if (game->render->ray % 32 == 0)
 			draw_line(game->render, (int)game->render->player_x, (int)game->render->player_y, (int)game->render->ray_x, (int)game->render->ray_y);
-		draw_col(game->render);
+		draw_col(game);
 		
 		//line offset
 		game->render->line_offset = (HEIGHT / 2) - (game->render->line_height / 2);
@@ -302,8 +295,21 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 	
 	return (0);
 }
+static void	put_textures(t_game *game, int col_x, int y)
+{ 
+	int		i;
+	float	text_y;
+	float	text_y_step;
 
-void	draw_col(t_render *render)
+	text_y = 0;
+
+	while (i < game->render->h_distance)
+	{
+		printf("width of textures:%lu\n"game->textures->east_t->width;
+		i++;
+	}
+}
+void	draw_col(t_game *game)
 {
 	int	col_x;
 	int	wall_start;
@@ -311,20 +317,25 @@ void	draw_col(t_render *render)
 	int y;
 
 	y = 0;
-	// draws the 3d view on the right half of the screen if its width / 2
-	col_x = render->ray;
+	col_x = game->render->ray;
 	if (col_x >= WIDTH)
 		return ;
-	wall_start = (HEIGHT / 2) - (render->line_height / 2);
-	wall_end = (HEIGHT / 2) + (render->line_height / 2);
+	
+	wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
+	wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
 	while (y < HEIGHT)
 	{
-		if (y < wall_start)
-			 mlx_put_pixel(render->ray_image, col_x, y, 0x87CEEBFF);
-		else if (y > wall_end)
-			mlx_put_pixel(render->ray_image, col_x, y, 0x8B4513FF);
+		if (y < wall_start) // ceiing
+			 mlx_put_pixel(game->render->ray_image, col_x, y, game->colors->c_rgb);
+		else if (y > wall_end) // floor
+			mlx_put_pixel(game->render->ray_image, col_x, y,  game->colors->f_rgb);
 		else
-			mlx_put_pixel(render->ray_image, col_x, y, WALL);
+		{
+			// put_textures(game, col_x, y);
+			mlx_put_pixel(game->render->ray_image, col_x, y, WALL);
+		}
 		y++;
 	}
 }
+
+
