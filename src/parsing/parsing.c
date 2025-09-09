@@ -12,6 +12,15 @@
 
 #include "cub3d.h"
 
+bool	is_col_tex(char *line)
+{
+	if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
+	|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0
+	|| ft_strncmp(line, "C ", 2) == 0 || ft_strncmp(line, "F ", 2) == 0)
+		return (true);
+	return (false);
+}
+
 bool	no_invalid_input(char *line, int in_map)
 {
 	char	*map_line;
@@ -36,7 +45,7 @@ bool	is_map_last(char **map)
 	found = 0;
 	while (map[i])
 	{
-		if (map[i + 1] && ft_strchr(map[i], '1') && ft_strchr(map[i + 1], '1'))
+		if (map[i + 1] && ft_strchr(map[i], '1') && ft_strchr(map[i + 1], '1') && !is_col_tex(map[i]))
 			found = 1;
 		if (no_invalid_input(map[i], found) == false)
 			return (false);

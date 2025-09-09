@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:46:22 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 12:53:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:24:47 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 unsigned long	convert_rgb(int *rgb)
 {
-	return ((rgb[0] & 0xff) << 16) + ((rgb[1] & 0xff) << 8) + (rgb[2] & 0xff);
+	return (((rgb[0] & 0xff) << 24) | ((rgb[1] & 0xff) << 16) | (rgb[2] & 0xff) << 8 | (255 & 0xff));
 }
+
 
 char	**find_copy_color_c(char **file)
 {
@@ -34,7 +35,7 @@ char	**find_copy_color_c(char **file)
 	}
 	while (*c_color && !ft_isdigit(*c_color))
 		c_color++;
-	color = (char *)malloc(ft_strlen(c_color) * sizeof(char));
+	color = (char *)malloc((ft_strlen(c_color) + 1) * sizeof(char));
 	if (!color)
 		return (0);
 	copy_string(c_color, color);
@@ -79,7 +80,7 @@ char	**find_copy_color_f(char **file)
 	}
 	while (*f_color && !ft_isdigit(*f_color))
 		f_color++;
-	color = (char *)malloc(ft_strlen(f_color) * sizeof(char));
+	color = (char *)malloc((ft_strlen(f_color) + 1) * sizeof(char));
 	if (!color)
 		return (0);
 	copy_string(f_color, color);

@@ -39,6 +39,9 @@ int	main(int argc, char **argv)
 	// printf("y: %f\n",game.render->player_y);
 	// printf("x: %f\n",game.render->player_x);
 	// printf("x: %f\n",game.render->player_angle);
+
+	printf("i: %lu\n",game.colors->c_rgb);
+	printf("i: %lu\n",game.colors->f_rgb);
 	mlx_start(&game);
 	mlx_key_hook(render->mlx, &key_handler, &game);
 	mlx_loop_hook(render->mlx, &draw_rays, &game);
