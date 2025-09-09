@@ -43,6 +43,7 @@ int	main(int argc, char **argv)
 	printf("i: %lu\n",game.colors->c_rgb);
 	printf("i: %lu\n",game.colors->f_rgb);
 	mlx_start(&game);
+	mlx_cursor_hook(render->mlx, &mouse_handler, &game);
 	mlx_key_hook(render->mlx, &key_handler, &game);
 	mlx_loop_hook(render->mlx, &draw_rays, &game);
 	mlx_loop_hook(render->mlx, &draw_player, render);
