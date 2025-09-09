@@ -22,6 +22,10 @@
 # define P2 PI / 2
 # define P3 3 * PI / 2
 # define TILE 64
+# define SOUTH 0
+# define NORTH 1
+# define EAST 2
+# define WEST 3
 
 enum					keys_texture
 {
@@ -78,6 +82,9 @@ typedef struct s_render
 	int					m_x;
 	int					m_y;
 	int					mp;
+	int					wall_dir; //direction of the wall that was hit by a ray. 0=N,1=S,2=E,3=W
+	float				wall_hit_x;
+	float				wall_hit_y;
 }						t_render;
 
 typedef struct s_texture
@@ -182,9 +189,16 @@ void    mouse_handler(double xpos, double ypos, void* param);
 float					distance(float ax, float ay, float bx, float by,
 							float ang);
 void					normalize_angle(t_game *game);
+int						determine_steps(float delta_x, float delta_y);
 /* -- textures --*/
-// void					put_textures(t_game *game);
+void					put_textures(t_game *game, int wall_start, int wall_end, int col_x, int y);
 int						load_textures(t_game *game);
+/*----rays------*/
+void					setup_horizontal_rays(t_game *game, int max_dof);
+void					horizontal_wall_detection(t_game *game, int max_dof);
+void					setup_vertical_rays(t_game *game, int max_dof);
+void					vertical_wall_detection(t_game *game, int max_dof);
+
 
 
 #endif

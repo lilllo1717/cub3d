@@ -23,7 +23,7 @@ void create_world(void *param)
     	return;
 	}
 
-	
+	//put_textures(game);
 	tile = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
     if (!tile)
 		return;
