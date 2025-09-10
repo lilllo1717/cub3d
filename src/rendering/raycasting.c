@@ -54,9 +54,9 @@ void	horizontal_wall_detection(t_game *game, int max_dof)
 				game->render->horizontal_ray_x_pos = game->render->ray_x;
 				game->render->horizontal_ray_y_pos = game->render->ray_y;
 				if (game->render->ray_angle > PI)
-					game->render->wall_dir = SOUTH;
-				else
 					game->render->wall_dir = NORTH;
+				else
+					game->render->wall_dir = SOUTH;
 				game->render->h_distance = distance(game->render->player_x,
 					game->render->player_y, game->render->horizontal_ray_x_pos,
 					game->render->horizontal_ray_y_pos, game->render->ray_angle);
@@ -127,7 +127,7 @@ void	vertical_wall_detection(t_game *game, int max_dof)
 				game->render->vertical_ray_x_pos = game->render->ray_x;
 				game->render->vertical_ray_y_pos = game->render->ray_y;
 				game->render->v_distance = distance(game->render->player_x, game->render->player_y, game->render->vertical_ray_x_pos, game->render->vertical_ray_y_pos, game->render->ray_angle);
-				if (cos(game->render->ray_angle) > 0)
+				if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // Ray pointing left
 					game->render->wall_dir = EAST;
 				else
 					game->render->wall_dir = WEST;
@@ -146,11 +146,7 @@ void	vertical_wall_detection(t_game *game, int max_dof)
 }
 
 // function that will return the distance between the player and the rays end point
-float	distance(float ax, float ay, float bx, float by, float ang)
-{
-	(void)ang;
-	return (sqrt((bx-ax) * (bx-ax) + (by-ay) * (by-ay)));
-}
+
 
 void	draw_rays(void  *param)
 {
@@ -187,8 +183,10 @@ void	draw_rays(void  *param)
 		a_tan = -1 / tan(game->render->ray_angle); //horizontal line intersection calculations
 		game->render->dof = 0;
 		check_horizontal_lines(game, a_tan);
+		game->render->wall_dir_h = game->render->wall_dir;
 		game->render->dof = 0; 
 		check_vertical_lines(game, n_tan);
+		game->render->wall_dir_v = game->render->wall_dir;
 
 		//if statements implent the closest intersection selection logic
 		//	if the vertical wall intersec is closer that horizontal one we set the ray endpoint to the vert intersec coordinates
@@ -200,6 +198,7 @@ void	draw_rays(void  *param)
 			game->render->final_dist = game->render->v_distance;
 			game->render->wall_hit_x = game->render->vertical_ray_x_pos;
 			game->render->wall_hit_y = game->render->vertical_ray_y_pos;
+			//game->render->wall_dir = game->render->wall_dir_v;
 		}
 		//	if the horizontal wall intersec is closer that vertical one we set the ray endpoint to the horizontal intersec coordinates
 		//	and use the horizontal ray intersection as the final distance. this means the ray hit a horizontal wall (e or w) 
@@ -209,7 +208,9 @@ void	draw_rays(void  *param)
 			game->render->ray_y = game->render->horizontal_ray_y_pos;
 			game->render->final_dist = game->render->h_distance;
 			game->render->wall_hit_x = game->render->horizontal_ray_x_pos;
-			game->render->wall_hit_y = game->render->vertical_ray_y_pos;
+			game->render->wall_hit_y = game->render->horizontal_ray_y_pos;
+			//game->render->wall_dir = game->render->wall_dir_h;
+
 		}
 
 		game->render->correct_distance = game->render->final_dist * cos(game->render->ray_angle - game->render->player_angle); //fisheye correction
@@ -224,32 +225,62 @@ void	draw_rays(void  *param)
 			game->render->line_height = HEIGHT;
 		if (game->render->line_height < 1)
 			game->render->line_height = 1;
-		
-			// only draw every 8th ray to avoid cluttering the 2d view
+		// only draw every 8th ray to avoid cluttering the 2d view
 		if (game->render->ray % 32 == 0)
 			draw_line(game->render, (int)game->render->player_x, (int)game->render->player_y, (int)game->render->ray_x, (int)game->render->ray_y);
-		draw_col(game);
-		
 		//line offset
 		game->render->line_offset = (HEIGHT / 2) - (game->render->line_height / 2);
+		draw_col(game);
+		
+		
 		game->render->ray++;
 		game->render->ray_angle += ray_angle_increment;
 		
 	}
-	// printf("----------------------------------\n");
+	printf("player angle: %f\n", game->render->player_angle);
 }
 
 float	get_xcoord_from_texture(t_game *game)
 {
-	if (game->render->wall_dir == SOUTH)
-		return (fmodf(game->render->wall_hit_x * (game->textures->south_t->width / TILE), game->textures->south_t->width));
+	float 	wall_offset;
+	float 	tex_coord;
+	int		maxw;
+
 	if (game->render->wall_dir == NORTH)
-		return (fmodf(game->render->wall_hit_x * (game->textures->north_t->width / TILE), game->textures->north_t->width));
-	if (game->render->wall_dir == EAST)
-		return (fmodf(game->render->wall_hit_y * (game->textures->east_t->width / TILE), game->textures->east_t->width ));
-	if (game->render->wall_dir == WEST)
-		return (fmodf(game->render->wall_hit_y * (game->textures->west_t->width / TILE), game->textures->west_t->width ));
-	return (1.0);//needs change
+	{
+		wall_offset = fmodf(game->render->wall_hit_x, TILE);
+		tex_coord = wall_offset * game->textures->north_t->width / TILE;
+		
+	}
+	else if (game->render->wall_dir == SOUTH)
+	{
+		wall_offset = TILE - fmodf(game->render->wall_hit_x, TILE);
+		tex_coord = wall_offset * game->textures->south_t->width / TILE;
+	}
+	else if (game->render->wall_dir == EAST)
+	{
+		wall_offset = fmodf(game->render->wall_hit_y, TILE);
+		tex_coord = wall_offset * game->textures->east_t->width / TILE;
+	}
+	else if (game->render->wall_dir == WEST)
+	{
+		wall_offset = TILE - fmodf(game->render->wall_hit_y, TILE);
+		tex_coord = wall_offset * game->textures->west_t->width / TILE;
+	}
+	else
+		return 0.0f; // Fallback
+	// Clamp
+	if (tex_coord < 0)
+		tex_coord = 0;
+	// Clamp to width-1 for safety for all directions:
+	maxw = 0;
+	if      (game->render->wall_dir == SOUTH) maxw = game->textures->south_t->width;
+	else if (game->render->wall_dir == NORTH) maxw = game->textures->north_t->width;
+	else if (game->render->wall_dir == EAST)  maxw = game->textures->east_t->width;
+	else if (game->render->wall_dir == WEST)  maxw = game->textures->west_t->width;
+	if (tex_coord >= maxw) tex_coord = maxw - 1;
+	
+	return tex_coord;
 }
 
 

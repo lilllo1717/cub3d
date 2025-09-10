@@ -71,32 +71,90 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 // 		i++;
 // 	}
 // }
+static uint32_t	get_texture_pixel(mlx_texture_t *texture, int x, int y)
+{
+    uint8_t	*pixel;
+    uint32_t color;
+
+    if (!texture || x < 0 || y < 0 || x >= (int)texture->width || y >= (int)texture->height)
+        return (0x000000); // Black for invalid coordinates
+
+    // Calculate pixel position in texture data
+    pixel = &texture->pixels[(y * texture->width + x) * texture->bytes_per_pixel];
+    
+    // Combine RGBA values into a single uint32_t
+    // Assuming RGBA format
+    color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+    
+    return (color);
+}
 
 void	draw_col(t_game *game)
 {
-	int	col_x;
-	int	wall_start;
-	int wall_end;
-	int y;
+	mlx_texture_t	*hit_wall_texture;
+	//int				col_x;
+	// int				wall_start;
+	// int 			wall_end;
+	int 			y;
+	//int				tex_x_coord;
+	float			texture_step;
+	float			texture_pos;
+	int		tex_x;
+    int		tex_y;
+	uint32_t pixel_color;
 
+
+	tex_x = (int)get_xcoord_from_texture(game);
+	hit_wall_texture = select_correct_texture(game);
+	texture_step = (float)hit_wall_texture->height / game->render->line_height;
+	texture_pos = (game->render->line_offset - HEIGHT / 2 + game->render->line_height / 2) * texture_step;
 	y = 0;
-	col_x = game->render->ray;
-	if (col_x >= WIDTH)
-		return ;
-	
-	wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
-	wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
+	// col_x = game->render->ray;
+	// if (col_x >= WIDTH)
+	// 	return ;
+	// wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
+	// wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
 	while (y < HEIGHT)
 	{
-		if (y < wall_start) // ceiing
-			 mlx_put_pixel(game->render->ray_image, col_x, y, game->colors->c_rgb);
-		else if (y > wall_end) // floor
-			mlx_put_pixel(game->render->ray_image, col_x, y,  game->colors->f_rgb);
-		else
-		{
-			//put_textures( game, wall_start, wall_end, col_x , y);
-			mlx_put_pixel(game->render->ray_image, col_x, y, WALL);
+		if (y >= game->render->line_offset && y < game->render->line_offset + game->render->line_height)
+        {
+            // We're in the wall section - draw texture
+            tex_y = (int)texture_pos;
+			if (tex_y < 0)
+				tex_y = 0;
+			if (tex_y >= (int)hit_wall_texture->height)
+				tex_y = hit_wall_texture->height - 1;
+            texture_pos += texture_step;
+            
+            // Get pixel color from texture
+			pixel_color = get_texture_pixel(hit_wall_texture, tex_x, tex_y);
+            
+            // Set pixel in the image
+            mlx_put_pixel(game->render->ray_image, game->render->ray, y, pixel_color);
+        }
+        else
+        {
+            // Draw ceiling or floor
+            if (y < game->render->line_offset)
+                mlx_put_pixel(game->render->ray_image, game->render->ray, y, 0x87CEEBFF); // Sky blue
+            else
+                mlx_put_pixel(game->render->ray_image, game->render->ray, y, 0x8B4513FF); // Brown floor
 		}
 		y++;
 	}
 }
+
+mlx_texture_t *select_correct_texture(t_game *game)
+{
+	if (game->render->wall_dir == NORTH)
+		return(game->textures->north_t);
+	else if (game->render->wall_dir == SOUTH)
+		return(game->textures->south_t);
+	else if (game->render->wall_dir == EAST)
+		return(game->textures->east_t);
+	else if (game->render->wall_dir == WEST)
+		return(game->textures->west_t);
+	else
+		return (NULL);
+}
+
