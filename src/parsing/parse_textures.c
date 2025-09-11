@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:32:38 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 13:27:46 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/11 13:06:02 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	parse_textures(t_game *game)
 		return (0);
 	if (!parsing_paths(game, 'E'))
 		return (0);
-	// printf("%s\n", game->textures->n_text);
-	// printf("%s\n", game->textures->w_text);
+	printf("%s\n", game->textures->e_text);
+	printf("%s\n", game->textures->w_text);
 	return (1);
 }

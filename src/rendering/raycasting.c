@@ -128,9 +128,9 @@ void	vertical_wall_detection(t_game *game, int max_dof)
 				game->render->vertical_ray_y_pos = game->render->ray_y;
 				game->render->v_distance = distance(game->render->player_x, game->render->player_y, game->render->vertical_ray_x_pos, game->render->vertical_ray_y_pos, game->render->ray_angle);
 				if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // Ray pointing left
-					game->render->wall_dir = EAST;
-				else
 					game->render->wall_dir = WEST;
+				else
+					game->render->wall_dir = EAST;
 				game->render->dof = max_dof;
 			}
 			else //next line
@@ -146,8 +146,6 @@ void	vertical_wall_detection(t_game *game, int max_dof)
 }
 
 // function that will return the distance between the player and the rays end point
-
-
 void	draw_rays(void  *param)
 {
 	float		a_tan;
@@ -188,7 +186,7 @@ void	draw_rays(void  *param)
 		check_vertical_lines(game, n_tan);
 		game->render->wall_dir_v = game->render->wall_dir;
 
-		//if statements implent the closest intersection selection logic
+		//if statements implement the closest intersection selection logic
 		//	if the vertical wall intersec is closer that horizontal one we set the ray endpoint to the vert intersec coordinates
 		//	and use the vertical ray intersection as the final distance. this means the ray hit a vertical wall (n or s) 
 		if (game->render->v_distance < game->render->h_distance)
@@ -198,7 +196,7 @@ void	draw_rays(void  *param)
 			game->render->final_dist = game->render->v_distance;
 			game->render->wall_hit_x = game->render->vertical_ray_x_pos;
 			game->render->wall_hit_y = game->render->vertical_ray_y_pos;
-			//game->render->wall_dir = game->render->wall_dir_v;
+			game->render->wall_dir = game->render->wall_dir_v;
 		}
 		//	if the horizontal wall intersec is closer that vertical one we set the ray endpoint to the horizontal intersec coordinates
 		//	and use the horizontal ray intersection as the final distance. this means the ray hit a horizontal wall (e or w) 
@@ -209,7 +207,7 @@ void	draw_rays(void  *param)
 			game->render->final_dist = game->render->h_distance;
 			game->render->wall_hit_x = game->render->horizontal_ray_x_pos;
 			game->render->wall_hit_y = game->render->horizontal_ray_y_pos;
-			//game->render->wall_dir = game->render->wall_dir_h;
+			game->render->wall_dir = game->render->wall_dir_h;
 
 		}
 
@@ -231,13 +229,10 @@ void	draw_rays(void  *param)
 		//line offset
 		game->render->line_offset = (HEIGHT / 2) - (game->render->line_height / 2);
 		draw_col(game);
-		
-		
 		game->render->ray++;
 		game->render->ray_angle += ray_angle_increment;
 		
 	}
-	printf("player angle: %f\n", game->render->player_angle);
 }
 
 float	get_xcoord_from_texture(t_game *game)
@@ -261,6 +256,7 @@ float	get_xcoord_from_texture(t_game *game)
 	{
 		wall_offset = fmodf(game->render->wall_hit_y, TILE);
 		tex_coord = wall_offset * game->textures->east_t->width / TILE;
+		
 	}
 	else if (game->render->wall_dir == WEST)
 	{
@@ -268,17 +264,22 @@ float	get_xcoord_from_texture(t_game *game)
 		tex_coord = wall_offset * game->textures->west_t->width / TILE;
 	}
 	else
-		return 0.0f; // Fallback
-	// Clamp
+		return 0.0f; // fallback
+	// clamp
 	if (tex_coord < 0)
 		tex_coord = 0;
-	// Clamp to width-1 for safety for all directions:
+	// clamp to width-1 for safety for all directions:
 	maxw = 0;
-	if      (game->render->wall_dir == SOUTH) maxw = game->textures->south_t->width;
-	else if (game->render->wall_dir == NORTH) maxw = game->textures->north_t->width;
-	else if (game->render->wall_dir == EAST)  maxw = game->textures->east_t->width;
-	else if (game->render->wall_dir == WEST)  maxw = game->textures->west_t->width;
-	if (tex_coord >= maxw) tex_coord = maxw - 1;
+	if (game->render->wall_dir == SOUTH)
+		maxw = game->textures->south_t->width;
+	else if (game->render->wall_dir == NORTH) 
+		maxw = game->textures->north_t->width;
+	else if (game->render->wall_dir == EAST)  
+		maxw = game->textures->east_t->width;
+	else if (game->render->wall_dir == WEST)  
+		maxw = game->textures->west_t->width;
+	if (tex_coord >= maxw) 
+		tex_coord = maxw - 1;
 	
 	return tex_coord;
 }

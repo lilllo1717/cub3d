@@ -49,58 +49,35 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 	
 	return (0);
 }
-// void	put_textures(t_game *game, int wall_start, int wall_end, int col_x, int y)
-// { 
-// 	int		i;
-// 	uint8_t	*pixels;
-// 	int32_t *img_px;
-// 	//float	text_y;
-// 	//float	text_y_step;
 
-// 	//text_y = 0;
-	
-// 	i = 0;
-// 	load_textures(game);
-// 	printf("width of south texture:%u\n", game->textures->south_t->width);
-// 	printf("height of south texture:%u\n", game->textures->south_t->height);
-// 	pixels = game->textures->south_t->pixels;
-// 	img_px = (int32_t *)pixels;
-// 	while (i < 10)
-// 	{
-// 		printf("pixels of south texture:%d\n", img_px[i]);
-// 		i++;
-// 	}
-// }
 static uint32_t	get_texture_pixel(mlx_texture_t *texture, int x, int y)
 {
-    uint8_t	*pixel;
-    uint32_t color;
+	uint8_t	*pixel;
+	uint32_t color;
 
-    if (!texture || x < 0 || y < 0 || x >= (int)texture->width || y >= (int)texture->height)
-        return (0x000000); // black for invalid coordinates
+	if (!texture || x < 0 || y < 0 || x >= (int)texture->width || y >= (int)texture->height)
+		return (0x000000); // black for invalid coordinates
+	// calculates the pixel position in the texture data
+	pixel = &texture->pixels[(y * texture->width + x) * texture->bytes_per_pixel];
+	// combines the rgba values into a single uint32_t
+	color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
 
-    // calculates the pixel position in the texture data
-    pixel = &texture->pixels[(y * texture->width + x) * texture->bytes_per_pixel];
-    // combines the rgba values into a single uint32_t
-    color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
-    
-    return (color);
-}
+	return (color);
+	}
 
 void	draw_col(t_game *game)
 {
 	mlx_texture_t	*hit_wall_texture;
 	//int				col_x;
-	// int				wall_start;
-	// int 			wall_end;
+	int				wall_start;
+	int 			wall_end;
 	int 			y;
-	//int				tex_x_coord;
+	//int			tex_x_coord;
 	float			texture_step;
 	float			texture_pos;
-	int		tex_x;
-    int		tex_y;
-	uint32_t pixel_color;
-
+	int				tex_x;
+    int				tex_y;
+	uint32_t		pixel_color;
 
 	tex_x = (int)get_xcoord_from_texture(game);
 	hit_wall_texture = select_correct_texture(game);
@@ -110,31 +87,31 @@ void	draw_col(t_game *game)
 	// col_x = game->render->ray;
 	// if (col_x >= WIDTH)
 	// 	return ;
-	// wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
-	// wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
+	wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
+	wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
 	while (y < HEIGHT)
 	{
 		if (y >= game->render->line_offset && y < game->render->line_offset + game->render->line_height)
-        {
-            // we found a wall section so we draw texture
-            tex_y = (int)texture_pos;
+		{
+			// we found a wall section so we draw texture
+			tex_y = (int)texture_pos;
 			if (tex_y < 0)
 				tex_y = 0;
 			if (tex_y >= (int)hit_wall_texture->height)
 				tex_y = hit_wall_texture->height - 1;
-            texture_pos += texture_step;
-            
-            // get the pixel color from texture
+			texture_pos += texture_step;
+
+			// get the pixel color from texture
 			pixel_color = get_texture_pixel(hit_wall_texture, tex_x, tex_y);
-            mlx_put_pixel(game->render->ray_image, game->render->ray, y, pixel_color);
+			mlx_put_pixel(game->render->ray_image, game->render->ray, y, pixel_color);
         }
-        else
-        {
-            // draw ceiling or floor
-            if (y < game->render->line_offset)
-                mlx_put_pixel(game->render->ray_image, game->render->ray, y, 0x87CEEBFF); // Sky blue
-            else
-                mlx_put_pixel(game->render->ray_image, game->render->ray, y, 0x8B4513FF); // Brown floor
+		else
+		{
+			// draw ceiling or floor
+			if (y < game->render->line_offset)
+				mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->c_rgb);
+			else
+				mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->f_rgb); 
 		}
 		y++;
 	}
