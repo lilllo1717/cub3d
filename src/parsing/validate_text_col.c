@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:36:51 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/21 16:18:45 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:37:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	is_valid_text_line(char *line)
 	checking_char = NULL;
 	count_members = ft_count_substrings(line, ' ');
 	if (count_members != 2)
-		return (printf("Wrong input format for textures.\n"), false);
+		return (err("Wrong input format for textures.\n"), false);
 	if (is_texture(line))
 		checking_char = line + 3;
 	while (checking_char[i] != '\0' && checking_char[i] != '.')
@@ -55,7 +55,7 @@ bool	is_valid_text_line(char *line)
 		if (checking_char[i] == '.' && checking_char[i + 1] == '/')
 			return (true);
 		else
-			return (printf("Wrong input format for textures.\n"), false);
+			return (err("Wrong input format for textures.\n"), false);
 	}
 	return (true);
 }
@@ -71,6 +71,8 @@ bool	is_valid_text_path(char *line)
 	i = 0;
 	checking_char = ft_strchr(line, '.');
 	file_name = (char *)malloc(ft_strlen(checking_char) * sizeof(char));
+	if (!file_name)
+		return (false);
 	while (checking_char[i] && checking_char[i] != '\n')
 	{
 		file_name[i] = checking_char[i];
@@ -79,7 +81,7 @@ bool	is_valid_text_path(char *line)
 	file_name[i] = '\0';
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		return (free(file_name), printf("Invalid texture path.\n"), close(fd),
+		return (free(file_name), err("Invalid texture path.\n"), close(fd),
 			false);
 	close(fd);
 	free(file_name);

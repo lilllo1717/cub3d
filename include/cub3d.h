@@ -167,6 +167,7 @@ int						parse_textures(t_game *game);
 int						malloc_map(char **map, t_map *map_dim);
 void					free_game(t_game *game);
 int						init_game_parsing(t_game *game);
+void					err(char *str);
 
 /* ----mlx---- */
 t_render				*init_render(void);

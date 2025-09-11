@@ -32,7 +32,7 @@ bool	no_invalid_input(char *line, int in_map)
 		|| (ft_strncmp(line, " ", 1) == 0 && map_line != NULL)
 		|| (ft_strcmp(line, "\n") == 0) || (map_line != NULL && in_map == 1))
 		return (true);
-	printf("Invalid input present->\n");
+	err("Invalid input present.\n");
 	return (false);
 }
 
@@ -53,7 +53,7 @@ bool	is_map_last(char **map)
 			&& !ft_strchr(map[i + 1], '1'))
 			found = 2;
 		else if (found == 2 && map[i][0] != '\n')
-			return (printf("Invalid input: map is not last\n"), false);
+			return (err("Invalid input: map is not last.\n"), false);
 		i++;
 	}
 	return (true);

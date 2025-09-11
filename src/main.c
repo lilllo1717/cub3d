@@ -35,43 +35,20 @@ int	main(int argc, char **argv)
 	render = init_render();
 	if (implement_parsing(&game, render, argc, argv) == 0)
 		return (1);
-	game.render = render;
-	// printf("y: %f\n",game.render->player_y);
-	// printf("x: %f\n",game.render->player_x);
-	// printf("x: %f\n",game.render->player_angle);
+	// printf("east: %s\n", game.textures->e_text);
+	// printf("west: %s\n", game.textures->w_text);
+	// printf("north: %s\n", game.textures->n_text);
+	// printf("south: %s\n", game.textures->s_text);
 
-	printf("i: %lu\n",game.colors->c_rgb);
-	printf("i: %lu\n",game.colors->f_rgb);
-	load_textures(&game);
-	mlx_start(&game);
-	mlx_cursor_hook(render->mlx, &mouse_handler, &game);
-	mlx_key_hook(render->mlx, &key_handler, &game);
-	mlx_loop_hook(render->mlx, &draw_rays, &game);
-	mlx_loop_hook(render->mlx, &draw_player, render);
-	mlx_loop(render->mlx);
-	mlx_terminate(render->mlx);
-	free_game(&game);
+	game.render = render;
+	// load_textures(&game);
+	// mlx_start(&game);
+	// mlx_cursor_hook(render->mlx, &mouse_handler, &game);
+	// mlx_key_hook(render->mlx, &key_handler, &game);
+	// mlx_loop_hook(render->mlx, &draw_rays, &game);
+	// mlx_loop_hook(render->mlx, &draw_player, render);
+	// mlx_loop(render->mlx);
+	// mlx_terminate(render->mlx);
+	// free_game(&game);
 	// free_render(render);
 }
-
-// int main (int argc, char **argv)
-// {
-//     t_game  	game;
-// 	t_render	*render;
-
-//     if (is_valid_input(argc, argv) == false)
-// 	{
-// 		printf("Invalid input\n");
-// 		return (1);
-// 	}
-//     parse_map(&game, argv[1]);
-// 	is_map_last(game.initial_file);
-// 	find_textures(game.initial_file);
-// 	render = init_render();
-// 	mlx_start(render);
-// 	mlx_key_hook(render->mlx, &key_handler, render);
-// 	mlx_loop_hook(render->mlx, &draw_player, render);
-// 	mlx_loop(render->mlx);
-// 	mlx_terminate(render->mlx);
-// 	free(render);
-// }
