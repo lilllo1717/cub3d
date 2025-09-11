@@ -237,7 +237,7 @@ void	draw_rays(void  *param)
 		game->render->ray_angle += ray_angle_increment;
 		
 	}
-	printf("player angle: %f\n", game->render->player_angle);
+	// printf("player angle: %f\n", game->render->player_angle);
 }
 
 float	get_xcoord_from_texture(t_game *game)
