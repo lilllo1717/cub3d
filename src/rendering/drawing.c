@@ -77,13 +77,11 @@ static uint32_t	get_texture_pixel(mlx_texture_t *texture, int x, int y)
     uint32_t color;
 
     if (!texture || x < 0 || y < 0 || x >= (int)texture->width || y >= (int)texture->height)
-        return (0x000000); // Black for invalid coordinates
+        return (0x000000); // black for invalid coordinates
 
-    // Calculate pixel position in texture data
+    // calculates the pixel position in the texture data
     pixel = &texture->pixels[(y * texture->width + x) * texture->bytes_per_pixel];
-    
-    // Combine RGBA values into a single uint32_t
-    // Assuming RGBA format
+    // combines the rgba values into a single uint32_t
     color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
     
     return (color);
@@ -118,7 +116,7 @@ void	draw_col(t_game *game)
 	{
 		if (y >= game->render->line_offset && y < game->render->line_offset + game->render->line_height)
         {
-            // We're in the wall section - draw texture
+            // we found a wall section so we draw texture
             tex_y = (int)texture_pos;
 			if (tex_y < 0)
 				tex_y = 0;
@@ -126,15 +124,13 @@ void	draw_col(t_game *game)
 				tex_y = hit_wall_texture->height - 1;
             texture_pos += texture_step;
             
-            // Get pixel color from texture
+            // get the pixel color from texture
 			pixel_color = get_texture_pixel(hit_wall_texture, tex_x, tex_y);
-            
-            // Set pixel in the image
             mlx_put_pixel(game->render->ray_image, game->render->ray, y, pixel_color);
         }
         else
         {
-            // Draw ceiling or floor
+            // draw ceiling or floor
             if (y < game->render->line_offset)
                 mlx_put_pixel(game->render->ray_image, game->render->ray, y, 0x87CEEBFF); // Sky blue
             else
