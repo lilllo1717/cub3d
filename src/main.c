@@ -41,14 +41,14 @@ int	main(int argc, char **argv)
 	// printf("south: %s\n", game.textures->s_text);
 
 	game.render = render;
-	// load_textures(&game);
-	// mlx_start(&game);
-	// mlx_cursor_hook(render->mlx, &mouse_handler, &game);
-	// mlx_key_hook(render->mlx, &key_handler, &game);
-	// mlx_loop_hook(render->mlx, &draw_rays, &game);
-	// mlx_loop_hook(render->mlx, &draw_player, render);
-	// mlx_loop(render->mlx);
-	// mlx_terminate(render->mlx);
-	// free_game(&game);
-	// free_render(render);
+	load_textures(&game);
+	mlx_start(&game);
+	mlx_cursor_hook(render->mlx, &mouse_handler, &game);
+	mlx_key_hook(render->mlx, &key_handler, &game);
+	mlx_loop_hook(render->mlx, &draw_rays, &game);
+	mlx_loop_hook(render->mlx, &draw_player, render);
+	mlx_loop(render->mlx);
+	mlx_terminate(render->mlx);
+	free_game(&game);
+	//free_render(render);
 }

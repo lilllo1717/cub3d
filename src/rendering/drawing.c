@@ -68,11 +68,10 @@ static uint32_t	get_texture_pixel(mlx_texture_t *texture, int x, int y)
 void	draw_col(t_game *game)
 {
 	mlx_texture_t	*hit_wall_texture;
-	//int				col_x;
+
 	int				wall_start;
 	int 			wall_end;
 	int 			y;
-	//int			tex_x_coord;
 	float			texture_step;
 	float			texture_pos;
 	int				tex_x;
@@ -81,17 +80,22 @@ void	draw_col(t_game *game)
 
 	tex_x = (int)get_xcoord_from_texture(game);
 	hit_wall_texture = select_correct_texture(game);
-	texture_step = (float)hit_wall_texture->height / game->render->line_height;
+	texture_step = (float)hit_wall_texture->height / (float)game->render->line_height;
 	texture_pos = (game->render->line_offset - HEIGHT / 2 + game->render->line_height / 2) * texture_step;
 	y = 0;
-	// col_x = game->render->ray;
-	// if (col_x >= WIDTH)
+
 	// 	return ;
 	wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
 	wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
 	while (y < HEIGHT)
 	{
-		if (y >= game->render->line_offset && y < game->render->line_offset + game->render->line_height)
+		if (y < wall_start)
+		{
+			mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->c_rgb);
+		}
+		else if (y > wall_end)
+			mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->f_rgb);
+		else
 		{
 			// we found a wall section so we draw texture
 			tex_y = (int)texture_pos;
@@ -100,19 +104,10 @@ void	draw_col(t_game *game)
 			if (tex_y >= (int)hit_wall_texture->height)
 				tex_y = hit_wall_texture->height - 1;
 			texture_pos += texture_step;
-
 			// get the pixel color from texture
 			pixel_color = get_texture_pixel(hit_wall_texture, tex_x, tex_y);
 			mlx_put_pixel(game->render->ray_image, game->render->ray, y, pixel_color);
         }
-		else
-		{
-			// draw ceiling or floor
-			if (y < game->render->line_offset)
-				mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->c_rgb);
-			else
-				mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->f_rgb); 
-		}
 		y++;
 	}
 }
