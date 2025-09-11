@@ -3,12 +3,12 @@ F 4,112,73
 C 52,134,235
 
 
-NO ./brick1.png
-SO ./brick2.png
+NO ./brick_n.png
+SO ./brick_s.png
 
 
-WE ./brick3.png
-EA ./brick4.png
+WE ./brick_w.png
+EA ./brick_e.png
 
 
 

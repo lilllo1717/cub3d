@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:21:24 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/20 11:28:54 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:35:41 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	all_color_present(int *color_val)
 	{
 		if (color_val[count_color] != 1)
 		{
-			printf("Invalid input: Wrong number of colors.\n");
+			err("Invalid input: Wrong number of colors.\n");
 			return (false);
 		}
 		count_color++;
@@ -38,7 +38,7 @@ bool	all_texture_present(int *texture_val)
 	{
 		if (texture_val[count_text] != 1)
 		{
-			printf("Invalid input: Wrong number of textures.\n");
+			err("Invalid input: Wrong number of textures.\n");
 			return (false);
 		}
 		count_text++;

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:12:41 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/09 14:40:18 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:20:19 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void    mouse_handler(double xpos, double ypos, void* param)
 
     (void)ypos;
 	game = (t_game *)param;
+    mlx_set_cursor_mode(game->render->mlx, MLX_MOUSE_HIDDEN);
     mlx_set_mouse_pos(game->render->mlx, WIDTH/2, HEIGHT/2);
     mouse_delta = (xpos - WIDTH/2) * 0.0004;
     game->render->player_angle += mouse_delta;

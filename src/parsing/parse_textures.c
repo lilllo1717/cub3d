@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:32:38 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/11 11:16:31 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:29:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	first_letters(t_game *game, char *start_pars, char c, int len)
 
 int	second_letters(t_game *game, char *start_pars, char c, int len)
 {
-	if (c == 'E')
+	if (c == 'A')
 	{
 		game->textures->e_text = (char *)malloc(len * sizeof(char));
 		if (!game->textures->e_text)
@@ -86,9 +86,15 @@ int	parsing_paths(t_game *game, char c)
 	i = 0;
 	while (game->initial_file[i])
 	{
+		// if (ft_strchr(game->initial_file[i], 'W') == 0)
+		// 	i++;
 		start_pars = ft_strchr(game->initial_file[i], c);
 		if (start_pars != NULL)
+		{
+			printf("%s\n", start_pars);
 			break ;
+			
+		}
 		i++;
 	}
 	while (*start_pars && *start_pars != '.')
@@ -108,9 +114,11 @@ int	parse_textures(t_game *game)
 		return (0);
 	if (!parsing_paths(game, 'W'))
 		return (0);
-	if (!parsing_paths(game, 'E'))
+	if (!parsing_paths(game, 'A'))
 		return (0);
-	// printf("%s\n", game->textures->n_text);
-	// printf("%s\n", game->textures->w_text);
+	// printf("east: %s\n", game->textures->e_text);
+	// printf("west: %s\n", game->textures->w_text);
+	// printf("north: %s\n", game->textures->n_text);
+	// printf("south: %s\n", game->textures->s_text);
 	return (1);
 }
