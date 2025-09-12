@@ -151,7 +151,7 @@ void	draw_rays(void  *param)
 	float		a_tan;
 	float		n_tan;
 	float		ray_angle_increment;
-	t_game	*game;
+	t_game		*game;
 
 	game = (t_game *)param;
  	if (!game || !game->render->ray_image || !game->render->ray_image->pixels)
@@ -159,7 +159,7 @@ void	draw_rays(void  *param)
 	ft_memset(game->render->ray_image->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
 	//calculate the field of view in radians (60 degrees = PI/3)
 	game->render->fov = PI / 3;
-	ray_angle_increment = game->render->fov / WIDTH; // half width for right side 3d view
+	ray_angle_increment = game->render->fov / WIDTH;
 	game->render->ray_angle = game->render->player_angle - (game->render->fov / 2);
 	// printf("ray_angle[%f]\n", game->render->ray_angle);
 	//angle normalization
@@ -219,8 +219,8 @@ void	draw_rays(void  *param)
 		game->render->line_height = (64 * HEIGHT) / game->render->correct_distance; //calculate wall height based on the distance
 		
 		// cap the line height. maintainst visual consistency regardless of player distance to the wall. and prevents renderer from drawing wall too high
-		if (game->render->line_height > HEIGHT)
-			game->render->line_height = HEIGHT;
+		// if (game->render->line_height > HEIGHT)
+		// 	game->render->line_height = HEIGHT;
 		if (game->render->line_height < 1)
 			game->render->line_height = 1;
 		// only draw every 8th ray to avoid cluttering the 2d view
@@ -239,13 +239,11 @@ float	get_xcoord_from_texture(t_game *game)
 {
 	float 	wall_offset;
 	float 	tex_coord;
-	int		maxw;
 
 	if (game->render->wall_dir == NORTH)
 	{
 		wall_offset = fmodf(game->render->wall_hit_x, TILE);
 		tex_coord = wall_offset * game->textures->north_t->width / TILE;
-		
 	}
 	else if (game->render->wall_dir == SOUTH)
 	{
@@ -265,23 +263,7 @@ float	get_xcoord_from_texture(t_game *game)
 	}
 	else
 		return 0.0f; // fallback
-	// clamp
 	if (tex_coord < 0)
 		tex_coord = 0;
-	// clamp to width-1 for safety for all directions:
-	maxw = 0;
-	if (game->render->wall_dir == SOUTH)
-		maxw = game->textures->south_t->width;
-	else if (game->render->wall_dir == NORTH) 
-		maxw = game->textures->north_t->width;
-	else if (game->render->wall_dir == EAST)  
-		maxw = game->textures->east_t->width;
-	else if (game->render->wall_dir == WEST)  
-		maxw = game->textures->west_t->width;
-	if (tex_coord >= maxw) 
-		tex_coord = maxw - 1;
-	
-	return tex_coord;
+	return (tex_coord);
 }
-
-

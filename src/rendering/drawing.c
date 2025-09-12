@@ -63,51 +63,44 @@ static uint32_t	get_texture_pixel(mlx_texture_t *texture, int x, int y)
 	color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
 
 	return (color);
-	}
+}
 
-void	draw_col(t_game *game)
+void draw_col(t_game *game)
 {
-	mlx_texture_t	*hit_wall_texture;
+    mlx_texture_t	*hit_wall_texture;
+    int				tex_x;
+	int				tex_y;
+    float			texture_step;
+	float			texture_y_offset;
+    int				y;
+	uint32_t		pixel_color; 
+    int				wall_start;
+    int				wall_end;
 
-	int				wall_start;
-	int 			wall_end;
-	int 			y;
-	float			texture_step;
-	float			texture_pos;
-	int				tex_x;
-    int				tex_y;
-	uint32_t		pixel_color;
-
-	tex_x = (int)get_xcoord_from_texture(game);
 	hit_wall_texture = select_correct_texture(game);
+	tex_x = (int)get_xcoord_from_texture(game);
 	texture_step = (float)hit_wall_texture->height / (float)game->render->line_height;
-	texture_pos = (game->render->line_offset - HEIGHT / 2 + game->render->line_height / 2) * texture_step;
-	y = 0;
-
-	// 	return ;
 	wall_start = (HEIGHT / 2) - (game->render->line_height / 2);
-	wall_end = (HEIGHT / 2) + (game->render->line_height / 2);
+	wall_end = wall_start + game->render->line_height;
+	y = 0;
 	while (y < HEIGHT)
 	{
 		if (y < wall_start)
-		{
-			mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->c_rgb);
-		}
-		else if (y > wall_end)
-			mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->f_rgb);
+			mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->c_rgb); // ceiling
+		else if (y >= wall_end)
+			mlx_put_pixel(game->render->ray_image, game->render->ray, y, game->colors->f_rgb); //floor
 		else
 		{
-			// we found a wall section so we draw texture
-			tex_y = (int)texture_pos;
-			if (tex_y < 0)
+			// calculate texture y offset coordinate relative to wall start
+			texture_y_offset = (y - wall_start) * texture_step;
+			tex_y = (int)texture_y_offset;
+			if (tex_y < 0) 
 				tex_y = 0;
-			if (tex_y >= (int)hit_wall_texture->height)
+			if (tex_y >= (int)hit_wall_texture->height) 
 				tex_y = hit_wall_texture->height - 1;
-			texture_pos += texture_step;
-			// get the pixel color from texture
 			pixel_color = get_texture_pixel(hit_wall_texture, tex_x, tex_y);
 			mlx_put_pixel(game->render->ray_image, game->render->ray, y, pixel_color);
-        }
+		}
 		y++;
 	}
 }
