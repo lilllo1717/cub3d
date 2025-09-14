@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 10:17:46 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/29 13:27:26 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/14 18:11:35 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,18 @@ void	free_2dint(int **arr)
 	free(arr);
 }
 
+void	free_render(t_render *render)
+{
+	// free_2dint(&render->map);
+	if (render->player_image)
+		mlx_delete_image(render->mlx, render->player_image);
+	if (render->ray_image)
+		mlx_delete_image(render->mlx, render->ray_image);
+	if (render->mlx)
+		mlx_terminate(render->mlx);
+	free(render);
+}
+
 void	free_game(t_game *game)
 {
 	free_2darray(game->initial_file);
@@ -73,6 +85,19 @@ void	free_game(t_game *game)
 	free(game->textures->s_text);
 	free(game->textures->w_text);
 	free(game->textures->e_text);
+	// mlx_delete_image(game->render->mlx, game->textures->east_t);
+	// mlx_delete_image(game->render->mlx, game->textures->west_t);
+	// mlx_delete_image(game->render->mlx, game->textures->south_t);
+	// mlx_delete_image(game->render->mlx, game->textures->north_t);
+	if (game->textures->east_t)
+		mlx_delete_texture(game->textures->east_t);
+	if (game->textures->west_t)
+		mlx_delete_texture(game->textures->west_t);
+	if (game->textures->south_t)
+		mlx_delete_texture(game->textures->south_t);
+	if (game->textures->north_t)
+		mlx_delete_texture(game->textures->north_t);
 	free(game->textures);
+	free_render(game->render);
 	game = NULL;
 }

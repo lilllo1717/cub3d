@@ -165,9 +165,6 @@ int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 	}
 	find_map_dimensions(game);
 	parse_player(game, render);
-	// printf("y: %f\n",render->player_y);
-	// printf("x: %f\n",render->player_x);
-	// printf("x: %f\n",render->player_angle);
 	if (!init_game_parsing(game))
 		return (free_2darray(game->map), free(game->initial_file), 0);
 	if (!parse_colors(game))

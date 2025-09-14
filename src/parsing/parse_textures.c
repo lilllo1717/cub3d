@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:32:38 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/11 15:32:25 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:54:47 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,9 @@ int	parsing_paths(t_game *game, char c)
 	i = 0;
 	while (game->initial_file[i])
 	{
-		// if (ft_strchr(game->initial_file[i], 'W') == 0)
-		// 	i++;
 		start_pars = ft_strchr(game->initial_file[i], c);
 		if (start_pars != NULL)
-		{
-			printf("%s\n", start_pars);
 			break ;
-			
-		}
 		i++;
 	}
 	while (*start_pars && *start_pars != '.')

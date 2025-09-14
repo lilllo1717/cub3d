@@ -168,6 +168,7 @@ int						malloc_map(char **map, t_map *map_dim);
 void					free_game(t_game *game);
 int						init_game_parsing(t_game *game);
 void					err(char *str);
+void					free_render(t_render *render);
 
 /* ----mlx---- */
 t_render				*init_render(void);

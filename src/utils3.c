@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 11:29:46 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/11 11:30:46 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:51:51 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	err(char *str)
 {
 	printf("Error.\n");
-	printf(str);
+	printf("%s", str);
 }

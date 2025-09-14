@@ -1,0 +1,34 @@
+{
+   mlx42_glfw
+   Memcheck:Leak
+   ...
+   obj:*/libglfw.so.*
+}
+
+{
+   mlx42_x11
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so.*
+}
+
+{
+   mlx42_opengl
+   Memcheck:Leak
+   ...
+   obj:*/libGL.so.*
+}
+
+{
+   ld_linux_dynamic_loader
+   Memcheck:Addr8
+   ...
+   obj:*/ld-linux-x86-64.so.*
+}
+
+{
+   ld_linux_dynamic_loader_leak
+   Memcheck:Leak
+   ...
+   obj:*/ld-linux-x86-64.so.*
+}
