@@ -27,10 +27,13 @@ int	main(int argc, char **argv)
 	(void)argv;
 
 	render = init_render();
+	if (!render)
+		return (1);
 	if (implement_parsing(&game, render, argc, argv) == 0)
 		return (free_render(render), 1);
 	game.render = render;
-	load_textures(&game);
+	if (load_textures(&game) == 0)
+		return (free_step2(&game), 1);
 	mlx_start(&game);
 	create_world(&game);
 	mlx_cursor_hook(render->mlx, &mouse_handler, &game);

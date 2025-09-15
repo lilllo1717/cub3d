@@ -170,10 +170,11 @@ void					free_game(t_game *game);
 int						init_game_parsing(t_game *game);
 void					err(char *str);
 void					free_render(t_render *render);
+void					free_step2(t_game *game);
 
 /* ----mlx---- */
 t_render				*init_render(void);
-void					mlx_start(t_game *game);
+int						mlx_start(t_game *game);
 void					draw_player(void *param);
 void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
