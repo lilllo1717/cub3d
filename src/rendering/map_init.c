@@ -2,7 +2,7 @@
 
 void create_world(void *param)
 {
-	mlx_image_t	* tile;
+	mlx_image_t	*tile;
 	t_game	*game;
 
 	game = (t_game *)param;
