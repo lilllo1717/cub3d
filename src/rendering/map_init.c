@@ -2,29 +2,28 @@
 
 void create_world(void *param)
 {
-	mlx_image_t	* tile;
-	t_game	*game;
+	mlx_image_t	*tile;
+	t_game		*game;
+	uint32_t	color;
+	int			x = 0;
+	int 		y = 0;
+	int			xo = 0;
+	int 		yo = 0;
+	int			tile_instance;
+	int			ray_instance;
 
 	game = (t_game *)param;
 	if (!game->render) {
 		printf("ERROR: Invalid game->render or game->map is NULL\n");
 		return ;
 	}
-	uint32_t color;
-
-	int	x = 0;
-	int y = 0;
-	int	xo = 0;
-	int yo = 0;
-
 	if (!game->map) 
 	{
    		 printf("ERROR: render->map is NULL!\n");
     	return;
 	}
-
-	//put_textures(game);
 	tile = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
+	
     if (!tile)
 		return;
 	ft_memset(tile->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
@@ -35,24 +34,15 @@ void create_world(void *param)
 		{
 
 			if (game->map[y][x] == '1')
-			{
-				//printf("x[%d] y[%d]\n", x, y);
 				color = WALL;
-			}
 			else if (game->map[y][x] == '0' || game->map[y][x] == 'N' || game->map[y][x] == 'S' 
 				|| game->map[y][x] == 'W' || game->map[y][x] == 'E')
-			{
-				//printf("x[%d] y[%d]\n", x, y);
 				color = FLOOR;
-			}
 			else
-			{
-				//printf("x[%d] y[%d]\n", x, y); 
 				color = EMPTY;
-			}
 			xo = x * TILE;
 			yo = y * TILE;
-			if (xo < (WIDTH / 2) && yo < HEIGHT)
+			if (xo < (WIDTH) && yo < HEIGHT)
 				put_tile(tile, xo, yo, TILE, color);
 			x++;
 		}
@@ -63,8 +53,12 @@ void create_world(void *param)
 		return ;
 	ft_memset(game->render->ray_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
-	mlx_image_to_window(game->render->mlx, tile, 0, 0);
-	mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
+	tile_instance = mlx_image_to_window(game->render->mlx, tile, 16, 16);
+	ray_instance = mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
+	if (ray_instance >= 0)
+		game->render->ray_image->instances[ray_instance].z = 0;
+	if (tile_instance >= 0)
+		tile->instances[tile_instance].z = 100;
 	game->render->player_delta_x = cos(game->render->player_angle) * 5;
 	game->render->player_delta_y = sin(game->render->player_angle) * 5;
 }
@@ -94,11 +88,7 @@ void	draw_player(void *param)
 	t_render	*render;
 	float		pixel_x;
 	float		pixel_y;
-	// float		y;
-	// float		x;
 
-	// y = 0;
-	// x = 0;
 	render = (t_render *)param;
 	if (!render->player_image)
 	{
@@ -112,5 +102,4 @@ void	draw_player(void *param)
 	pixel_x = render->player_x;
 	pixel_y = render->player_y;
 	put_tile(render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10 , PLAYER_COLOR);
-	
 }

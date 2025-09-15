@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/09 14:14:07 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:56:36 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	mlx_start(t_game *game)
 	else
 		printf("mlx started\n");
 	mlx_key_hook(game->render->mlx, &key_handler, game->render);
-	create_world(game);
+	// create_world(game);
 	draw_player(game->render);
 }
 
@@ -54,7 +54,6 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	left_right(game);
 	forward_backward(game);
 	turn(game);
-	//draw_player(game->render);
 }
 
 void	left_right(t_game *game)

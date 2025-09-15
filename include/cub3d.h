@@ -15,13 +15,14 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define PLAYER_COLOR 0xFF0000FF
-# define WALL 0xFFFFFFFF
-# define FLOOR 0x00FFFFFF
+# define WALL 0xFFFFFF30
+# define FLOOR 0x00FFFF30
 # define EMPTY 0x00000000
 # define PI 3.1415926535
 # define P2 (PI / 2)
 # define P3 (3 * PI / 2)
 # define TILE 64
+# define MINITILE 16
 # define SOUTH 0
 # define NORTH 1
 # define EAST 2
