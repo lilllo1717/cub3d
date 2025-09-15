@@ -10,7 +10,7 @@ void create_world(void *param)
 	int			xo = 0;
 	int 		yo = 0;
 	int			tile_instance;
-	int			ray_instance;
+	// int			ray_instance;
 
 	
 	game = (t_game *)param;
@@ -54,14 +54,10 @@ void create_world(void *param)
 		return ;
 	ft_memset(game->render->ray_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
-	ray_instance = mlx_image_to_window(game->render->mlx, tile, 16, 16);
-	tile_instance = mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
-	if (ray_instance >= 0)
-		mlx_set_instance_depth(ray_instance, 0);
-	// 	game->render->ray_image->instances[ray_instance].z = 10;
+	tile_instance = mlx_image_to_window(game->render->mlx, tile, 16, 16);
+	mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
 	if (tile_instance >= 0)
-		mlx_set_instance_depth(tile_instance, 0);
-	// 	tile->instances[tile_instance].z = 5; 
+		tile->instances[tile_instance].z = 5;
 	game->render->player_delta_x = cos(game->render->player_angle) * 5;
 	game->render->player_delta_y = sin(game->render->player_angle) * 5;
 }
