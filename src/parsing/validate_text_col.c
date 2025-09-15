@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:36:51 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/11 12:37:30 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/15 12:12:52 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ bool	is_valid_text_path(char *line)
 	file_name[i] = '\0';
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		return (free(file_name), err("Invalid texture path.\n"), close(fd),
-			false);
+		return (free(file_name), err("Invalid texture path.\n"), false);
 	close(fd);
 	free(file_name);
 	return (true);
