@@ -14,7 +14,12 @@
 
 void	render_frame(void *param)
 {
-	
+	t_game	*game;
+
+	game = (t_game *)param;
+	draw_rays(game);
+	draw_player(game);
+	//create_world(game);
 }
 
 

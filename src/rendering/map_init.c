@@ -12,6 +12,7 @@ void create_world(void *param)
 	int			tile_instance;
 	int			ray_instance;
 
+	
 	game = (t_game *)param;
 	if (!game->render) {
 		printf("ERROR: Invalid game->render or game->map is NULL\n");
@@ -40,10 +41,10 @@ void create_world(void *param)
 				color = FLOOR;
 			else
 				color = EMPTY;
-			xo = x * TILE;
-			yo = y * TILE;
+			xo = x * MINITILE;
+			yo = y * MINITILE;
 			if (xo < (WIDTH) && yo < HEIGHT)
-				put_tile(tile, xo, yo, TILE, color);
+				put_tile(tile, xo, yo, MINITILE, color);
 			x++;
 		}
 		y++;
@@ -53,12 +54,14 @@ void create_world(void *param)
 		return ;
 	ft_memset(game->render->ray_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
-	tile_instance = mlx_image_to_window(game->render->mlx, tile, 16, 16);
-	ray_instance = mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
+	ray_instance = mlx_image_to_window(game->render->mlx, tile, 16, 16);
+	tile_instance = mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
 	if (ray_instance >= 0)
-		game->render->ray_image->instances[ray_instance].z = 0;
+		mlx_set_instance_depth(ray_instance, 0);
+	// 	game->render->ray_image->instances[ray_instance].z = 10;
 	if (tile_instance >= 0)
-		tile->instances[tile_instance].z = 100;
+		mlx_set_instance_depth(tile_instance, 0);
+	// 	tile->instances[tile_instance].z = 5; 
 	game->render->player_delta_x = cos(game->render->player_angle) * 5;
 	game->render->player_delta_y = sin(game->render->player_angle) * 5;
 }
@@ -85,21 +88,21 @@ void	put_tile(mlx_image_t *image, int start_x, int start_y, int size, uint32_t c
 
 void	draw_player(void *param)
 {
-	t_render	*render;
+	t_game	*game;
 	float		pixel_x;
 	float		pixel_y;
 
-	render = (t_render *)param;
-	if (!render->player_image)
+	game = (t_game *)param;
+	if (!game->render->player_image)
 	{
-		render->player_image = mlx_new_image(render->mlx, WIDTH, HEIGHT);
-		if (mlx_image_to_window(render->mlx, render->player_image, 0,  0) < 0)
+		game->render->player_image = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
+		if (mlx_image_to_window(game->render->mlx, game->render->player_image, game->map_info.max_len * MINITILE,  game->map_info.num_rows * MINITILE) < 0)
 			return ;
 	}
 	
-	ft_memset(render->player_image->pixels, 0,
+	ft_memset(game->render->player_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
-	pixel_x = render->player_x;
-	pixel_y = render->player_y;
-	put_tile(render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10 , PLAYER_COLOR);
+	pixel_x = game->render->player_x;
+	pixel_y = game->render->player_y;
+	put_tile(game->render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10 , PLAYER_COLOR);
 }
