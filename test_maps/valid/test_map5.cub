@@ -2,13 +2,11 @@
 
 F 220,100,0
 C 225,30,0
-NO ./brick1.jpg
+NO ./brick1_n.jpg
 
-EA ./brick4.jpg
+EA ./brick4_e.jpg
 
-SO ./brick2.png
-
-
+SO ./brick2_s.png
 
 
 
@@ -22,7 +20,9 @@ SO ./brick2.png
 
 
 
-WE ./brick3.jpg
+
+
+WE ./brick3_w.jpg
 
 1111
 10N1

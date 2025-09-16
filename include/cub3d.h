@@ -27,6 +27,7 @@
 # define NORTH 1
 # define EAST 2
 # define WEST 3
+# define M_SPEED 150.0
 
 enum					keys_texture
 {

@@ -19,6 +19,9 @@ void	render_frame(void *param)
 	game = (t_game *)param;
 	draw_rays(game);
 	draw_player(game);
+	left_right(game);
+	forward_backward(game);
+	turn(game);
 	//create_world(game);
 }
 
@@ -43,8 +46,6 @@ int	main(int argc, char **argv)
 	//create_world(&game);
 	mlx_cursor_hook(render->mlx, &mouse_handler, &game);
 	mlx_key_hook(render->mlx, &key_handler, &game);
-	// mlx_loop_hook(render->mlx, &draw_rays, &game);
-	// mlx_loop_hook(render->mlx, &draw_player, render);
 	mlx_loop_hook(render->mlx, &render_frame, &game);
 	mlx_loop(render->mlx);
 	// mlx_terminate(render->mlx);

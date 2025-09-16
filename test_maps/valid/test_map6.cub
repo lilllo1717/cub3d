@@ -1,9 +1,9 @@
-NO           ./brick1.jpg
-SO    ./brick2.png
-WE ./brick3.jpg
+NO           ./brick1_n.jpg
+SO    ./brick2_s.png
+WE ./brick3_w.jpg
 
 
-EA ./brick4.jpg
+EA ./brick4_e.jpg
 
 
 F 13,32,3
