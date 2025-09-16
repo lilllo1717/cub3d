@@ -224,8 +224,8 @@ void	draw_rays(void  *param)
 		if (game->render->line_height < 1)
 			game->render->line_height = 1;
 		// only draw every 8th ray to avoid cluttering the 2d view
-		if (game->render->ray % 32 == 0)
-			draw_line(game->render, (int)game->render->player_x, (int)game->render->player_y, (int)game->render->ray_x, (int)game->render->ray_y);
+		// if (game->render->ray % 32 == 0)
+		// 	draw_line(game->render, (int)game->render->player_x, (int)game->render->player_y, (int)game->render->ray_x, (int)game->render->ray_y);
 		//line offset
 		game->render->line_offset = (HEIGHT / 2) - (game->render->line_height / 2);
 		draw_col(game);

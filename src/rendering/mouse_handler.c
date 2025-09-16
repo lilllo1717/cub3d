@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 13:12:41 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/11 15:20:19 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/16 15:09:02 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void    mouse_handler(double xpos, double ypos, void* param)
     game->render->player_angle += mouse_delta;
     game->render->player_delta_x = cos(game->render->player_angle) * 1.0;
 	game->render->player_delta_y = sin(game->render->player_angle) * 1.0;
-    mlx_set_mouse_pos(game->render->mlx, WIDTH/2, HEIGHT/2);
+    // mlx_set_mouse_pos(game->render->mlx, WIDTH/2, HEIGHT/2);
 }
 

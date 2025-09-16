@@ -52,12 +52,13 @@ void create_world(void *param)
 	game->render->ray_image = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
 	if (!game->render->ray_image)
 		return ;
+	mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
+	mlx_set_instance_depth(game->render->ray_image->instances, 0);
 	ft_memset(game->render->ray_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
 	tile_instance = mlx_image_to_window(game->render->mlx, tile, 16, 16);
-	mlx_image_to_window(game->render->mlx, game->render->ray_image, 0, 0);
-	if (tile_instance >= 0)
-		tile->instances[tile_instance].z = 5;
+	
+	mlx_set_instance_depth(tile->instances, 2);
 	game->render->player_delta_x = cos(game->render->player_angle) * 5;
 	game->render->player_delta_y = sin(game->render->player_angle) * 5;
 }
@@ -84,21 +85,23 @@ void	put_tile(mlx_image_t *image, int start_x, int start_y, int size, uint32_t c
 
 void	draw_player(void *param)
 {
-	t_game	*game;
+	t_game		*game;
 	float		pixel_x;
 	float		pixel_y;
+	int			player_inst;
 
 	game = (t_game *)param;
 	if (!game->render->player_image)
 	{
+		// printf("player image is null, creating image\n");
 		game->render->player_image = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
-		if (mlx_image_to_window(game->render->mlx, game->render->player_image, game->map_info.max_len * MINITILE,  game->map_info.num_rows * MINITILE) < 0)
-			return ;
+		player_inst = mlx_image_to_window(game->render->mlx, game->render->player_image, 0,  0);
+		printf("id [%d]\n", player_inst);
+		mlx_set_instance_depth(game->render->player_image->instances, 3);
 	}
-	
 	ft_memset(game->render->player_image->pixels, 0,
 		WIDTH * HEIGHT * sizeof(int32_t));
-	pixel_x = game->render->player_x;
-	pixel_y = game->render->player_y;
-	put_tile(game->render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10 , PLAYER_COLOR);
+	pixel_x = (game->render->player_x / TILE) * MINITILE + 16;
+	pixel_y = (game->render->player_y / TILE) * MINITILE + 16;
+	put_tile(game->render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, 10, PLAYER_COLOR);
 }

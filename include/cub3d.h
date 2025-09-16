@@ -14,7 +14,7 @@
 # define DR 0.0174533 //one degree in radians, used to seperate each ray by 1 degree
 # define WIDTH 1920
 # define HEIGHT 1080
-# define PLAYER_COLOR 0xFF0000FF
+# define PLAYER_COLOR 0x00FFFFFF
 # define WALL 0xFF0000FF
 # define FLOOR 0x00FFFF30
 # define EMPTY 0x00000000
