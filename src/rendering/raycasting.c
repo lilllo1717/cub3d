@@ -18,7 +18,7 @@ void	setup_horizontal_rays(t_game *game, int max_dof)
 {
 	if (game->render->ray_angle > PI) // looking up
 	{
-		game->render->ray_y = (((int)game->render->player_y / TILE) * TILE) - 0.0001;
+		game->render->ray_y = (((int)game->render->player_y / TILE) * TILE) - 0.001;
 		// game->render->ray_x = game->render->player_x + (game->render->player_y - game->render->ray_y)/tan(game->render->ray_angle);
 		game->render->ray_x  = game->render->player_x + (game->render->ray_y - game->render->player_y) / tan(game->render->ray_angle);
 		game->render->y_offset = -TILE; 
@@ -77,7 +77,7 @@ void	setup_vertical_rays(t_game *game, int max_dof)
 {
 	if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // looking left
 	{
-		game->render->ray_x = (((int)game->render->player_x / TILE) * TILE) - 0.0001;
+		game->render->ray_x = (((int)game->render->player_x / TILE) * TILE) - 0.001;
 		// game->render->ray_y = (game->render->player_x - game->render->ray_x) * tan(game->render->ray_angle) + game->render->player_y;
 		game->render->ray_y = game->render->player_y + (game->render->ray_x - game->render->player_x) * tan(game->render->ray_angle);
 		game->render->x_offset = -TILE;
@@ -217,7 +217,7 @@ void	draw_rays(void  *param)
 			game->render->correct_distance = 1.0;
 		
 		game->render->line_height = (64 * HEIGHT) / game->render->correct_distance; //calculate wall height based on the distance
-		
+
 		// cap the line height. maintainst visual consistency regardless of player distance to the wall. and prevents renderer from drawing wall too high
 		// if (game->render->line_height > HEIGHT)
 		// 	game->render->line_height = HEIGHT;
@@ -237,33 +237,37 @@ void	draw_rays(void  *param)
 
 float	get_xcoord_from_texture(t_game *game)
 {
-	float 	wall_offset;
-	float 	tex_coord;
+	float 			wall_offset;
+	float 			tex_coord;
+	mlx_texture_t	*current_text;
 
 	if (game->render->wall_dir == NORTH)
 	{
 		wall_offset = fmodf(game->render->wall_hit_x, TILE);
-		tex_coord = wall_offset * game->textures->north_t->width / TILE;
+		current_text = game->textures->north_t;
 	}
 	else if (game->render->wall_dir == SOUTH)
 	{
 		wall_offset = TILE - fmodf(game->render->wall_hit_x, TILE);
-		tex_coord = wall_offset * game->textures->south_t->width / TILE;
+		current_text = game->textures->south_t;
 	}
 	else if (game->render->wall_dir == EAST)
 	{
 		wall_offset = fmodf(game->render->wall_hit_y, TILE);
-		tex_coord = wall_offset * game->textures->east_t->width / TILE;
+		current_text = game->textures->east_t;
 		
 	}
 	else if (game->render->wall_dir == WEST)
 	{
 		wall_offset = TILE - fmodf(game->render->wall_hit_y, TILE);
-		tex_coord = wall_offset * game->textures->west_t->width / TILE;
+		current_text = game->textures->west_t;
 	}
 	else
 		return 0.0f; // fallback
+	tex_coord = wall_offset * current_text->width / TILE;
 	if (tex_coord < 0)
 		tex_coord = 0;
+	if (tex_coord >= current_text->width)
+		tex_coord = current_text->width - 1;
 	return (tex_coord);
 }
