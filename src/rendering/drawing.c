@@ -12,7 +12,6 @@ int	draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y)
 	int		i;
 
 	i = 0;
-
 	// deltas are the total horizontal and vertical distance from start point to end point.
 	//		positive delta y - line goes down
 	//		negative delta y - line goes up
@@ -119,3 +118,24 @@ mlx_texture_t *select_correct_texture(t_game *game)
 		return (NULL);
 }
 
+void	draw_player(void *param)
+{
+	t_game		*game;
+	float		pixel_x;
+	float		pixel_y;
+	int			player_inst;
+
+	game = (t_game *)param;
+	if (!game->render->player_image)
+	{
+		game->render->player_image = mlx_new_image(game->render->mlx, WIDTH, HEIGHT);
+		player_inst = mlx_image_to_window(game->render->mlx, game->render->player_image, 0,  0);
+		printf("id [%d]\n", player_inst);
+		mlx_set_instance_depth(game->render->player_image->instances, 3);
+	}
+	ft_memset(game->render->player_image->pixels, 0,
+		WIDTH * HEIGHT * sizeof(int32_t));
+	pixel_x = (game->render->player_x / TILE) * MINITILE + 16;
+	pixel_y = (game->render->player_y / TILE) * MINITILE + 16;
+	put_tile(game->render->player_image, (int)pixel_x - 5, (int)pixel_y - 5, PLAYER_COLOR);
+}

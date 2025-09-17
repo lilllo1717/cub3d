@@ -28,6 +28,7 @@
 # define EAST 2
 # define WEST 3
 # define M_SPEED 150.0
+# define PLAYER_SIZE 10
 
 enum					keys_texture
 {
@@ -52,6 +53,22 @@ enum					keys_colors
 	KEY_C,
 	NUM_KEYS2
 };
+
+typedef struct s_line_draw
+{
+	int					begin_x;
+	int					begin_y;
+	int					end_x;
+	int					end_y;
+	float				delta_x;
+	float				delta_y;
+	float				current_x;
+	float				current_y;
+	float				step_x;
+	float				step_y;
+	int					steps;
+} 						t_line_draw;
+
 
 typedef struct s_render
 {
@@ -89,6 +106,7 @@ typedef struct s_render
 	float				wall_hit_y;
 	int					wall_dir_h;
 	int					wall_dir_v;
+	struct s_line_draw		*line;
 }						t_render;
 
 typedef struct s_texture
@@ -180,12 +198,13 @@ void					draw_player(void *param);
 void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
 void					put_tile(mlx_image_t *image, int start_x, int start_y,
-							int size, uint32_t color);
+							uint32_t color);
 void					draw_rays(void *param);
 int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
 void					draw_col(t_game *game);
 void					check_horizontal_lines(t_game *game, float a_tan);
 void					check_vertical_lines(t_game *game, float n_tan);
+void					render_frame(void *param);
 /* ---movement------ */
 void					left_right(t_game *game);
 void					forward_backward(t_game *game);
@@ -193,8 +212,7 @@ void					turn(t_game *game);
 void    				mouse_handler(double xpos, double ypos, void* param);
 
 /* ----render utils---- */
-float					distance(float ax, float ay, float bx, float by,
-							float ang);
+float					distance(float ax, float ay, float bx, float by);
 void					normalize_angle(t_game *game);
 int						determine_steps(float delta_x, float delta_y);
 /* -- textures --*/

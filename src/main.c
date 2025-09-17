@@ -12,20 +12,6 @@
 
 #include "cub3d.h"
 
-void	render_frame(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	draw_rays(game);
-	draw_player(game);
-	left_right(game);
-	forward_backward(game);
-	turn(game);
-	//create_world(game);
-}
-
-
 int	main(int argc, char **argv)
 {
 	t_game		game;
@@ -43,7 +29,6 @@ int	main(int argc, char **argv)
 	if (load_textures(&game) == 0)
 		return (free_step2(&game), 1);
 	mlx_start(&game);
-	//create_world(&game);
 	mlx_cursor_hook(render->mlx, &mouse_handler, &game);
 	mlx_key_hook(render->mlx, &key_handler, &game);
 	mlx_loop_hook(render->mlx, &render_frame, &game);

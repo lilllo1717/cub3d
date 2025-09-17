@@ -59,7 +59,7 @@ void	horizontal_wall_detection(t_game *game, int max_dof)
 					game->render->wall_dir = SOUTH;
 				game->render->h_distance = distance(game->render->player_x,
 					game->render->player_y, game->render->horizontal_ray_x_pos,
-					game->render->horizontal_ray_y_pos, game->render->ray_angle);
+					game->render->horizontal_ray_y_pos);
 				game->render->dof = max_dof;
 			}
 			else
@@ -126,7 +126,7 @@ void	vertical_wall_detection(t_game *game, int max_dof)
 			{
 				game->render->vertical_ray_x_pos = game->render->ray_x;
 				game->render->vertical_ray_y_pos = game->render->ray_y;
-				game->render->v_distance = distance(game->render->player_x, game->render->player_y, game->render->vertical_ray_x_pos, game->render->vertical_ray_y_pos, game->render->ray_angle);
+				game->render->v_distance = distance(game->render->player_x, game->render->player_y, game->render->vertical_ray_x_pos, game->render->vertical_ray_y_pos);
 				if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // Ray pointing left
 					game->render->wall_dir = WEST;
 				else
