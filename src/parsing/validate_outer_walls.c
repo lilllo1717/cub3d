@@ -6,11 +6,46 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 10:01:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 11:34:45 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	is_space_char(char **map, size_t row, size_t col)
+{
+	if (map[row][col] == '0' || map[row][col] == 'N' || map[row][col] == 'S'
+		|| map[row][col] == 'W' || map[row][col] == 'E')
+		return (1);
+	return (0);
+}
+
+int	check_diagonals(char **map, size_t row, size_t col, t_map *map_dim)
+{
+	if (map[row][col] == ' ')
+	{
+		if (row > 0 && col > 0 && is_space_char(map, row - 1, col - 1))
+			return (1);
+		if (row > 0 && is_space_char(map, row - 1, col))
+			return (1);
+		if (row > 0 && col + 1 < map_dim->max_len + 2 && is_space_char(map, row
+				- 1, col + 1))
+			return (1);
+		if (col > 0 && is_space_char(map, row, col - 1))
+			return (1);
+		if (col + 1 < map_dim->max_len + 2 && is_space_char(map, row, col + 1))
+			return (1);
+		if (row + 1 < map_dim->num_rows + 2 && col > 0 && is_space_char(map, row
+				+ 1, col - 1))
+			return (1);
+		if (row + 1 < map_dim->num_rows + 2 && is_space_char(map, row + 1, col))
+			return (1);
+		if (row + 1 < map_dim->num_rows + 2 && col + 1 < map_dim->max_len + 2
+			&& is_space_char(map, row + 1, col + 1))
+			return (1);
+	}
+	return (0);
+}
 
 int	ft_dfs(char **map, size_t row, size_t col, t_map *map_dim)
 {
@@ -19,7 +54,12 @@ int	ft_dfs(char **map, size_t row, size_t col, t_map *map_dim)
 		return (0);
 	if (map[row][col] == '1')
 		return (0);
-	if (map[row][col] != ' ')
+	if (row > 0 && col > 0)
+	{
+		if (map[row][col] == ' ' && map[row - 1][col - 1] == '0')
+			return (1);
+	}
+	if (check_diagonals(map, row, col, map_dim) == 1)
 		return (1);
 	map[row][col] = '1';
 	if (ft_dfs(map, row - 1, col, map_dim))
