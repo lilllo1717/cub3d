@@ -173,6 +173,5 @@ int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 	if (!parse_textures(game))
 		return (free_2darray(game->map), free(game->colors), free(game->textures),
 			free(game->initial_file), 0);
-			
 	return (1);
 }

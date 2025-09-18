@@ -133,6 +133,9 @@ typedef struct s_map
 {
 	size_t				max_len;
 	size_t				num_rows;
+	size_t				original_len;
+	size_t				start_index;
+	size_t				end_index;
 	char				player_letter;
 	int					player_flag;
 }						t_map;

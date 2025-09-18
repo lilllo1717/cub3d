@@ -1,0 +1,16 @@
+
+F 4,112,73
+C 52,134,235
+
+
+NO ./brick_n.png
+SO ./brick_s.png
+
+
+WE ./brick_w.png
+EA ./brick_e.png
+
+
+        1111111
+    111110N11
+        1111
