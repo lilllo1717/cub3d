@@ -6,17 +6,11 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:46:22 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/09 12:24:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 12:19:16 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-unsigned long	convert_rgb(int *rgb)
-{
-	return (((rgb[0] & 0xff) << 24) | ((rgb[1] & 0xff) << 16) | (rgb[2] & 0xff) << 8 | (255 & 0xff));
-}
-
 
 char	**find_copy_color_c(char **file)
 {
@@ -48,8 +42,9 @@ int	parse_color_c(t_game *game)
 {
 	char	**file;
 	char	**split_colors;
-	int		rgb[3] = {0, 0, 0};
+	int		rgb[3];
 
+	ft_memset(&rgb, 0, 3);
 	split_colors = NULL;
 	file = game->initial_file;
 	split_colors = find_copy_color_c(file);
@@ -93,8 +88,9 @@ int	parse_color_f(t_game *game)
 {
 	char	**file;
 	char	**split_colors;
-	int		rgb[3] = {0, 0, 0};
+	int		rgb[3];
 
+	ft_memset(&rgb, 0, 3);
 	split_colors = NULL;
 	file = game->initial_file;
 	split_colors = find_copy_color_f(file);
@@ -114,7 +110,5 @@ int	parse_colors(t_game *game)
 		return (0);
 	if (!parse_color_c(game))
 		return (0);
-	// printf("%lX\n", game->colors->c_rgb);
-	// printf("%lX\n", game->colors->f_rgb);
 	return (1);
 }

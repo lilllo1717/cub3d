@@ -6,17 +6,16 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:53:21 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/02 14:17:14 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:21:24 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 int	count_num_lines(char *file)
 {
-	int	num_lines;
-	int	fd;
+	int		num_lines;
+	int		fd;
 	char	*line;
 
 	fd = open(file, O_RDONLY);

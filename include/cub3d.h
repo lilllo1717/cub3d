@@ -11,7 +11,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# define DR 0.0174533 //one degree in radians, used to seperate each ray by 1 degree
+# define DR 0.0174533
 # define WIDTH 1920
 # define HEIGHT 1080
 # define PLAYER_COLOR 0x00FFFFFF
@@ -67,8 +67,7 @@ typedef struct s_line_draw
 	float				step_x;
 	float				step_y;
 	int					steps;
-} 						t_line_draw;
-
+}						t_line_draw;
 
 typedef struct s_render
 {
@@ -85,10 +84,10 @@ typedef struct s_render
 	float				ray_x;
 	float				h_distance;
 	float				v_distance;
-	float				horizontal_ray_x_pos; //horizontal ray's x positions
-	float				horizontal_ray_y_pos; //horizontal ray's y positions
-	float				vertical_ray_x_pos; //vertical ray's x positions
-	float				vertical_ray_y_pos; //vertical ray's y positions
+	float				horizontal_ray_x_pos;
+	float				horizontal_ray_y_pos;
+	float				vertical_ray_x_pos;
+	float				vertical_ray_y_pos;
 	float				line_height;
 	float				line_offset;
 	float				correct_distance;
@@ -96,17 +95,17 @@ typedef struct s_render
 	int					ray;
 	float				y_offset;
 	float				x_offset;
-	int 				dof;
+	int					dof;
 	float				final_dist;
 	int					m_x;
 	int					m_y;
 	int					mp;
-	int					wall_dir; //direction of the wall that was hit by a ray. 0=N,1=S,2=E,3=W
+	int					wall_dir;
 	float				wall_hit_x;
 	float				wall_hit_y;
 	int					wall_dir_h;
 	int					wall_dir_v;
-	struct s_line_draw		*line;
+	struct s_line_draw	*line;
 }						t_render;
 
 typedef struct s_texture
@@ -171,12 +170,19 @@ int						validate_map(t_game *game, char **initial_file,
 char					**map_for_valid(char **file, t_map *map_dim);
 int						ft_dfs_inside(char **map, size_t row, size_t col,
 							t_map *map_dim);
-bool	map_chars_valid(t_game *game, char **map, t_map *map_for_pos);
+bool					map_chars_valid(t_game *game, char **map,
+							t_map *map_for_pos);
 void					find_player_position(char **map, t_render *render,
 							t_map *map_for_pos);
 int						init_game_parsing(t_game *game);
-int						implement_parsing(t_game *game, t_render *render, 
+int						implement_parsing(t_game *game, t_render *render,
 							int argc, char **argv);
+unsigned long			convert_rgb(int *rgb);
+bool					check_extension(char *start_pars);
+bool					is_col_tex(char *line);
+bool					no_invalid_input(char *line, int in_map);
+bool					is_map_last(char **map);
+
 /*utils*/
 void					free_2darray_partial(char **arr, int num);
 void					free_2darray(char **arr);
@@ -194,6 +200,10 @@ void					err(char *str);
 void					free_render(t_render *render);
 void					free_step2(t_game *game);
 void					free_invalid_map(t_game *game);
+void					init_map(t_map *map);
+int						malloc_map(char **map, t_map *map_dim);
+size_t					find_start_index(char *line);
+size_t					find_end_index(char *line);
 
 /* ----mlx---- */
 t_render				*init_render(void);
@@ -204,7 +214,8 @@ void					create_world(void *param);
 void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							uint32_t color);
 void					draw_rays(void *param);
-int						draw_line(t_render *render, int begin_x, int begin_y, int end_x, int end_y);
+int						draw_line(t_render *render, int begin_x, int begin_y,
+							int end_x, int end_y);
 void					draw_col(t_game *game);
 void					check_horizontal_lines(t_game *game, float a_tan);
 void					check_vertical_lines(t_game *game, float n_tan);
@@ -213,25 +224,23 @@ void					render_frame(void *param);
 void					left_right(t_game *game);
 void					forward_backward(t_game *game);
 void					turn(t_game *game);
-void    				mouse_handler(double xpos, double ypos, void* param);
+void					mouse_handler(double xpos, double ypos, void *param);
 
 /* ----render utils---- */
 float					distance(float ax, float ay, float bx, float by);
 void					normalize_angle(t_game *game);
 int						determine_steps(float delta_x, float delta_y);
 /* -- textures --*/
-void					put_textures(t_game *game, int wall_start, int wall_end, int col_x, int y);
+void					put_textures(t_game *game, int wall_start, int wall_end,
+							int col_x, int y);
 int						load_textures(t_game *game);
 float					get_xcoord_from_texture(t_game *game);
-mlx_texture_t 			*select_correct_texture(t_game *game);
-
+mlx_texture_t			*select_correct_texture(t_game *game);
 
 /*----rays------*/
 void					setup_horizontal_rays(t_game *game, int max_dof);
 void					horizontal_wall_detection(t_game *game, int max_dof);
 void					setup_vertical_rays(t_game *game, int max_dof);
 void					vertical_wall_detection(t_game *game, int max_dof);
-
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/03 13:11:01 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:19:54 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ int	ft_dfs_inside(char **map, size_t row, size_t col, t_map *map_dim)
 
 bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 {
-	int total = player_val[0] + player_val[1] + player_val[2] + player_val[3];
+	int	total;
 
-    if (total != 1)
-    {
-        printf("Invalid input: Wrong number of player.\n");
-        return false;
-    }
+	total = player_val[0] + player_val[1] + player_val[2] + player_val[3];
+	if (total != 1)
+	{
+		printf("Invalid input: Wrong number of player.\n");
+		return (false);
+	}
 	if (player_flag == 0)
 		map_for_pos->player_letter = 'N';
 	else if (player_flag == 1)
@@ -72,8 +73,6 @@ bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 		map_for_pos->player_letter = 'W';
 	else if (player_flag == 3)
 		map_for_pos->player_letter = 'E';
-	// else
-	// 	return (false);
 	return (true);
 }
 
@@ -102,20 +101,19 @@ bool	count_playes(char c, int *player_val, int *player_flag)
 		*player_flag = 3;
 		player_val[KEY_E]++;
 	}
-	// else
-	// 	return (false);
 	return (true);
 }
 
 bool	map_chars_valid(t_game *game, char **map, t_map *map_for_pos)
 {
-	int	player_val[4] = {0};
+	int	player_val[4];
 	int	i;
 	int	j;
 	int	player_flag;
 
 	i = 0;
 	player_flag = -1;
+	ft_memset(player_val, 0, sizeof(player_val));
 	while (map[i])
 	{
 		j = 0;
@@ -128,10 +126,8 @@ bool	map_chars_valid(t_game *game, char **map, t_map *map_for_pos)
 		i++;
 	}
 	if (player_count_valid(player_val, player_flag, map_for_pos) == false)
-		return (printf("Wrong input for player.\n"),false);
+		return (printf("Wrong input for player.\n"), false);
 	game->map_info.player_letter = map_for_pos->player_letter;
 	game->map_info.player_flag = player_flag;
-	// printf("%c\n",game->map_info.player_letter);
-	// printf("%i\n",game->map_info.player_flag);
 	return (true);
 }

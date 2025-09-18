@@ -19,7 +19,6 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-
 	render = init_render();
 	if (!render)
 		return (1);
@@ -33,6 +32,5 @@ int	main(int argc, char **argv)
 	mlx_key_hook(render->mlx, &key_handler, &game);
 	mlx_loop_hook(render->mlx, &render_frame, &game);
 	mlx_loop(render->mlx);
-	// mlx_terminate(render->mlx);
 	free_game(&game);
 }

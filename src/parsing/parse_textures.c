@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:32:38 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/14 17:54:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:14:53 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,6 @@ int	malloc_copy_texture(t_game *game, char *start_pars, char c)
 	return (1);
 }
 
-bool	check_extension(char *start_pars)
-{
-	start_pars++;
-	while(*start_pars && *start_pars != '.')
-		start_pars++;
-	if (ft_strncmp(start_pars, ".png", 4) != 0)
-		return (printf("Wrong file extension.\n"), false);
-	return (true);
-}
-
 int	parsing_paths(t_game *game, char c)
 {
 	int		i;
@@ -110,9 +100,5 @@ int	parse_textures(t_game *game)
 		return (0);
 	if (!parsing_paths(game, 'A'))
 		return (0);
-	// printf("east: %s\n", game->textures->e_text);
-	// printf("west: %s\n", game->textures->w_text);
-	// printf("north: %s\n", game->textures->n_text);
-	// printf("south: %s\n", game->textures->s_text);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 11:34:45 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:20:09 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	validate_map(t_game *game, char **initial_file, t_render *render)
 		return (printf("2.Map is invalid. Empty spaces.\n"), free_2darray(tmp),
 			free_2darray(map_to_valid), 0);
 	game->map = map_to_valid;
-	// print_2d_array(game->map);
 	free_2darray(tmp);
 	printf("Map is valid.\n");
 	return (1);
