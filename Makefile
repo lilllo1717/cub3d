@@ -15,6 +15,7 @@ SRC_ROOT = \
 	$(SRC_DIR)/utils.c \
 	$(SRC_DIR)/utils2.c \
 	$(SRC_DIR)/utils3.c \
+	$(SRC_DIR)/utils4.c \
 
 SRC_PARSING = \
 	$(SRC_DIR)/parsing/parsing.c \
@@ -27,6 +28,8 @@ SRC_PARSING = \
 	$(SRC_DIR)/parsing/validate_map_inside.c \
 	$(SRC_DIR)/parsing/parse_color.c \
 	$(SRC_DIR)/parsing/parse_textures.c \
+	$(SRC_DIR)/parsing/convert_color.c \
+	$(SRC_DIR)/parsing/check_input.c \
 
 
 SRC_RENDERING = \

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 11:29:46 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 11:45:50 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:00:07 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,15 @@ void	free_invalid_map(t_game *game)
 	free_2darray(game->initial_file);
 	if (game->map)
 		free_2darray(game->map);
+}
+
+void	init_map(t_map *map)
+{
+	map->max_len = 0;
+	map->num_rows = 0;
+	map->original_len = 0;
+	map->start_index = 0;
+	map->end_index = 0;
+	map->player_letter = '\0';
+	map->player_flag = -1;
 }

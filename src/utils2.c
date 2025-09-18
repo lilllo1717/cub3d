@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 10:17:46 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 10:00:50 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:22:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,8 @@ void	free_2dint_partial(int **arr, int num)
 	free(arr);
 }
 
-void	free_2dint(int **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
 void	free_render(t_render *render)
 {
-	// free_2dint(&render->map);
 	if (render->player_image)
 		mlx_delete_image(render->mlx, render->player_image);
 	if (render->ray_image)
@@ -85,10 +71,6 @@ void	free_game(t_game *game)
 	free(game->textures->s_text);
 	free(game->textures->w_text);
 	free(game->textures->e_text);
-	// mlx_delete_image(game->render->mlx, game->textures->east_t);
-	// mlx_delete_image(game->render->mlx, game->textures->west_t);
-	// mlx_delete_image(game->render->mlx, game->textures->south_t);
-	// mlx_delete_image(game->render->mlx, game->textures->north_t);
 	if (game->textures->east_t)
 		mlx_delete_texture(game->textures->east_t);
 	if (game->textures->west_t)

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 10:23:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/11 11:33:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 14:12:50 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,15 @@ bool	is_valid_input(int argc, char **argv)
 	}
 	if (is_valid_input_file(argv[1]) == false)
 		return (false);
+	return (true);
+}
+
+bool	check_extension(char *start_pars)
+{
+	start_pars++;
+	while (*start_pars && *start_pars != '.')
+		start_pars++;
+	if (ft_strncmp(start_pars, ".png", 4) != 0)
+		return (printf("Wrong file extension.\n"), false);
 	return (true);
 }
