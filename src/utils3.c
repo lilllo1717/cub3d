@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 11:29:46 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/15 11:47:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/18 11:45:50 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ void	free_step2(t_game *game)
 	free(game->textures->w_text);
 	free(game->textures->e_text);
 	free_render(game->render);
+}
+
+void	free_invalid_map(t_game *game)
+{
+	free_2darray(game->initial_file);
+	if (game->map)
+		free_2darray(game->map);
 }

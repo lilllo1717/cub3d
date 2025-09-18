@@ -157,12 +157,7 @@ int	implement_parsing(t_game *game, t_render *render, int argc, char **argv)
 	if (parse_file(game->initial_file) == false)
 		return (free_2darray(game->initial_file), 0);
 	if (!validate_map(game, game->initial_file, render))
-	{
-		free_2darray(game->initial_file);
-		if (game->map)
-			free_2darray(game->map);
-		return (0);
-	}
+		return (free_invalid_map(game), 0);
 	find_map_dimensions(game);
 	parse_player(game, render);
 	if (!init_game_parsing(game))

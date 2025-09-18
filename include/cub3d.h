@@ -193,6 +193,7 @@ int						init_game_parsing(t_game *game);
 void					err(char *str);
 void					free_render(t_render *render);
 void					free_step2(t_game *game);
+void					free_invalid_map(t_game *game);
 
 /* ----mlx---- */
 t_render				*init_render(void);
