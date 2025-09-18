@@ -130,9 +130,12 @@ typedef struct s_map
 {
 	size_t				max_len;
 	size_t				num_rows;
+	size_t				original_len;
+	size_t				start_index;
+	size_t				end_index;
 	char				player_letter;
 	int					player_flag;
-}						t_map;
+}								t_map;
 
 typedef struct s_game
 {
@@ -226,7 +229,5 @@ void					setup_horizontal_rays(t_game *game, int max_dof);
 void					horizontal_wall_detection(t_game *game, int max_dof);
 void					setup_vertical_rays(t_game *game, int max_dof);
 void					vertical_wall_detection(t_game *game, int max_dof);
-
-
 
 #endif

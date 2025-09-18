@@ -2,11 +2,12 @@
 
 void	check_horizontal_lines(t_game *game, float a_tan)
 {
-	(void)a_tan;
 	int	max_dof;
+
 	// if (game->map_info.max_len > game->map_info.num_rows)
 	// 	max_dof = game->map_info.max_len;
 	// else
+	(void)a_tan;
 	max_dof = game->map_info.num_rows;
 	game->render->horizontal_ray_x_pos = game->render->player_x;
 	game->render->horizontal_ray_y_pos = game->render->player_y;
@@ -18,21 +19,26 @@ void	setup_horizontal_rays(t_game *game, int max_dof)
 {
 	if (game->render->ray_angle > PI) // looking up
 	{
-		game->render->ray_y = (((int)game->render->player_y / TILE) * TILE) - 0.001;
-		// game->render->ray_x = game->render->player_x + (game->render->player_y - game->render->ray_y)/tan(game->render->ray_angle);
-		game->render->ray_x  = game->render->player_x + (game->render->ray_y - game->render->player_y) / tan(game->render->ray_angle);
-		game->render->y_offset = -TILE; 
-		game->render->x_offset = game->render->y_offset/tan(game->render->ray_angle); 
+		game->render->ray_y = (((int)game->render->player_y / TILE) * TILE)
+			- 0.001;
+		game->render->ray_x = game->render->player_x + (game->render->ray_y
+				- game->render->player_y) / tan(game->render->ray_angle);
+		game->render->y_offset = -TILE;
+		game->render->x_offset = game->render->y_offset
+			/ tan(game->render->ray_angle);
 	}
 	else if (game->render->ray_angle < PI) // looking down
 	{
-		game->render->ray_y = (((int)game->render->player_y / TILE) * TILE) + TILE;
-		// game->render->ray_x = game->render->player_x + (game->render->player_y - game->render->ray_y)/ tan(game->render->ray_angle);
-		game->render->ray_x  = game->render->player_x + (game->render->ray_y - game->render->player_y) / tan(game->render->ray_angle);
-		game->render->y_offset = TILE; 
-		game->render->x_offset = game->render->y_offset/tan(game->render->ray_angle);
+		game->render->ray_y = (((int)game->render->player_y / TILE) * TILE)
+			+ TILE;
+		game->render->ray_x = game->render->player_x + (game->render->ray_y
+				- game->render->player_y) / tan(game->render->ray_angle);
+		game->render->y_offset = TILE;
+		game->render->x_offset = game->render->y_offset
+			/ tan(game->render->ray_angle);
 	}
-	else if (game->render->ray_angle == 0 || game->render->ray_angle == PI) // looking straight left or right
+	else if (game->render->ray_angle == 0 || game->render->ray_angle == PI)
+		// looking straight left or right
 	{
 		game->render->ray_x = game->render->player_x;
 		game->render->ray_y = game->render->player_y;
@@ -46,8 +52,10 @@ void	horizontal_wall_detection(t_game *game, int max_dof)
 	{
 		game->render->m_x = (int)(game->render->ray_x) / TILE;
 		game->render->m_y = (int)(game->render->ray_y) / TILE;
-		if (game->render->m_x >= 0 && game->render->m_x < (int)game->map_info.max_len && 
-			game->render->m_y >= 0 && game->render->m_y < (int)game->map_info.num_rows)
+		if (game->render->m_x >= 0
+			&& game->render->m_x < (int)game->map_info.max_len
+			&& game->render->m_y >= 0
+			&& game->render->m_y < (int)game->map_info.num_rows)
 		{
 			if (game->map[game->render->m_y][game->render->m_x] == '1')
 			{
@@ -58,8 +66,9 @@ void	horizontal_wall_detection(t_game *game, int max_dof)
 				else
 					game->render->wall_dir = SOUTH;
 				game->render->h_distance = distance(game->render->player_x,
-					game->render->player_y, game->render->horizontal_ray_x_pos,
-					game->render->horizontal_ray_y_pos);
+						game->render->player_y,
+						game->render->horizontal_ray_x_pos,
+						game->render->horizontal_ray_y_pos);
 				game->render->dof = max_dof;
 			}
 			else
@@ -71,25 +80,30 @@ void	horizontal_wall_detection(t_game *game, int max_dof)
 		}
 		else
 			game->render->dof = max_dof;
-	}	
+	}
 }
+
 void	setup_vertical_rays(t_game *game, int max_dof)
 {
 	if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // looking left
 	{
-		game->render->ray_x = (((int)game->render->player_x / TILE) * TILE) - 0.001;
-		// game->render->ray_y = (game->render->player_x - game->render->ray_x) * tan(game->render->ray_angle) + game->render->player_y;
-		game->render->ray_y = game->render->player_y + (game->render->ray_x - game->render->player_x) * tan(game->render->ray_angle);
+		game->render->ray_x = (((int)game->render->player_x / TILE) * TILE)
+			- 0.001;
+		game->render->ray_y = game->render->player_y + (game->render->ray_x
+				- game->render->player_x) * tan(game->render->ray_angle);
 		game->render->x_offset = -TILE;
-		game->render->y_offset = game->render->x_offset * tan(game->render->ray_angle); 
+		game->render->y_offset = game->render->x_offset
+			* tan(game->render->ray_angle);
 	}
-	else if (game->render->ray_angle < P2 || game->render->ray_angle > P3) // looking right
+	else if (game->render->ray_angle < P2 || game->render->ray_angle > P3)		// looking right
 	{
-		game->render->ray_x = (((int)game->render->player_x / TILE) * TILE) + TILE;
-		// game->render->ray_y = (game->render->player_x - game->render->ray_x) * tan(game->render->ray_angle) + game->render->player_y;
-		game->render->ray_y = game->render->player_y + (game->render->ray_x - game->render->player_x) * tan(game->render->ray_angle);
-		game->render->x_offset = TILE; 
-		game->render->y_offset = game->render->x_offset * tan(game->render->ray_angle); 
+		game->render->ray_x = (((int)game->render->player_x / TILE) * TILE)
+			+ TILE;
+		game->render->ray_y = game->render->player_y + (game->render->ray_x
+				- game->render->player_x) * tan(game->render->ray_angle);
+		game->render->x_offset = TILE;
+		game->render->y_offset = game->render->x_offset
+			* tan(game->render->ray_angle);
 	}
 	else if (game->render->ray_angle == P2 || game->render->ray_angle == P3) // looking straight up or down
 	{
@@ -101,12 +115,13 @@ void	setup_vertical_rays(t_game *game, int max_dof)
 
 void	check_vertical_lines(t_game *game, float n_tan)
 {
-	(void)n_tan;
 	int	max_dof;
+
 	// if (game->map_info.max_len > game->map_info.num_rows)
 	max_dof = game->map_info.max_len;
 	// else
 	// 	max_dof = game->map_info.num_rows;
+	(void)n_tan;
 	game->render->vertical_ray_x_pos = game->render->player_x;
 	game->render->vertical_ray_y_pos = game->render->player_y;
 	setup_vertical_rays(game, max_dof);
@@ -119,15 +134,21 @@ void	vertical_wall_detection(t_game *game, int max_dof)
 	{
 		game->render->m_x = (int)(game->render->ray_x) / TILE;
 		game->render->m_y = (int)(game->render->ray_y) / TILE;
-		 if (game->render->m_x >= 0 && game->render->m_x < (int)game->map_info.max_len &&
-            game->render->m_y >= 0 && game->render->m_y < (int)game->map_info.num_rows)
+		if (game->render->m_x >= 0
+			&& game->render->m_x < (int)game->map_info.max_len
+			&& game->render->m_y >= 0
+			&& game->render->m_y < (int)game->map_info.num_rows)
 		{
 			if (game->map[game->render->m_y][game->render->m_x] == '1')
 			{
 				game->render->vertical_ray_x_pos = game->render->ray_x;
 				game->render->vertical_ray_y_pos = game->render->ray_y;
-				game->render->v_distance = distance(game->render->player_x, game->render->player_y, game->render->vertical_ray_x_pos, game->render->vertical_ray_y_pos);
-				if (game->render->ray_angle > P2 && game->render->ray_angle < P3) // Ray pointing left
+				game->render->v_distance = distance(game->render->player_x,
+						game->render->player_y,
+						game->render->vertical_ray_x_pos,
+						game->render->vertical_ray_y_pos);
+				if (game->render->ray_angle > P2
+					&& game->render->ray_angle < P3) // Ray pointing left
 					game->render->wall_dir = WEST;
 				else
 					game->render->wall_dir = EAST;
@@ -231,39 +252,42 @@ void	draw_rays(void  *param)
 		draw_col(game);
 		game->render->ray++;
 		game->render->ray_angle += ray_angle_increment;
-		
+
 	}
+}
+
+static float	wall_offset_calc(t_game *game)
+{
+	float	wall_offset;
+
+	if (game->render->wall_dir == NORTH)
+		wall_offset = fmodf(game->render->wall_hit_x, TILE);
+	else if (game->render->wall_dir == SOUTH)
+		wall_offset = TILE - fmodf(game->render->wall_hit_x, TILE);
+	else if (game->render->wall_dir == EAST)
+		wall_offset = fmodf(game->render->wall_hit_y, TILE);
+	else
+		wall_offset = TILE - fmodf(game->render->wall_hit_y, TILE);
+	return (wall_offset);
 }
 
 float	get_xcoord_from_texture(t_game *game)
 {
-	float 			wall_offset;
-	float 			tex_coord;
+	float			wall_offset;
+	float			tex_coord;
 	mlx_texture_t	*current_text;
 
 	if (game->render->wall_dir == NORTH)
-	{
-		wall_offset = fmodf(game->render->wall_hit_x, TILE);
 		current_text = game->textures->north_t;
-	}
 	else if (game->render->wall_dir == SOUTH)
-	{
-		wall_offset = TILE - fmodf(game->render->wall_hit_x, TILE);
 		current_text = game->textures->south_t;
-	}
 	else if (game->render->wall_dir == EAST)
-	{
-		wall_offset = fmodf(game->render->wall_hit_y, TILE);
 		current_text = game->textures->east_t;
-		
-	}
 	else if (game->render->wall_dir == WEST)
-	{
-		wall_offset = TILE - fmodf(game->render->wall_hit_y, TILE);
 		current_text = game->textures->west_t;
-	}
 	else
-		return 0.0f; // fallback
+		return (0.0f); // fallback
+	wall_offset = wall_offset_calc(game);
 	tex_coord = wall_offset * current_text->width / TILE;
 	if (tex_coord < 0)
 		tex_coord = 0;
