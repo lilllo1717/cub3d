@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:46:22 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 12:19:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/19 15:55:56 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	parse_color_c(t_game *game)
 	file = game->initial_file;
 	split_colors = find_copy_color_c(file);
 	if (!split_colors)
+		return (free_2darray(split_colors), 0);
+	if (ft_strlen(split_colors[0]) > 3 || ft_strlen(split_colors[1]) > 3
+		|| ft_strlen(split_colors[2]) > 3)
 		return (free_2darray(split_colors), 0);
 	rgb[0] = ft_atoi(split_colors[0]);
 	rgb[1] = ft_atoi(split_colors[1]);
@@ -96,6 +99,9 @@ int	parse_color_f(t_game *game)
 	split_colors = find_copy_color_f(file);
 	if (!split_colors)
 		return (free_2darray(split_colors), 0);
+	if (ft_strlen(split_colors[0]) > 3 || ft_strlen(split_colors[1]) > 3
+		|| ft_strlen(split_colors[2]) > 3)
+		return (free_2darray(split_colors), 0);
 	rgb[0] = ft_atoi(split_colors[0]);
 	rgb[1] = ft_atoi(split_colors[1]);
 	rgb[2] = ft_atoi(split_colors[2]);
@@ -107,8 +113,8 @@ int	parse_color_f(t_game *game)
 int	parse_colors(t_game *game)
 {
 	if (!parse_color_f(game))
-		return (0);
+		return (err("Invalid input for colors.\n"), 0);
 	if (!parse_color_c(game))
-		return (0);
+		return (err("Invalid input for colors.\n"), 0);
 	return (1);
 }

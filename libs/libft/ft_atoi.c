@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:04:17 by tignatov          #+#    #+#             */
-/*   Updated: 2024/10/13 15:11:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/19 15:47:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "libft.h"
 
 int	ft_atoi(const char	*s)
