@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 14:04:56 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 14:23:11 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/19 14:29:08 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,12 @@ void	free_2dint(int **arr)
 		i++;
 	}
 	free(arr);
+}
+
+bool	has_invalid(char c)
+{
+	if (c != '1' && c != '0' && c != 'S' && c != 'N' && c != 'W' && c != 'E'
+			&& c != ' ')
+			return (err("Invalid input: invalid chars.\n"), true);
+	return (false);
 }

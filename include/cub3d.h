@@ -182,6 +182,7 @@ bool					check_extension(char *start_pars);
 bool					is_col_tex(char *line);
 bool					no_invalid_input(char *line, int in_map);
 bool					is_map_last(char **map);
+bool					has_invalid(char c);
 
 /*utils*/
 void					free_2darray_partial(char **arr, int num);

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 14:19:54 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/19 14:23:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool	count_playes(char c, int *player_val, int *player_flag)
 {
 	if (c != '1' && c != '0' && c != 'S' && c != 'N' && c != 'W' && c != 'E'
 		&& c != ' ')
-		return (printf("Invalid input: invalid chars.\n"), false);
+		return (err("Invalid input: invalid chars.\n"), false);
 	if (c == 'S')
 	{
 		player_val[KEY_S]++;

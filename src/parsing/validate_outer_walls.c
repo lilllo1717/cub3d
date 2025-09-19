@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 14:20:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/19 14:26:44 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_space_char(char **map, size_t row, size_t col)
 
 int	check_diagonals(char **map, size_t row, size_t col, t_map *map_dim)
 {
+	if (has_invalid(map[row][col]) == true)
+		return (1);
 	if (map[row][col] == ' ')
 	{
 		if (row > 0 && col > 0 && is_space_char(map, row - 1, col - 1))
