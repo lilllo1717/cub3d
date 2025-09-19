@@ -6,11 +6,26 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 16:00:38 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/17 16:15:07 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/18 15:02:52 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static uint32_t	choose_color(t_game *game, int x, int y)
+{
+	uint32_t	color;
+
+	if (game->map[y][x] == '1')
+		color = WALL;
+	else if (game->map[y][x] == '0' || game->map[y][x] == 'N'
+		|| game->map[y][x] == 'S'
+		|| game->map[y][x] == 'W' || game->map[y][x] == 'E')
+		color = FLOOR;
+	else
+		color = EMPTY;
+	return (color);
+}
 
 static void	tile_loop(t_game *game, mlx_image_t	*tile)
 {
@@ -29,14 +44,7 @@ static void	tile_loop(t_game *game, mlx_image_t	*tile)
 		x = 0;
 		while (x < (int)game->map_info.max_len)
 		{
-			if (game->map[y][x] == '1')
-				color = WALL;
-			else if (game->map[y][x] == '0' || game->map[y][x] == 'N'
-				|| game->map[y][x] == 'S'
-				|| game->map[y][x] == 'W' || game->map[y][x] == 'E')
-				color = FLOOR;
-			else
-				color = EMPTY;
+			color = choose_color(game, x, y);
 			xo = x * MINITILE;
 			yo = y * MINITILE;
 			if (xo < (WIDTH) && yo < HEIGHT)

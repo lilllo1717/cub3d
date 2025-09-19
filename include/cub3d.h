@@ -54,20 +54,19 @@ enum					keys_colors
 	NUM_KEYS2
 };
 
-typedef struct s_line_draw
+typedef struct s_draw
 {
-	int					begin_x;
-	int					begin_y;
-	int					end_x;
-	int					end_y;
-	float				delta_x;
-	float				delta_y;
-	float				current_x;
-	float				current_y;
-	float				step_x;
-	float				step_y;
-	int					steps;
-}						t_line_draw;
+	mlx_texture_t		*wall_t;
+    int					tex_x;
+	int					tex_y;
+    float				tex_step;
+	float				tex_y_offset;
+    int					y;
+	uint32_t			pixel_color; 
+    int					wall_start;
+    int					wall_end;
+} 						t_draw;
+
 
 typedef struct s_render
 {
@@ -105,7 +104,6 @@ typedef struct s_render
 	float				wall_hit_y;
 	int					wall_dir_h;
 	int					wall_dir_v;
-	struct s_line_draw	*line;
 }						t_render;
 
 typedef struct s_texture
@@ -137,7 +135,7 @@ typedef struct s_map
 	size_t				end_index;
 	char				player_letter;
 	int					player_flag;
-}						t_map;
+}								t_map;
 
 typedef struct s_game
 {
@@ -147,6 +145,7 @@ typedef struct s_game
 	struct s_color		*colors;
 	struct s_render		*render;
 	struct s_map		map_info;
+	struct s_draw		*draw;
 }						t_game;
 
 /*parsing*/
