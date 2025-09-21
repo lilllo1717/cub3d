@@ -6,28 +6,29 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 15:04:28 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/18 15:06:02 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/21 17:52:22 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	key_handler(mlx_key_data_t keydata, void *param)
+static void	update_pos(t_game *game, float next_pos_x, float next_pos_y)
 {
-	t_game	*game;
+	int	col;
+	int	row;
 
-	game = (t_game *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	col = (int)(next_pos_x / TILE);
+	row = (int)(next_pos_y / TILE);
+	if (row >= 0 && row < (int)game->map_info.num_rows && col >= 0
+		&& col < (int)game->map_info.max_len && game->map[row][col] != '1')
 	{
-		ft_putendl_fd("Thanks for playing :)", 1);
-		mlx_close_window(game->render->mlx);
+		game->render->player_x = next_pos_x;
+		game->render->player_y = next_pos_y;
 	}
 }
 
 void	left_right(t_game *game)
 {
-	int		col;
-	int		row;
 	float	next_pos_x;
 	float	next_pos_y;
 
@@ -47,20 +48,11 @@ void	left_right(t_game *game)
 		next_pos_y += game->render->player_delta_x
 			* game->render->mlx->delta_time;
 	}
-	col = (int)(next_pos_x / TILE);
-	row = (int)(next_pos_y / TILE);
-	if (row >= 0 && row < (int)game->map_info.num_rows && col >= 0
-		&& col < (int)game->map_info.max_len && game->map[row][col] != '1')
-	{
-		game->render->player_x = next_pos_x;
-		game->render->player_y = next_pos_y;
-	}
+	update_pos(game, next_pos_x, next_pos_y);
 }
 
 void	forward_backward(t_game *game)
 {
-	int		col;
-	int		row;
 	float	next_pos_x;
 	float	next_pos_y;
 
@@ -80,14 +72,7 @@ void	forward_backward(t_game *game)
 		next_pos_y -= game->render->player_delta_y
 			* game->render->mlx->delta_time;
 	}
-	col = (int)(next_pos_x / TILE);
-	row = (int)(next_pos_y / TILE);
-	if (row >= 0 && row < (int)game->map_info.num_rows && col >= 0
-		&& col < (int)game->map_info.max_len && game->map[row][col] != '1')
-	{
-		game->render->player_x = next_pos_x;
-		game->render->player_y = next_pos_y;
-	}
+	update_pos(game, next_pos_x, next_pos_y);
 }
 
 void	turn(t_game *game)

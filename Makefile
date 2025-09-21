@@ -40,6 +40,9 @@ SRC_RENDERING = \
 	$(SRC_DIR)/rendering/mouse_handler.c \
 	$(SRC_DIR)/rendering/drawing.c \
 	$(SRC_DIR)/rendering/movement.c \
+	$(SRC_DIR)/rendering/rays_horizontal.c \
+	$(SRC_DIR)/rendering/rays_vertical.c \
+	$(SRC_DIR)/rendering/raycast_utils.c \
 
 GNL_DIR  := libs/gnl
 GNL_SRCS = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c

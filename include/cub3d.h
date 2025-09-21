@@ -217,8 +217,8 @@ void					draw_rays(void *param);
 int						draw_line(t_render *render, int begin_x, int begin_y,
 							int end_x, int end_y);
 void					draw_col(t_game *game);
-void					check_horizontal_lines(t_game *game, float a_tan);
-void					check_vertical_lines(t_game *game, float n_tan);
+void					check_horizontal_lines(t_game *game);
+void					check_vertical_lines(t_game *game);
 void					render_frame(void *param);
 /* ---movement------ */
 void					left_right(t_game *game);
