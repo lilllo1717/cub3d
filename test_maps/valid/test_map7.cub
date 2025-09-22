@@ -2,10 +2,10 @@ F 4,112,73
 C 52,134,235
 
 
-NO ./brick_n.png
-SO ./brick_s.png
-WE ./brick_w.png
-EA ./brick_e.png
+NO ./textures/pixel1.png
+SO ./textures/pixel2.png
+WE ./textures/pixel3.png
+EA ./textures/pixel4.png
 
  1111111111111111111
 1E000000000000000001

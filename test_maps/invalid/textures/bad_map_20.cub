@@ -1,7 +1,7 @@
 NO ./brick50.jpg
-SO ./brick2.png
-WE ./brick3.jpg
-EA ./brick4.jpg
+SO ./textures/brick_s.png
+WE ./textures/brick_w.png
+EA ./textures/brick_e.png
 
 
 F 13,32,3

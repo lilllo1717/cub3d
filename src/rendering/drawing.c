@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:20:51 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/18 14:50:57 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:14:31 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,13 @@ static uint32_t	get_texture_pixel(mlx_texture_t *texture, int x, int y)
 	return (color);
 }
 
-/*
-	the last else calculates texture y offset coordinate relative to wall start
-*******************************************************************************
-	this means the pixel is part of the ceiling
-	if (y < draw.wall_start)
-*******************************************************************************
-	this means the pixel is part of the floor
-	else if (y >= draw.wall_end)
+/******************************************************************************
+*	-the last else calculates texture y offset coordinate relative to wall start
+*
+*	-this means the pixel is part of the ceiling
+*		if (y < draw.wall_start)
+*	-this means the pixel is part of the floor
+*		else if (y >= draw.wall_end)
 *******************************************************************************
 */
 static void	draw_col_putpixel_loop(t_draw draw, t_game *game, int y)
@@ -132,6 +131,12 @@ static void	draw_col_putpixel_loop(t_draw draw, t_game *game, int y)
 	}
 }
 
+/******************************************************************************
+ *
+ *  -function draws a vertical column of the wall on the screen for the current
+ * 	ray, selecting the appropriate texture and applying it to the column
+ *
+ *****************************************************************************/
 void	draw_col(t_game *game)
 {
 	int		y;
@@ -147,6 +152,12 @@ void	draw_col(t_game *game)
 	draw_col_putpixel_loop(draw, game, y);
 }
 
+/******************************************************************************
+*
+*	-function simply selects the current texture based on the direction of 
+* where the ray hit the wall 
+*
+******************************************************************************/
 mlx_texture_t	*select_correct_texture(t_game *game)
 {
 	if (game->render->wall_dir == NORTH)
@@ -161,6 +172,14 @@ mlx_texture_t	*select_correct_texture(t_game *game)
 		return (NULL);
 }
 
+/******************************************************************************
+ * 
+ *	-function that draws the player
+ *	-memset clears the image so we get a fresh image every frame
+ *	-the player is drawn on instance depth 3 which means its above the map and
+ * 3d render
+ * 
+******************************************************************************/
 void	draw_player(void *param)
 {
 	t_game	*game;
@@ -175,7 +194,6 @@ void	draw_player(void *param)
 				HEIGHT);
 		player_inst = mlx_image_to_window(game->render->mlx,
 				game->render->player_image, 0, 0);
-		printf("id [%d]\n", player_inst);
 		mlx_set_instance_depth(game->render->player_image->instances, 3);
 	}
 	ft_memset(game->render->player_image->pixels, 0, WIDTH * HEIGHT

@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/22 12:21:17 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:15:42 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	validate_map(t_game *game, char **initial_file, t_render *render)
 	map_to_valid = map_for_valid(initial_file, &map);
 	if (!map_to_valid)
 		return (0);
-	print_2d_array(map_to_valid);
 	tmp = dup_array(map_to_valid);
 	if (!tmp)
 		return (free_2darray(map_to_valid), 0);
