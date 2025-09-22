@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_outer_walls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/19 15:56:11 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:21:17 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	ft_dfs(char **map, size_t row, size_t col, t_map *map_dim)
 		if (map[row][col] == ' ' && map[row - 1][col - 1] == '0')
 			return (1);
 	}
-	if (check_diagonals(map, row, col, map_dim) == 1)
-		return (1);
+	// if (check_diagonals(map, row, col, map_dim) == 1)
+	// 	return (1);
 	map[row][col] = '1';
 	if (ft_dfs(map, row - 1, col, map_dim))
 		return (1);

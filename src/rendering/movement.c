@@ -6,11 +6,24 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 15:04:28 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/21 17:52:22 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:17:50 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	check_pos(t_game *game, float x, float y)
+{
+    int col = (int)(x / TILE);
+    int row = (int)(y / TILE);
+
+    if ( row >= 0 && row < (int)game->map_info.num_rows 
+    	&& col >= 0 && col < (int)game->map_info.max_len 
+    	&& game->map[row][col] != '1')
+		return (1);
+	else 
+		return (0);
+}
 
 static void	update_pos(t_game *game, float next_pos_x, float next_pos_y)
 {
@@ -19,8 +32,10 @@ static void	update_pos(t_game *game, float next_pos_x, float next_pos_y)
 
 	col = (int)(next_pos_x / TILE);
 	row = (int)(next_pos_y / TILE);
-	if (row >= 0 && row < (int)game->map_info.num_rows && col >= 0
-		&& col < (int)game->map_info.max_len && game->map[row][col] != '1')
+	if (check_pos(game, next_pos_x - (TILE / 3), next_pos_y - (TILE / 3)) //top left
+       	&& check_pos(game, next_pos_x + (TILE / 3), next_pos_y - (TILE / 3)) //top right
+    	&& check_pos(game, next_pos_x - (TILE / 3), next_pos_y + (TILE / 3)) //bottom left
+    	&& check_pos(game, next_pos_x + (TILE / 3), next_pos_y + (TILE / 3))) //bottom right
 	{
 		game->render->player_x = next_pos_x;
 		game->render->player_y = next_pos_y;
