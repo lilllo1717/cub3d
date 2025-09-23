@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 15:02:07 by rojornod          #+#    #+#             */
+/*   Updated: 2025/09/23 11:20:13 by rojornod         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -57,16 +69,15 @@ enum					keys_colors
 typedef struct s_draw
 {
 	mlx_texture_t		*wall_t;
-    int					tex_x;
+	int					tex_x;
 	int					tex_y;
-    float				tex_step;
+	float				tex_step;
 	float				tex_y_offset;
-    int					y;
-	uint32_t			pixel_color; 
-    int					wall_start;
-    int					wall_end;
-} 						t_draw;
-
+	int					y;
+	uint32_t			pixel_color;
+	int					wall_start;
+	int					wall_end;
+}						t_draw;
 
 typedef struct s_render
 {
@@ -92,8 +103,8 @@ typedef struct s_render
 	float				correct_distance;
 	float				fov;
 	int					ray;
-	float				y_offset;
-	float				x_offset;
+	float				y_o;
+	float				x_o;
 	int					dof;
 	float				final_dist;
 	int					m_x;
@@ -213,9 +224,7 @@ void					key_handler(mlx_key_data_t keydata, void *param);
 void					create_world(void *param);
 void					put_tile(mlx_image_t *image, int start_x, int start_y,
 							uint32_t color);
-void					draw_rays(void *param);
-int						draw_line(t_render *render, int begin_x, int begin_y,
-							int end_x, int end_y);
+void					cast_rays(void *param);
 void					draw_col(t_game *game);
 void					check_horizontal_lines(t_game *game);
 void					check_vertical_lines(t_game *game);
@@ -225,22 +234,16 @@ void					left_right(t_game *game);
 void					forward_backward(t_game *game);
 void					turn(t_game *game);
 void					mouse_handler(double xpos, double ypos, void *param);
+void					update_pos(t_game *game, float next_pos_x,
+							float next_pos_y);
 
 /* ----render utils---- */
 float					distance(float ax, float ay, float bx, float by);
 void					normalize_angle(t_game *game);
 int						determine_steps(float delta_x, float delta_y);
 /* -- textures --*/
-void					put_textures(t_game *game, int wall_start, int wall_end,
-							int col_x, int y);
 int						load_textures(t_game *game);
 float					get_xcoord_from_texture(t_game *game);
 mlx_texture_t			*select_correct_texture(t_game *game);
-
-/*----rays------*/
-void					setup_horizontal_rays(t_game *game, int max_dof);
-void					horizontal_wall_detection(t_game *game, int max_dof);
-void					setup_vertical_rays(t_game *game, int max_dof);
-void					vertical_wall_detection(t_game *game, int max_dof);
 
 #endif

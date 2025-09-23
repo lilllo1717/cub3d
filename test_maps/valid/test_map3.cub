@@ -1,7 +1,7 @@
-NO ./brick_n.png
-SO ./brick_s.png
-WE ./brick_w.png
-EA ./brick_e.png
+NO ./textures//brick_n.png
+SO ./textures//brick_s.png
+WE ./textures//brick_w.png
+EA ./textures//brick_e.png
 
 F 220,100,0
 C 225,30,0

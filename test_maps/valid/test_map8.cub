@@ -1,24 +1,14 @@
-
-F           4,112,73
-C 52,134,255
-
-
-
+F 4,112,73
+C 52,134,235
 
 
 NO ./textures//brick_n.png
 SO ./textures//brick_s.png
-
 WE ./textures//brick_w.png
 EA ./textures//brick_e.png
 
-
-
-
-
-
-
-
-        11111
-    11111N011
-        1111
+ 111111
+10010001
+101N1001
+10010001
+ 1111111

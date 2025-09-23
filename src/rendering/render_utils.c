@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 11:45:09 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/17 14:52:14 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 10:28:28 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	normalize_angle(t_game *game)
 
 int	load_textures(t_game *game)
 {
+	if (!game || !game->textures)
+		return (0);
 	game->textures->east_t = mlx_load_png(game->textures->e_text);
 	if (!game->textures->east_t)
 		return (err("Failure to load textures.\n"), 0);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 12:31:13 by rojornod          #+#    #+#             */
+/*   Updated: 2025/09/22 12:47:23 by rojornod         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static float	wall_offset_calc(t_game *game)
@@ -30,7 +42,7 @@ float	get_xcoord_from_texture(t_game *game)
 	else if (game->render->wall_dir == WEST)
 		current_text = game->textures->west_t;
 	else
-		return (0.0f); // fallback
+		return (0.0f);
 	wall_offset = wall_offset_calc(game);
 	tex_coord = wall_offset * current_text->width / TILE;
 	if (tex_coord < 0)
