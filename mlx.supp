@@ -32,3 +32,17 @@
    ...
    obj:*/ld-linux-x86-64.so.*
 }
+
+{
+   llvm_driver_leak
+   Memcheck:Leak
+   ...
+   obj:*/libLLVM-*.so.*
+}
+
+{
+   mesa_driver_leak
+   Memcheck:Leak
+   ...
+   obj:*/dri/*.so
+}
