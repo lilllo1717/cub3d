@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 10:23:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/18 14:12:50 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:46:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ bool	is_valid_input_file(char *file_name)
 	const char	*file_format = ft_strchr(file_name, '.');
 
 	fd = 0;
+	if (file_format == NULL)
+		return (err("Can't open the file.\n"), false);
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
@@ -48,6 +50,6 @@ bool	check_extension(char *start_pars)
 	while (*start_pars && *start_pars != '.')
 		start_pars++;
 	if (ft_strncmp(start_pars, ".png", 4) != 0)
-		return (printf("Wrong file extension.\n"), false);
+		return (err("Wrong file extension.\n"), false);
 	return (true);
 }

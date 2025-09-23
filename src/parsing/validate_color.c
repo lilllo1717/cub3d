@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:03:18 by tignatov          #+#    #+#             */
-/*   Updated: 2025/08/21 16:18:19 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:42:12 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_valid_color_line(char *line)
 	checking_char = NULL;
 	count_members = ft_count_substrings(line, ' ');
 	if (count_members != 2)
-		return (printf("1.Wrong input format for color.\n"), false);
+		return (err("Wrong input format for color.\n"), false);
 	if (is_color(line))
 		checking_char = line + 2;
 	while (checking_char[i] != '\0')
@@ -34,7 +34,7 @@ bool	is_valid_color_line(char *line)
 		else if (checking_char[i] == '\n' && checking_char[i + 1] == '\0')
 			return (true);
 		else
-			return (printf("2.Wrong input format for color.\n"), false);
+			return (err("Wrong input format for color.\n"), false);
 	}
 	return (true);
 }
@@ -80,7 +80,7 @@ bool	check_num_colors(char *color)
 	num_colors = 0;
 	num_colors = ft_count_substrings(color, ',');
 	if (num_colors != 3)
-		return (printf("Invalid color values.\n"), free(color), false);
+		return (err("Invalid color values.\n"), free(color), false);
 	return (true);
 }
 
@@ -105,7 +105,7 @@ bool	is_valid_color(char *file)
 	if (!split_colors)
 		return (free(color), NULL);
 	if (color_valid(split_colors) == false)
-		return (printf("Invalid color values.\n"), free(color),
+		return (err("Invalid color values.\n"), free(color),
 			free_2darray(split_colors), false);
 	free(color);
 	free_2darray(split_colors);

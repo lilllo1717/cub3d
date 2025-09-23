@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:46:22 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/19 15:55:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:38:51 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	**find_copy_color_c(char **file)
 		return (0);
 	copy_string(c_color, color);
 	split_colors = ft_split(color, ',');
+	if (!split_colors)
+		return (free(color), NULL);
 	free(color);
 	return (split_colors);
 }
@@ -83,6 +85,8 @@ char	**find_copy_color_f(char **file)
 		return (0);
 	copy_string(f_color, color);
 	split_colors = ft_split(color, ',');
+	if (!split_colors)
+		return (free(color), NULL);
 	free(color);
 	return (split_colors);
 }

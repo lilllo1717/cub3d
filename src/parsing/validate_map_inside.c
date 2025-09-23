@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/19 14:23:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:42:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	player_count_valid(int *player_val, int player_flag, t_map *map_for_pos)
 	total = player_val[0] + player_val[1] + player_val[2] + player_val[3];
 	if (total != 1)
 	{
-		printf("Invalid input: Wrong number of player.\n");
+		err("Invalid input: Wrong number of player.\n");
 		return (false);
 	}
 	if (player_flag == 0)
@@ -126,7 +126,7 @@ bool	map_chars_valid(t_game *game, char **map, t_map *map_for_pos)
 		i++;
 	}
 	if (player_count_valid(player_val, player_flag, map_for_pos) == false)
-		return (printf("Wrong input for player.\n"), false);
+		return (err("Wrong input for player.\n"), false);
 	game->map_info.player_letter = map_for_pos->player_letter;
 	game->map_info.player_flag = player_flag;
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/23 11:58:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:41:01 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,11 @@ int	validate_map(t_game *game, char **initial_file, t_render *render)
 	if (!tmp)
 		return (free_2darray(map_to_valid), 0);
 	if (ft_dfs(tmp, 0, 0, &map) || map_chars_valid(game, tmp, &map) == false)
-		return (err("1.Map is invalid.\n"), free_2darray(tmp),
-			free_2darray(map_to_valid), 0);
+		return (free_2darray(tmp), free_2darray(map_to_valid), 0);
 	find_player_position(tmp, render, &map);
 	if (ft_dfs_inside(tmp, (size_t)render->player_y, (size_t)render->player_x,
 			&map) == true)
-		return (err("2.Map is invalid. Empty spaces.\n"), free_2darray(tmp),
+		return (err("Map is invalid. Empty spaces.\n"), free_2darray(tmp),
 			free_2darray(map_to_valid), 0);
 	game->map = map_to_valid;
 	free_2darray(tmp);
