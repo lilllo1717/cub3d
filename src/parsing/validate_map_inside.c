@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map_inside.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:00:19 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/23 12:42:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:04:39 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ bool	map_chars_valid(t_game *game, char **map, t_map *map_for_pos)
 		i++;
 	}
 	if (player_count_valid(player_val, player_flag, map_for_pos) == false)
-		return (err("Wrong input for player.\n"), false);
+		return (false);
 	game->map_info.player_letter = map_for_pos->player_letter;
 	game->map_info.player_flag = player_flag;
 	return (true);
