@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:03:18 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/23 12:42:12 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:54:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ bool	is_valid_color(char *file)
 	while (*file && !ft_isdigit(*file))
 		file++;
 	checking_char = file;
-	color = (char *)malloc(ft_strlen(checking_char) * sizeof(char));
+	color = (char *)malloc(ft_strlen(checking_char) * sizeof(char) + 1);
 	if (!color)
 		return (NULL);
 	copy_string(checking_char, color);
