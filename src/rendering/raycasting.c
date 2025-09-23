@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:57:24 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/22 16:53:45 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:23:57 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 ******************************************************************************/
 static void	initial_ray_calc(t_game *game)
 {
-	game->render->h_distance = 1000000;
-	game->render->v_distance = 1000000;
+	game->render->h_distance = 9999999;
+	game->render->v_distance = 9999999;
 	game->render->dof = 0;
 	normalize_angle(game);
 	game->render->dof = 0;

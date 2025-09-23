@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:00:41 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/22 16:57:42 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:16:57 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
  * horizontal grid line
  * 
 ******************************************************************************/
-void	setup_horizontal_rays(t_game *game, int max_dof)
+static void	setup_horizontal_rays(t_game *game, int max_dof)
 {
 	(void)max_dof;
 	if (game->render->ray_angle > PI)
@@ -52,27 +52,6 @@ void	setup_horizontal_rays(t_game *game, int max_dof)
 		game->render->y_o = TILE;
 		game->render->x_o = game->render->y_o / tan(game->render->ray_angle);
 	}
-}
-
-/******************************************************************************
- * 
- * 	-function that checks for horizontal wall intersections by casting rays 
- * from the player's position
- *	-sets up the initial ray positions and detects where the rays hit 
- * horizontal walls
- * 	-max_dof = maximum number of grind intersecctions we take until we 
- * give up looking for a wall hit
- * 
-******************************************************************************/
-void	check_horizontal_lines(t_game *game)
-{
-	int	max_dof;
-
-	max_dof = game->map_info.num_rows;
-	game->render->horizontal_ray_x_pos = game->render->player_x;
-	game->render->horizontal_ray_y_pos = game->render->player_y;
-	setup_horizontal_rays(game, max_dof);
-	horizontal_wall_detection(game, max_dof);
 }
 
 /******************************************************************************
@@ -114,7 +93,7 @@ static void	horiz_wall_hit(t_game *game, int max_dof)
  * if out of bounds
  *
  *****************************************************************************/
-void	horizontal_wall_detection(t_game *game, int max_dof)
+static void	horizontal_wall_detection(t_game *game, int max_dof)
 {
 	while (game->render->dof < max_dof)
 	{
@@ -128,4 +107,25 @@ void	horizontal_wall_detection(t_game *game, int max_dof)
 		else
 			game->render->dof = max_dof;
 	}
+}
+
+/******************************************************************************
+ * 
+ * 	-function that checks for horizontal wall intersections by casting rays 
+ * from the player's position
+ *	-sets up the initial ray positions and detects where the rays hit 
+ * horizontal walls
+ * 	-max_dof = maximum number of grind intersecctions we take until we 
+ * give up looking for a wall hit
+ * 
+******************************************************************************/
+void	check_horizontal_lines(t_game *game)
+{
+	int	max_dof;
+
+	max_dof = game->map_info.num_rows;
+	game->render->horizontal_ray_x_pos = game->render->player_x;
+	game->render->horizontal_ray_y_pos = game->render->player_y;
+	setup_horizontal_rays(game, max_dof);
+	horizontal_wall_detection(game, max_dof);
 }

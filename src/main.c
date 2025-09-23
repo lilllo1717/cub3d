@@ -27,7 +27,11 @@ int	main(int argc, char **argv)
 	game.render = render;
 	if (load_textures(&game) == 0)
 		return (free_step2(&game), 1);
-	mlx_start(&game);
+	if (!mlx_start(&game))
+	{
+		free_game(&game);
+		return (1);
+	}
 	mlx_cursor_hook(render->mlx, &mouse_handler, &game);
 	mlx_key_hook(render->mlx, &key_handler, &game);
 	mlx_loop_hook(render->mlx, &render_frame, &game);

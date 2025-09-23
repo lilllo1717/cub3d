@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:02:45 by tignatov          #+#    #+#             */
-/*   Updated: 2025/09/22 17:15:42 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:25:45 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	ft_dfs(char **map, size_t row, size_t col, t_map *map_dim)
 		if (map[row][col] == ' ' && map[row - 1][col - 1] == '0')
 			return (1);
 	}
-	// if (check_diagonals(map, row, col, map_dim) == 1)
-	// 	return (1);
 	map[row][col] = '1';
 	if (ft_dfs(map, row - 1, col, map_dim))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:02:07 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/22 16:46:38 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:20:13 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,11 +245,5 @@ int						determine_steps(float delta_x, float delta_y);
 int						load_textures(t_game *game);
 float					get_xcoord_from_texture(t_game *game);
 mlx_texture_t			*select_correct_texture(t_game *game);
-
-/*----rays------*/
-void					setup_horizontal_rays(t_game *game, int max_dof);
-void					horizontal_wall_detection(t_game *game, int max_dof);
-void					setup_vertical_rays(t_game *game, int max_dof);
-void					vertical_wall_detection(t_game *game, int max_dof);
 
 #endif

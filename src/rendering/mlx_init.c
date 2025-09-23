@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:51:12 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/22 17:14:19 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:12:56 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_render	*init_render(void)
 
 int	mlx_start(t_game *game)
 {
+	if (!game || !game->render)
+		return (0);
 	game->render->mlx = mlx_init(WIDTH, HEIGHT, "BEST GAME EVER", false);
 	if (!game->render->mlx)
 	{
