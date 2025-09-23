@@ -61,15 +61,7 @@ MLX42_DIR  := $(LIB_DIR)/MLX
 MLX42_TAG  := v2.4.1
 MLX_A      := $(MLX42_DIR)/build/libmlx42.a
 
-
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-    # macOS: needs frameworks for GLFW
-    LIBS_OS := -lglfw -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
-else
-    # Linux
-    LIBS_OS := -ldl -lglfw -pthread -lm
-endif
+LIBS_OS := -ldl -lglfw -pthread -lm
 
 LIBS := $(MLX_A) $(LIBFT_A) $(LIBS_OS)
 
@@ -79,7 +71,7 @@ $(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $@
 
 # Object build
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.c $(INC_DIR)/cub3d.h | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
@@ -99,7 +91,6 @@ $(MLX_A): | $(MLX42_DIR)
 	@cmake -S $(MLX42_DIR) -B $(MLX42_DIR)/build >/dev/null
 	@cmake --build $(MLX42_DIR)/build -j >/dev/null
 
-# ===== Housekeeping =====
 clean:
 	@rm -rf $(BUILD_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean || true

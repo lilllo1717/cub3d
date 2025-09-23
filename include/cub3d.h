@@ -6,7 +6,7 @@
 /*   By: rojornod <rojornod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:02:07 by rojornod          #+#    #+#             */
-/*   Updated: 2025/09/23 11:20:13 by rojornod         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:19:56 by rojornod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # define WALL 0xFF0000FF
 # define FLOOR 0x00FFFF30
 # define EMPTY 0x00000000
-# define PI 3.1415926535
-# define P2 (PI / 2)
-# define P3 (3 * PI / 2)
+# define PI 3.1415926535897932
+# define P2 1.5707963267948966
+# define P3 4.7123889803846897
 # define TILE 64
 # define MINITILE 16
 # define SOUTH 0
@@ -42,7 +42,7 @@
 # define M_SPEED 150.0
 # define PLAYER_SIZE 10
 
-enum					keys_texture
+enum					e_keys_texture
 {
 	KEY_NO,
 	KEY_SO,
@@ -51,7 +51,7 @@ enum					keys_texture
 	NUM_KEYS1
 };
 
-enum					player_chars
+enum					e_player_chars
 {
 	KEY_N,
 	KEY_S,
@@ -59,7 +59,7 @@ enum					player_chars
 	KEY_E,
 };
 
-enum					keys_colors
+enum					e_keys_colors
 {
 	KEY_F,
 	KEY_C,
